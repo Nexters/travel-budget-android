@@ -1,7 +1,8 @@
-package com.nexters.travelbudget
+package com.nexters.travelbudget.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.nexters.travelbudget.R
 
 class MainActivity : AppCompatActivity() {
 
