@@ -8,8 +8,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class TravelApplication : Application() {
-    companion object { var debugMode: Boolean = true }
-
     private fun isDebuggable(context: Context): Boolean {
         var debuggable = false
 
@@ -32,4 +30,6 @@ class TravelApplication : Application() {
             androidContext(this@TravelApplication)
         }
     }
+
+    companion object { var debugMode: Boolean = true }
 }

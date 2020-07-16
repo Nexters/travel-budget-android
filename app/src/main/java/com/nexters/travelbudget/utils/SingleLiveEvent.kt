@@ -6,11 +6,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
-class SingleLiveEvent<T> : LiveData<T>() {
+/**
+ * SingleLiveEvent
+ *
+ * 정보 전달이 필요 없는 경우에 사용
+ *
+ * setValue를 통한 호출이 아닌 call()을 이용한 호출
+ *
+ */
+
+class SingleLiveEvent : LiveData<Unit>() {
     private val pending = AtomicBoolean()
 
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+    override fun observe(owner: LifecycleOwner, observer: Observer<in Unit>) {
         super.observe(owner, Observer {
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
@@ -19,14 +28,13 @@ class SingleLiveEvent<T> : LiveData<T>() {
     }
 
     @MainThread
-    override fun setValue(value: T?) {
+    override fun setValue(value: Unit?) {
         pending.set(true)
-        super.setValue(value)
+        super.setValue(null)
     }
 
     @MainThread
-    fun call(t: T?) {
-        value = t
+    fun call() {
+        value = null
     }
-
 }
