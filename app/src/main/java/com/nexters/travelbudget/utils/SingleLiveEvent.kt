@@ -3,23 +3,24 @@ package com.nexters.travelbudget.utils
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * SingleLiveEvent
  *
- * 정보 전달이 필요 없는 경우에 사용
+ * 한번의 데이터 전달을 보장해주는 클래스
  *
- * setValue를 통한 호출이 아닌 call()을 이용한 호출
+ * 데이터를 전달할 필요가 없다면 call()을 통한 호출
  *
  */
 
-class SingleLiveEvent : LiveData<Unit>() {
+class SingleLiveEvent<T> : MutableLiveData<T>() {
     private val pending = AtomicBoolean()
 
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<in Unit>) {
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         super.observe(owner, Observer {
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
@@ -28,9 +29,9 @@ class SingleLiveEvent : LiveData<Unit>() {
     }
 
     @MainThread
-    override fun setValue(value: Unit?) {
+    override fun setValue(value: T?) {
         pending.set(true)
-        super.setValue(null)
+        super.setValue(value)
     }
 
     @MainThread
