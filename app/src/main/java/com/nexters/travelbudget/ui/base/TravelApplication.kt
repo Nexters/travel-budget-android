@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import com.nexters.travelbudget.BuildConfig
 import com.nexters.travelbudget.di.networkModule
+import com.nexters.travelbudget.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -20,7 +21,7 @@ class TravelApplication : Application() {
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()
             androidContext(this@TravelApplication)
-            modules(networkModule)
+            modules(networkModule, viewModelModule)
         }
     }
 
