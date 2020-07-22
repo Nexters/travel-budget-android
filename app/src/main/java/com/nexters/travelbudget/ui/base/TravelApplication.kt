@@ -4,9 +4,11 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import com.kakao.auth.KakaoSDK
 import com.nexters.travelbudget.BuildConfig
 import com.nexters.travelbudget.di.networkModule
 import com.nexters.travelbudget.di.viewModelModule
+import com.nexters.travelbudget.ui.login.kakao.KakaoSDKAdapter
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,6 +19,8 @@ class TravelApplication : Application() {
         super.onCreate()
         instance = this
         debugMode = isDebuggable(this)
+
+        KakaoSDK.init(KakaoSDKAdapter(this))
 
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()
