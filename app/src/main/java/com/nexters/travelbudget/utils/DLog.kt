@@ -1,7 +1,7 @@
 package com.nexters.travelbudget.utils
 
 import android.util.Log
-import com.nexters.travelbudget.TravelApplication
+import com.nexters.travelbudget.ui.base.TravelApplication
 import java.lang.StringBuilder
 
 class DLog {
