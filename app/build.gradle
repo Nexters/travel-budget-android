@@ -83,4 +83,7 @@ dependencies {
     // Koin
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-core:$koin_version"
+
+    // social login
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.29.0'
 }
