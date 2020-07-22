@@ -1,7 +1,7 @@
 package com.nexters.travelbudget.ui.base
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
  */
 abstract class BaseViewModel : ViewModel() {
 
-    var liveToastMessage: MutableLiveData<String> = MutableLiveData()
+    var liveToastMessage = SingleLiveEvent<String>()
 
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 

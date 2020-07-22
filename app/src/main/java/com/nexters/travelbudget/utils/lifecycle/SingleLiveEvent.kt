@@ -1,8 +1,7 @@
-package com.nexters.travelbudget.utils
+package com.nexters.travelbudget.utils.lifecycle
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
