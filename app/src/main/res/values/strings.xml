@@ -3,4 +3,5 @@
 
     <string name="kakao_app_key">76ee6d4e877a1ea575ed4d478cc671db</string>
 
+    <string name="connection_failed">연결에 실패했습니다.\n잠시 후 다시 시도해주세요.</string>
 </resources>
