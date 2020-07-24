@@ -27,7 +27,7 @@ val networkModule = module {
 
 /** Retrofit 설정 */
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-    return Retrofit.Builder().baseUrl("baseUrl")
+    return Retrofit.Builder().baseUrl("http://175.123.172.42:9050/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

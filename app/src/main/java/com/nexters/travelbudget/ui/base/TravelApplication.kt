@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import com.kakao.auth.KakaoSDK
 import com.nexters.travelbudget.BuildConfig
 import com.nexters.travelbudget.di.networkModule
+import com.nexters.travelbudget.di.remoteModule
+import com.nexters.travelbudget.di.repositoryModule
 import com.nexters.travelbudget.di.viewModelModule
 import com.nexters.travelbudget.ui.login.kakao.KakaoSDKAdapter
 import org.koin.android.ext.koin.androidContext
@@ -25,7 +27,7 @@ class TravelApplication : Application() {
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()
             androidContext(this@TravelApplication)
-            modules(networkModule, viewModelModule)
+            modules(networkModule, viewModelModule, repositoryModule, remoteModule)
         }
     }
 
