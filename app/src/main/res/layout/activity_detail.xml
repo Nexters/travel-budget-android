@@ -17,21 +17,62 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="50dp"
             android:text="@{vm.detailTitle}"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="30dp"
             android:textColor="@color/colorBlack"
             />
 
-        <androidx.fragment.app.FragmentContainerView
+        <LinearLayout
+            android:id="@+id/btn_detail_action"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
+            android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_detail_shared"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> vm.toShared()}"
+            android:background="@color/colorWhite"
+            android:text="공용" />
+
+        <Button
+            android:id="@+id/btn_detail_personal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> vm.toPersonal()}"
+            android:background="@color/colorWhite"
+            android:text="개인" />
+
+        </LinearLayout>
+
+
+
+        <FrameLayout
+            android:id="@+id/fl_detail_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
-            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_detail_action"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="30dp"
-            />
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"/>
+
+
+
+        <!--        <androidx.fragment.app.FragmentContainerView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="300dp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_detail_title"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
