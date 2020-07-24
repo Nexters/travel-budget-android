@@ -10,8 +10,8 @@ import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
-import com.kakao.usermgmt.response.model.UserAccount
 import com.kakao.util.exception.KakaoException
+import com.nexters.travelbudget.data.remote.model.request.SignUpRequest
 
 /**
  * 카카오 로그인 관리 클래스
@@ -26,7 +26,7 @@ typealias OnLoginFail = (Throwable) -> Unit
 
 class KakaoLogin(
     private val activity: AppCompatActivity,
-    private val onLoginSuccess: OnLoginSuccess<UserAccount>? = null,
+    private val onLoginSuccess: OnLoginSuccess<SignUpRequest>? = null,
     private val onLoginFail: OnLoginFail? = null
 ) {
 
@@ -87,7 +87,16 @@ class KakaoLogin(
             }
 
             override fun onSuccess(result: MeV2Response) {
-                onLoginSuccess?.invoke(result.kakaoAccount)
+                val socialId = result.id
+                with(result.kakaoAccount.profile) {
+                    val signUpRequest = SignUpRequest(
+                        socialId.toString(),
+                        nickname ?: "",
+                        thumbnailImageUrl ?: "",
+                        profileImageUrl ?: ""
+                    )
+                    onLoginSuccess?.invoke(signUpRequest)
+                }
             }
 
             override fun onFailure(errorResult: ErrorResult) {

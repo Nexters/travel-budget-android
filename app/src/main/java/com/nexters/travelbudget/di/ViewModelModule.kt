@@ -17,6 +17,6 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { (kakaoLogin: KakaoLogin) ->
-        LoginViewModel(kakaoLogin)
+        LoginViewModel(kakaoLogin, get())
     }
 }
