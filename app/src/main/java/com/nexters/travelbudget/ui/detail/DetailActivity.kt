@@ -43,6 +43,4 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
     }
 
 
-
-
 }
