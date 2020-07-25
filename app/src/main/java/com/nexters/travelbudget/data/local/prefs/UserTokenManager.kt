@@ -58,4 +58,10 @@ object UserTokenManager {
         val userToken = getUserToken(context)
         return userToken?.expireDt
     }
+
+    /** 유저 토큰 type 값 조회 */
+    fun getUserTokenType(context: Context): String? {
+        val userToken = getUserToken(context)
+        return userToken?.tokenType
+    }
 }
