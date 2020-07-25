@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 
-class DetailViewModel : BaseViewModel() {
+class TripDetailViewModel : BaseViewModel() {
 
 
     private val _detailTitle = MutableLiveData<String>().apply { value = DEFAULT_TITLE }
