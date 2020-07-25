@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        
+        <variable
+            name="isPersonal"
+            type="Boolean" />
+
         <variable
             name="vm"
             type="com.nexters.travelbudget.ui.detail.DetailViewModel" />
@@ -12,78 +17,101 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end">
+                
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:goneIf="@{isPersonal}"
+                    android:src="@drawable/ic_launcher_background"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:src="@drawable/ic_launcher_background"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher_background"/>
+                
+                
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
         <TextView
             android:id="@+id/tv_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="50dp"
             android:text="@{vm.detailTitle}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="30dp"
             android:textColor="@color/colorBlack"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/btn_detail_action"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
-            android:layout_alignParentBottom="true">
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_title">
 
-        <Button
-            android:id="@+id/btn_detail_shared"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:onClick="@{() -> vm.toShared()}"
-            android:background="@color/colorWhite"
-            android:text="공용" />
+            <Button
+                android:id="@+id/btn_detail_shared"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:onClick="@{() -> vm.toShared()}"
+                android:text="공용" />
 
-        <Button
-            android:id="@+id/btn_detail_personal"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:onClick="@{() -> vm.toPersonal()}"
-            android:background="@color/colorWhite"
-            android:text="개인" />
-
+            <Button
+                android:id="@+id/btn_detail_personal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:onClick="@{() -> vm.toPersonal()}"
+                android:text="개인" />
         </LinearLayout>
-
-
 
         <FrameLayout
             android:id="@+id/fl_detail_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/btn_detail_action"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"/>
+            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_detail_action" />
 
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/custom_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="28dp"
+            android:text="지출입력"
+            android:textColor="@color/colorWhite"
+            app:fabColor="#2b2b2b"
+            app:fabSizes="mini"
+            app:fabType="roundedSquare"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent" />
 
-
-        <!--        <androidx.fragment.app.FragmentContainerView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="300dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/tv_detail_title"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            android:layout_marginLeft="30dp"-->
-<!--            />-->
-
-<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--            android:id="@+id/fb_detail_write_cost"-->
-<!--            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Add"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            android:layout_marginBottom="28dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

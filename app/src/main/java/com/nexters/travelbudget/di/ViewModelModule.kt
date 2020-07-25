@@ -1,5 +1,7 @@
 package com.nexters.travelbudget.di
 
+import com.nexters.travelbudget.ui.detail.DetailPersonalViewModel
+import com.nexters.travelbudget.ui.detail.DetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.DetailViewModel
 import com.nexters.travelbudget.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -16,4 +18,6 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { DetailViewModel() }
+    viewModel { DetailSharedViewModel() }
+    viewModel { DetailPersonalViewModel() }
 }

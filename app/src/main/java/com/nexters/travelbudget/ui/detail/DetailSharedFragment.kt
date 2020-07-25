@@ -4,13 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentDetailPersonalBinding
 import com.nexters.travelbudget.databinding.FragmentDetailSharedBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailSharedFragment(override val viewModel: DetailViewModel) : BaseFragment<FragmentDetailPersonalBinding, DetailViewModel>(R.layout.fragment_detail_shared) {
-// override 꼭 써줘야하나? / 뷰모델을 저거로 같이 써도 되나
+class DetailSharedFragment() : BaseFragment<FragmentDetailSharedBinding, DetailSharedViewModel>(R.layout.fragment_detail_shared) {
 
+    override val viewModel: DetailSharedViewModel by viewModel()
 
+    companion object {
+        fun newInstance(): DetailSharedFragment {
+            return DetailSharedFragment().apply {
+                arguments = bundleOf()
+            }
+        }
+    }
 }
