@@ -26,17 +26,18 @@ class TripDetailActivity :
 
         //버튼 클릭 이벤트 - 프래그먼트를 교체
         viewModel.toShared.observe(this@TripDetailActivity, Observer {
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fl_detail_fragment, TripDetailSharedFragment.newInstance())
-            fragmentTransaction.commit()
+            supportFragmentManager.beginTransaction().also {
+                it.replace(R.id.fl_detail_fragment, TripDetailSharedFragment.newInstance())
+                it.commit()
+            }
         })
 
         viewModel.toPersonal.observe(this@TripDetailActivity, Observer {
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fl_detail_fragment, TripDetailPersonalFragment.newInstance())
-            fragmentTransaction.commit()
+            supportFragmentManager.beginTransaction().also {
+                it.replace(R.id.fl_detail_fragment, TripDetailPersonalFragment.newInstance())
+                it.commit()
+            }
         })
-
 
     }
 

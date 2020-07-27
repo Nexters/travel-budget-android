@@ -7,7 +7,6 @@ import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 
 class TripDetailViewModel : BaseViewModel() {
 
-
     private val _detailTitle = MutableLiveData<String>().apply { value = DEFAULT_TITLE }
     val detailTitle: LiveData<String> get() = _detailTitle
 

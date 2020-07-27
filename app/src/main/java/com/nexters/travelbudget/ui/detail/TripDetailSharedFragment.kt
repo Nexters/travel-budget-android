@@ -9,12 +9,4 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TripDetailSharedFragment() : BaseFragment<FragmentDetailSharedBinding, TripDetailSharedViewModel>(R.layout.fragment_detail_shared) {
 
     override val viewModel: TripDetailSharedViewModel by viewModel()
-
-    companion object {
-        fun newInstance(): TripDetailSharedFragment {
-            return TripDetailSharedFragment().apply {
-                arguments = bundleOf()
-            }
-        }
-    }
 }
