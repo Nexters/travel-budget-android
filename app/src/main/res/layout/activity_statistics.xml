@@ -69,6 +69,7 @@
                     android:id="@+id/tv_total_budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{vm.totalBudget}"
                     tools:text="2,000,000원"
                     app:layout_constraintStart_toEndOf="@id/txt_total_budget_title"
                     app:layout_constraintTop_toTopOf="@id/txt_total_budget_title"/>
@@ -82,8 +83,10 @@
                     android:id="@+id/tv_spend_budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{vm.spendAmount}"
                     tools:text="1,785,500원"
                     android:textSize="22sp"
+                    android:textColor="#000"
                     app:layout_constraintTop_toBottomOf="@id/txt_total_budget_title"
                     app:layout_constraintStart_toStartOf="parent"/>
                 <androidx.appcompat.widget.AppCompatTextView
@@ -102,10 +105,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_spend_budget"/>
-
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_statistics"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:addAll="@{vm.newPieDataList}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/pc_statistics"
