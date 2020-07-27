@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TravelBudget</string>
+    <string name="detail_shared_title">오늘의 공용 여행비</string>
 </resources>
