@@ -83,4 +83,9 @@ dependencies {
     // Koin
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-core:$koin_version"
+
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+
+    //floating action bar
+    implementation 'com.robertlevonyan.view:CustomFloatingActionButton:3.0.1'
 }
