@@ -9,4 +9,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TripDetailPersonalFragment() : BaseFragment<FragmentDetailPersonalBinding, TripDetailPersonalViewModel>(R.layout.fragment_detail_personal) {
 
     override val viewModel: TripDetailPersonalViewModel by viewModel()
+
+    companion object {
+        fun newInstance(): TripDetailPersonalFragment {
+            return TripDetailPersonalFragment()
+        }
+    }
+
 }
