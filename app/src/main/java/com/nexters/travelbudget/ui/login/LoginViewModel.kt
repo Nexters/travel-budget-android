@@ -2,6 +2,7 @@ package com.nexters.travelbudget.ui.login
 
 import com.nexters.travelbudget.data.remote.model.request.SignUpRequest
 import com.nexters.travelbudget.data.repository.SignUpRepository
+import com.nexters.travelbudget.data.repository.UserTokenRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.ui.login.kakao.KakaoLogin
 import com.nexters.travelbudget.utils.ext.applySchedulers
@@ -20,10 +21,14 @@ import java.util.concurrent.TimeUnit
 
 class LoginViewModel(
     private val kakaoLogin: KakaoLogin,
-    private val signUpRepository: SignUpRepository
+    private val signUpRepository: SignUpRepository,
+    private val userTokenRepository: UserTokenRepository
 ) : BaseViewModel() {
 
     private val kakaoLoginClick: PublishSubject<Unit> = PublishSubject.create()
+
+    private val _startMain = SingleLiveEvent<Unit>()
+    val startMain = _startMain
 
     private val _reStartLogin = SingleLiveEvent<Unit>()
     val reStartLogin = _reStartLogin
@@ -36,11 +41,21 @@ class LoginViewModel(
             }.addTo(compositeDisposable)
     }
 
+    private fun createUserToken(kakaoId: String) {
+        userTokenRepository.createUserToken(kakaoId)
+            .applySchedulers()
+            .subscribe({
+                _startMain.call()
+            }, {
+                _reStartLogin.call()
+            }).addTo(compositeDisposable)
+    }
+
     fun requestSignUp(signUpRequest: SignUpRequest) {
         signUpRepository.requestSignUp(signUpRequest)
             .applySchedulers()
             .subscribe({ signUpResponse ->
-                // TODO 성공 시 로그인 시도 작업하기
+                createUserToken(signUpResponse.kakaoId)
             }, {
                 _reStartLogin.call()
             }).addTo(compositeDisposable)

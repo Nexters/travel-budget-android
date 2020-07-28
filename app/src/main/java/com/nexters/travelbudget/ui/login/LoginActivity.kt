@@ -7,6 +7,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityLoginBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.login.kakao.KakaoLogin
+import com.nexters.travelbudget.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -33,6 +34,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.startMain.observe(this, Observer {
+            MainActivity.startActivity(this)
+        })
 
         viewModel.reStartLogin.observe(this, Observer {
             reStartActivity()
