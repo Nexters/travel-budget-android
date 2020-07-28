@@ -9,13 +9,14 @@ import com.nexters.travelbudget.ui.base.adapter.BaseRVAdapter
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.widget.piechart.PieData
 import java.text.DecimalFormat
+import java.util.*
 
 class PieChartRVAdapter : BaseRVAdapter<PieData>() {
     override fun onBindView(binding: ViewDataBinding, viewHolder: BaseItemVH, item: PieData) {
         with(binding as ItemPieDataListBinding) {
             tvCategoryTitle.text = item.tag
-            tvSpendPercent.text = "${(item.value / getTotalValue() * 100).toInt()}%"
-            tvSpendAmount.text = "${item.value.toMoneyString()}원"
+            tvSpendPercent.text = String.format(Locale.KOREA, "%d%%", (item.value / getTotalValue() * 100).toInt())
+            tvSpendAmount.text = String.format(Locale.KOREA, "%s원", item.value.toMoneyString())
             viewColor.setBackgroundColor(item.color)
         }
     }

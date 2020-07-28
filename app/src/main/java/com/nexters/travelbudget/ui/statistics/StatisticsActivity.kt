@@ -2,7 +2,6 @@ package com.nexters.travelbudget.ui.statistics
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityStatisticsBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -35,7 +34,6 @@ class StatisticsActivity : BaseActivity<ActivityStatisticsBinding, StatisticsVie
     private fun setupStatisticsRV() {
         with(binding.rvStatistics) {
             adapter = PieChartRVAdapter()
-            layoutManager = LinearLayoutManager(this@StatisticsActivity)
         }
     }
 }
