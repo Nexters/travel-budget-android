@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.statistics.StatisticsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="통계"
+                android:textColor="#000"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_statistics_shared"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:text="공용"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_title"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_statistics_personal"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:text="개인"
+            app:layout_constraintStart_toEndOf="@id/btn_statistics_shared"
+            app:layout_constraintTop_toBottomOf="@id/tb_title"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:descendantFocusability="blocksDescendants"
+            android:fillViewport="true"
+            android:background="#F6F6F6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_statistics_personal"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:layout_margin="24dp"
+                android:padding="24dp">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_total_budget_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 예산 "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_total_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.totalBudget}"
+                    tools:text="2,000,000원"
+                    app:layout_constraintStart_toEndOf="@id/txt_total_budget_title"
+                    app:layout_constraintTop_toTopOf="@id/txt_total_budget_title"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 중"
+                    app:layout_constraintStart_toEndOf="@id/tv_total_budget"
+                    app:layout_constraintTop_toTopOf="@id/txt_total_budget_title"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_spend_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.spendAmount}"
+                    tools:text="1,785,500원"
+                    android:textSize="22sp"
+                    android:textColor="#000"
+                    app:layout_constraintTop_toBottomOf="@id/txt_total_budget_title"
+                    app:layout_constraintStart_toStartOf="parent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 지출했어요"
+                    app:layout_constraintStart_toEndOf="@id/tv_spend_budget"
+                    app:layout_constraintTop_toTopOf="@id/tv_spend_budget"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_spend_budget"/>
+                <com.nexters.travelbudget.utils.widget.piechart.PieChartView
+                    android:id="@+id/pc_statistics"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginEnd="36dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_spend_budget"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_statistics"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:addAll="@{vm.newPieDataList}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pc_statistics"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

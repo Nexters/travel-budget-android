@@ -4,6 +4,7 @@ import com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailViewModel
 import com.nexters.travelbudget.ui.main.MainViewModel
+import com.nexters.travelbudget.ui.statistics.StatisticsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,6 +18,7 @@ import org.koin.dsl.module
 /** 뷰모델 모듈(DI) 설정 */
 val viewModelModule = module {
     viewModel { MainViewModel() }
+    viewModel { StatisticsViewModel() }
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
     viewModel { TripDetailPersonalViewModel() }
