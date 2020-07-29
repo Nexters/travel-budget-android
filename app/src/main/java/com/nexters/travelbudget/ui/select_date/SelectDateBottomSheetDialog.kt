@@ -18,15 +18,10 @@ class SelectDateBottomSheetDialog
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.rvDateList.adapter = SelectDateRVAdapter {
-            DLog.d(it)
-        }.apply {
-            add("2018.7.28")
-            add("2019.7.28")
-            add("2020.7.28")
-        }
-
         observeViewModel()
+        setupRecyclerView()
+
+        viewModel.addDateData()
     }
 
     private fun observeViewModel() {
@@ -34,6 +29,14 @@ class SelectDateBottomSheetDialog
             dismissEvent.observe(this@SelectDateBottomSheetDialog, Observer {
                 this@SelectDateBottomSheetDialog.dismiss()
             })
+        }
+    }
+
+    private fun setupRecyclerView() {
+        with(binding.rvDateList) {
+            adapter = SelectDateRVAdapter {
+                DLog.d(it)
+            }
         }
     }
 }
