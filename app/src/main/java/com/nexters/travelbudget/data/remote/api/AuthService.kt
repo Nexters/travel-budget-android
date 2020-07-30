@@ -14,7 +14,7 @@ import retrofit2.http.POST
  * @since v1.0.0 / 2020.07.22
  */
 
-interface ApiService {
+interface AuthService {
 
     @POST("api/kakao/signup")
     fun requestSignUp(@Body signUpRequest: SignUpRequest): Single<SignUpResponse>

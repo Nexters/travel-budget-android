@@ -1,6 +1,6 @@
 package com.nexters.travelbudget.data.remote.source
 
-import com.nexters.travelbudget.data.remote.api.ApiService
+import com.nexters.travelbudget.data.remote.api.AuthService
 import com.nexters.travelbudget.data.remote.model.response.UserTokenResponse
 import io.reactivex.Single
 
@@ -11,9 +11,9 @@ import io.reactivex.Single
  * @since v1.0.0 / 2020.07.25
  */
 
-class UserTokenRemoteDataSource(private val apiService: ApiService) {
+class UserTokenRemoteDataSource(private val authService: AuthService) {
 
     fun createUserToken(kakaoId: String): Single<UserTokenResponse> {
-        return apiService.createUserToken(hashMapOf("kakao_id" to kakaoId))
+        return authService.createUserToken(hashMapOf("kakao_id" to kakaoId))
     }
 }
