@@ -7,6 +7,7 @@ import com.nexters.travelbudget.data.remote.interceptor.AuthInterceptor
 import com.nexters.travelbudget.data.remote.model.enums.RetrofitQualifiers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -21,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
-    single { AuthInterceptor() }
+    single { AuthInterceptor(androidContext()) }
     single { provideAuthApi(get(qualifier = RetrofitQualifiers.DEFAULT)) }
     single { provideTripieApi(get(qualifier = RetrofitQualifiers.AUTH)) }
     single(RetrofitQualifiers.AUTH) { provideAuthOkHttpClient(get()) }
