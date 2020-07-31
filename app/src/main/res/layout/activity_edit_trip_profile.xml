@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -10,6 +11,149 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/toolbar_edit_trip_profile"
+                android:textColor="#000"
+                android:textSize="16sp"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_left"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            app:layout_constraintGuide_begin="24dp"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_right"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            app:layout_constraintGuide_end="24dp"
+            android:orientation="vertical"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_edit_notice"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:text="@string/text_edit_notice"
+            android:textSize="12sp"
+            android:textColor="@color/colorTextOrange"
+            android:background="@color/colorBackgroundOrange"
+            android:gravity="center"
+            android:layout_marginTop="28dp"
+            app:layout_constraintTop_toBottomOf="@id/tb_title"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trip_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_title"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_notice"/>
+        <com.nexters.travelbudget.utils.widget.TripEditText
+            android:id="@+id/et_trip_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_trip_title"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trip_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_date"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="14sp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/et_trip_title"/>
+        <com.nexters.travelbudget.utils.widget.TripEditText
+            android:id="@+id/et_trip_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_trip_date"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trip_shared_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_shared_budget"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="14sp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/et_trip_date"/>
+        <com.nexters.travelbudget.utils.widget.TripEditText
+            android:id="@+id/et_trip_shared_budget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_trip_shared_budget"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trip_personal_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_personal_budget"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="14sp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/et_trip_shared_budget"/>
+        <com.nexters.travelbudget.utils.widget.TripEditText
+            android:id="@+id/et_trip_personal_budget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_trip_personal_budget"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:text="@string/text_delete"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_button_round_black"
+            android:layout_marginBottom="31dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintEnd_toStartOf="@id/btn_submit"
+            app:layout_constraintBottom_toBottomOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_submit"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:text="@string/text_edit"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_button_round_blue"
+            app:layout_constraintStart_toEndOf="@id/btn_cancel"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintBottom_toBottomOf="@id/btn_cancel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

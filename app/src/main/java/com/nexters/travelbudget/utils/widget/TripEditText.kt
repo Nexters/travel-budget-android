@@ -13,7 +13,7 @@ class TripEditText @JvmOverloads constructor(
 ) : AppCompatEditText(context, attrs, defStyleAttr) {
     init {
         setBackgroundResource(R.drawable.bg_edit_text_underground_default)
-        setHintTextColor(resources.getColor(R.color.editTextDisabled, null))
+        setHintTextColor(resources.getColor(R.color.colorTextHint, null))
         setTextColor(resources.getColor(R.color.editTextActivated, null))
         onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             with(v as EditText) {
