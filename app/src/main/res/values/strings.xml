@@ -12,4 +12,10 @@
     <string name="text_delete">삭제하기</string>
     <string name="text_edit">수정하기</string>
     <!---->
+
+    <!-- bottom_sheet_selected_date -->
+    <string name="date_record_title">지출 기록하기</string>
+    <string name="date_ready">준비</string>
+    <!---->
+
 </resources>
