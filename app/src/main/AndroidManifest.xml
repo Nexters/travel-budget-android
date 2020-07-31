@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.detail.TripDetailActivity" />
+        <activity android:name=".ui.edit_trip_profile.EditTripProfileActivity" />
     </application>
 
 </manifest>
