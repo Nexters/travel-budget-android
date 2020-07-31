@@ -6,4 +6,21 @@
     <string name="connection_failed">연결에 실패했습니다.\n잠시 후 다시 시도해주세요.</string>
 
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
+    <string name="detail_shared_title">오늘의 공용 여행비</string>
+
+    <!-- edit trip profile -->
+    <string name="toolbar_edit_trip_profile">여행 프로필 편집</string>
+    <string name="text_edit_notice">폴더 정보는 여행방을 만든 사람만 수정할 수 있습니다</string>
+    <string name="text_title">타이틀</string>
+    <string name="text_date">날짜</string>
+    <string name="text_shared_budget">공용 예산</string>
+    <string name="text_personal_budget">개인 예산</string>
+    <string name="text_delete">삭제하기</string>
+    <string name="text_edit">수정하기</string>
+    <!---->
+
+    <!-- bottom_sheet_selected_date -->
+    <string name="date_record_title">지출 기록하기</string>
+    <string name="date_ready">준비</string>
+
 </resources>
