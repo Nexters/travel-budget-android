@@ -16,7 +16,7 @@ import org.koin.dsl.module
 
 /** 뷰모델 모듈(DI) 설정 */
 val viewModelModule = module {
-    viewModel { SplashViewModel() }
+    viewModel { SplashViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get(), get())
     }

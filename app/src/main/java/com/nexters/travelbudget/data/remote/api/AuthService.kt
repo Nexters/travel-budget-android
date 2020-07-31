@@ -21,4 +21,7 @@ interface AuthService {
 
     @POST("api/auth/token/create")
     fun createUserToken(@Body data: HashMap<String, String>): Single<UserTokenResponse>
+
+    @POST("api/auth/token/refresh")
+    fun refreshToken(@Body data: HashMap<String, String>): Single<UserTokenResponse>
 }

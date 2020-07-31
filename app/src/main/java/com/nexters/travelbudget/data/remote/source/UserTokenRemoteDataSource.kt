@@ -16,4 +16,8 @@ class UserTokenRemoteDataSource(private val authService: AuthService) {
     fun createUserToken(kakaoId: String): Single<UserTokenResponse> {
         return authService.createUserToken(hashMapOf("kakao_id" to kakaoId))
     }
+
+    fun refreshUserToken(refreshToken: String): Single<UserTokenResponse> {
+        return authService.refreshToken(hashMapOf("refresh_token" to refreshToken))
+    }
 }

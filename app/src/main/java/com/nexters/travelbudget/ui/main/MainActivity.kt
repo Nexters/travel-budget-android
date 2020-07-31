@@ -17,8 +17,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     }
 
     companion object {
-        fun startActivity(context: Context) {
-            context.startActivity(Intent(context, MainActivity::class.java))
+        fun getIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 }

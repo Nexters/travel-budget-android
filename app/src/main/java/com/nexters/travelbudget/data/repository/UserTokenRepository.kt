@@ -22,4 +22,14 @@ class UserTokenRepository(
             userTokenLocalDataSource.saveUserTokenToSharedPrefs(it)
         }
     }
+
+    fun refreshUserToken(refreshToken: String): Single<UserTokenResponse> {
+        return userTokenRemoteDataSource.refreshUserToken(refreshToken).doOnSuccess {
+            userTokenLocalDataSource.saveUserTokenToSharedPrefs(it)
+        }
+    }
+
+    fun getUserToken() = userTokenLocalDataSource.getUserTokenToSharedPrefs()
+
+    fun deleteUserToken() = userTokenLocalDataSource.deleteUserToken()
 }

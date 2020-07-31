@@ -1,10 +1,15 @@
 package com.nexters.travelbudget.ui.splash
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivitySplashBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
+import com.nexters.travelbudget.ui.login.LoginActivity
+import com.nexters.travelbudget.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -19,6 +24,8 @@ class SplashActivity :
 
     override val viewModel: SplashViewModel by viewModel()
 
+    private val handler = Handler()
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
@@ -29,6 +36,33 @@ class SplashActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO 토큰 체크 및 화면 전환
+        viewModel.checkUserToken()
+
+        viewModel.startLogin.observe(this, Observer {
+            goToLoginActivity()
+        })
+        viewModel.startMain.observe(this, Observer {
+            goToMainActivity()
+        })
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
+    }
+
+    private fun goToMainActivity() {
+        setIntentHandler(MainActivity.getIntent(this))
+    }
+
+    private fun goToLoginActivity() {
+        setIntentHandler(LoginActivity.getIntent(this))
+    }
+
+    private fun setIntentHandler(intent: Intent) {
+        handler.postDelayed({
+            startActivity(intent)
+            finish()
+        }, 1500)
     }
 }

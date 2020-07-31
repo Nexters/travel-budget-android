@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -36,7 +37,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         super.onCreate(savedInstanceState)
 
         viewModel.startMain.observe(this, Observer {
-            MainActivity.startActivity(this)
+            startActivity(MainActivity.getIntent(this))
         })
 
         viewModel.reStartLogin.observe(this, Observer {
@@ -61,5 +62,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         }
         finish()
         startActivity(intent)
+    }
+
+    companion object {
+        fun getIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
     }
 }
