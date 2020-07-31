@@ -16,7 +16,7 @@ class TripDetailViewModel : BaseViewModel() {
     private val _toPersonal = SingleLiveEvent<Unit>()
     val toPersonal = _toPersonal
 
-    fun toShared() { // 이렇게 두번의 과정을 거쳐야하나
+    fun toShared() {
         _toShared.call()
     }
 

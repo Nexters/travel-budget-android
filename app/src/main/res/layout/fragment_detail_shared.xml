@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +33,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="24dp"
             />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_detail_shared_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:addAll="@{vm.newDetailSharedList}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_shared_total_money"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

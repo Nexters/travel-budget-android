@@ -62,7 +62,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/btn_detail_action"
+            android:id="@+id/ll_detail_action"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
@@ -90,6 +90,80 @@
                 android:text="개인" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_detail_total_money_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="여행 총 예산"
+            app:layout_constraintTop_toBottomOf="@id/ll_detail_action"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="25dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/tv_detail_total_money_title"
+            android:id="@+id/tv_detail_total_money"
+            app:layout_constraintTop_toBottomOf="@id/ll_detail_action"
+            android:layout_marginLeft="4dp"
+            android:text="2,000,000원"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:id="@+id/iv_detail_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_total_money"
+            android:layout_marginTop="67dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_detail_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="3dp"
+            android:text="지출을 기록해주세요!"
+            android:textColor="@color/colorFillGrey"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:id="@+id/tv_require_write"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_detail_remain_money"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_require_write"
+            android:text="1,600,000원"
+            android:textSize="27dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorFillGrey"
+            />
+
+        <View
+            android:id="@+id/v_divide_section"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@drawable/ic_rectangle"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_remain_money"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            />
+
         <FrameLayout
             android:id="@+id/fl_detail_fragment"
             android:layout_width="0dp"
@@ -97,7 +171,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_detail_action"
+            app:layout_constraintTop_toBottomOf="@id/v_divide_section"
             app:layout_constraintRight_toRightOf="parent"/>
 
         <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
@@ -108,7 +182,7 @@
             android:layout_marginBottom="28dp"
             android:text="지출입력"
             android:textColor="@color/colorWhite"
-            app:fabColor="#2b2b2b"
+            app:fabColor="@color/colorFillBlue"
             app:fabSizes="mini"
             app:fabType="roundedSquare"
             app:layout_constraintBottom_toBottomOf="parent"
