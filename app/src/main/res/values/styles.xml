@@ -9,7 +9,7 @@
         <item name="toolbarStyle">@style/ToolbarStyle</item>
         <item name="android:statusBarColor">@android:color/white</item>
         <item name="colorControlHighlight">@color/colorRippleEffect</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:windowLightStatusBar">true</item>
         <!--custom font-family 적용-->
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>

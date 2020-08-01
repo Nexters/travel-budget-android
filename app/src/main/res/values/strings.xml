@@ -8,6 +8,9 @@
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
     <string name="detail_shared_title">오늘의 공용 여행비</string>
 
+    <!-- login -->
+    <string name="text_kakao_login">카카오 로그인</string>
+
     <!-- edit trip profile -->
     <string name="toolbar_edit_trip_profile">여행 프로필 편집</string>
     <string name="text_edit_notice">폴더 정보는 여행방을 만든 사람만 수정할 수 있습니다</string>
