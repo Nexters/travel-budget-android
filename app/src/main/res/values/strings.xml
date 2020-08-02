@@ -20,10 +20,16 @@
     <string name="text_personal_budget">개인 예산</string>
     <string name="text_delete">삭제하기</string>
     <string name="text_edit">수정하기</string>
-    <!---->
 
     <!-- bottom_sheet_selected_date -->
     <string name="date_record_title">지출 기록하기</string>
     <string name="date_ready">준비</string>
+
+    <!-- record_spend -->
+    <string name="record_spend_title">지출 기록하기</string>
+    <string name="text_shared">공용</string>
+    <string name="text_personal">개인</string>
+    <string name="spend_detail_hint">지출한 내용을 입력해주세요 (최대 10글자)</string>
+    <string name="text_record_submit">기록하기</string>
 
 </resources>
