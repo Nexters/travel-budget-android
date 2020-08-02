@@ -4,6 +4,22 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <!-- style_guide -->
+    <color name="fill_blue">#336ee8</color>
+    <color name="fill_blue_2">#4e88ff</color>
+    <color name="fill_blue_3">#629aff</color>
+    <color name="fill_blue_4">#79b0fb</color>
+    <color name="fill_blue_5">#95c4ff</color>
+    <color name="fill_blue_6">#b8d6ff</color>
+    <color name="fill_blue_7">#d5e6ff</color>
+    <color name="fill_blue_8">#e6edfc</color>
+    <color name="fill_light_grey">#eeeeee</color>
+    <color name="rectangle_style">#f5f5f5</color>
+    <color name="fill_grey_1">#131415</color>
+    <color name="fill_orange_2">#ffece4</color>
+    <color name="black">#2b2b2b</color>
+    <!---->
+
     <color name="colorRippleEffect">#1F000000</color>
 
     <color name="colorBlack">#000000</color>
