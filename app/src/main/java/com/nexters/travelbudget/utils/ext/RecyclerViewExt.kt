@@ -3,7 +3,10 @@ package com.nexters.travelbudget.utils.ext
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.ui.base.adapter.BaseRVAdapter
+import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
+import com.nexters.travelbudget.utils.DLog
 
 /**
  * RecyclerView 관련 Extension methods
@@ -31,4 +34,13 @@ fun RecyclerView.replaceAllItems(items: List<Any>?) {
 @BindingAdapter("submitList")
 fun RecyclerView.submitList(items: List<Any>?) {
     (adapter as? ListAdapter<Any, *>)?.submitList(items)
+}
+
+@Suppress("UNCHECKED_CAST")
+@BindingAdapter("notifySelectSpendCategoryItem")
+fun RecyclerView.notifySelectSpendCategoryItem(pair: Pair<Pair<SpendCategoryModel, Int>, Pair<SpendCategoryModel, Int>>?) {
+    pair?.let {
+        (adapter as? SpendCategoryRVAdapter)?.updateItem(it.first.first, it.first.second)
+        (adapter as? SpendCategoryRVAdapter)?.updateItem(it.second.first, it.second.second)
+    }
 }

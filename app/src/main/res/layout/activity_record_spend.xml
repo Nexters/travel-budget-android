@@ -79,6 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="39.5dp"
             android:orientation="horizontal"
+            app:addAll="@{vm.spendCategoryList}"
+            app:notifySelectSpendCategoryItem="@{vm.notifySelectedCategoryItem}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="@id/guide_left"
             app:layout_constraintEnd_toEndOf="parent"
