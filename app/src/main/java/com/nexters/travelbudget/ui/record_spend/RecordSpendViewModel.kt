@@ -37,6 +37,9 @@ class RecordSpendViewModel : BaseViewModel() {
     private val _selectedTime = MutableLiveData<String>()
     val selectedTime: LiveData<String> get() = _selectedTime
 
+    private val _isShared = MutableLiveData(true)
+    val isShared: LiveData<Boolean> get() = _isShared
+
     val selectDateEvent = SingleLiveEvent<Unit>()
     val selectTimeEvent = SingleLiveEvent<Unit>()
 
@@ -75,5 +78,9 @@ class RecordSpendViewModel : BaseViewModel() {
 
     fun setTime(value: String) {
         _selectedTime.value = value
+    }
+
+    fun selectShared(b: Boolean) {
+        _isShared.value = b
     }
 }
