@@ -102,7 +102,9 @@
             android:layout_marginTop="36dp"
             android:textSize="14sp"
             tools:text="2020.7.26"
+            android:text="@{vm.selectedDate}"
             android:focusableInTouchMode="false"
+            android:onClick="@{() -> vm.selectDate()}"
             app:layout_constraintStart_toStartOf="@id/guide_left"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintTop_toBottomOf="@id/et_spend_explain"/>
@@ -113,7 +115,9 @@
             android:layout_marginTop="36dp"
             android:textSize="14sp"
             tools:text="16:45"
+            android:text="@{vm.selectedTime}"
             android:focusableInTouchMode="false"
+            android:onClick="@{() -> vm.selectTime()}"
             app:layout_constraintStart_toStartOf="@id/guide_left"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintTop_toBottomOf="@id/et_spend_date"/>

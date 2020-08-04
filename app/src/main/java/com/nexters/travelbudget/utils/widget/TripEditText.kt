@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.updatePadding
@@ -12,11 +13,14 @@ import com.nexters.travelbudget.R
 class TripEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = R.attr.editTextStyle
 ) : AppCompatEditText(context, attrs, defStyleAttr) {
     init {
-        updatePadding(
-            bottom = TypedValue.applyDimension(
+        setPadding(
+            0,
+            0,
+            0,
+            TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 12f,
                 resources.displayMetrics

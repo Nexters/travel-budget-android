@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.model.enums.SpendCategoryEnum
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import kotlin.collections.ArrayList
 
 class RecordSpendViewModel : BaseViewModel() {
@@ -30,6 +31,15 @@ class RecordSpendViewModel : BaseViewModel() {
     val notifySelectedCategoryItem: LiveData<Pair<Pair<SpendCategoryModel, Int>, Pair<SpendCategoryModel, Int>>>
         get() = _notifySelectedCategoryItem
 
+    private val _selectedDate = MutableLiveData<String>()
+    val selectedDate: LiveData<String> get() = _selectedDate
+
+    private val _selectedTime = MutableLiveData<String>()
+    val selectedTime: LiveData<String> get() = _selectedTime
+
+    val selectDateEvent = SingleLiveEvent<Unit>()
+    val selectTimeEvent = SingleLiveEvent<Unit>()
+
     private var latestClicked = 0
 
     fun categoryItemClick(spendCategory: SpendCategoryModel) {
@@ -49,5 +59,21 @@ class RecordSpendViewModel : BaseViewModel() {
                 break
             }
         }
+    }
+
+    fun selectDate() {
+        selectDateEvent.call()
+    }
+
+    fun selectTime() {
+        selectTimeEvent.call()
+    }
+
+    fun setDate(value: String) {
+        _selectedDate.value = value
+    }
+
+    fun setTime(value: String) {
+        _selectedTime.value = value
     }
 }

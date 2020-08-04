@@ -9,6 +9,8 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityRecordSpendBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
+import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
+import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.round
@@ -21,7 +23,25 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.setDate("2020.8.4")
+        viewModel.setTime("15:14")
+        observeViewModel()
         setupSpendCategoryRV()
+    }
+
+    private fun observeViewModel() {
+        with(viewModel) {
+            selectDateEvent.observe(this@RecordSpendActivity, Observer {
+                SelectDateBottomSheetDialog {
+                    setDate(it)
+                }.show(supportFragmentManager, "")
+            })
+            selectTimeEvent.observe(this@RecordSpendActivity, Observer {
+                TimePickerDialogFragment {
+                    setTime(it)
+                }.show(supportFragmentManager, "")
+            })
+        }
     }
 
     private fun setupSpendCategoryRV() {
