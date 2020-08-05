@@ -49,6 +49,13 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                     setTime(it)
                 }.show(supportFragmentManager, "")
             })
+            spendExplain.observe(this@RecordSpendActivity, Observer {
+                checkComplete()
+            })
+
+            spendAmount.observe(this@RecordSpendActivity, Observer {
+                checkComplete()
+            })
         }
     }
 

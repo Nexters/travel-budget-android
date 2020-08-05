@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.model.enums.SpendCategoryEnum
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import java.text.DecimalFormat
@@ -40,8 +41,7 @@ class RecordSpendViewModel : BaseViewModel() {
     private val _spendAmount = MutableLiveData<String>()
     val spendAmount: LiveData<String> get() = _spendAmount
 
-    private val _spendExplain = MutableLiveData<String>()
-    val spendExplain: LiveData<String> get() = _spendExplain
+    val spendExplain = MutableLiveData<String>()
 
     private val _selectedDate = MutableLiveData<String>()
     val selectedDate: LiveData<String> get() = _selectedDate
@@ -56,8 +56,11 @@ class RecordSpendViewModel : BaseViewModel() {
     val selectTimeEvent = SingleLiveEvent<Unit>()
 
     private var latestClicked = 0
+    private var selectedCategory: String? = null
 
     fun categoryItemClick(spendCategory: SpendCategoryModel) {
+        selectedCategory = spendCategory.title
+
         val values = SpendCategoryEnum.values()
         for (i in values.indices) {
             if (spendCategory.title == values[i].title) {
@@ -74,6 +77,7 @@ class RecordSpendViewModel : BaseViewModel() {
                 break
             }
         }
+        checkComplete()
     }
 
     fun setSpendAmount(value: String) {
@@ -101,6 +105,22 @@ class RecordSpendViewModel : BaseViewModel() {
     }
 
     fun checkComplete() {
+        DLog.d("")
+        val amount = spendAmount.value
+        val explain = spendExplain.value
 
+        _isActivated.value = !amount.isNullOrEmpty() && !selectedCategory.isNullOrEmpty() && !explain.isNullOrEmpty()
+    }
+
+    fun recordSpend() {
+        if (isActivated.value == true) {
+            val type = if (isShared.value == true) {
+                "공용"
+            } else {
+                "개인"
+            }
+
+            liveToastMessage.value = "$type, ${spendAmount.value}원, ${selectedCategory}, ${spendExplain.value}"
+        }
     }
 }
