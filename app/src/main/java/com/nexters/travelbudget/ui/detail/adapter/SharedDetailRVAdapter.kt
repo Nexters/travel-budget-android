@@ -13,10 +13,9 @@ import java.util.*
 
 class SharedDetailRVAdapter : BaseRVAdapter<DetailSharedData>() {
     override fun onBindView(binding: ViewDataBinding, viewHolder: BaseItemVH, item: DetailSharedData) {
-        with(binding as FragmentDetailSharedBinding) {
-            tvDetailSharedTitle.text = item.title
-            tvDetailSharedTotalMoney.text = String.format(Locale.KOREA, "-%s원", item.money) // toMoneyString
-
+        with(binding as ItemSharedDetailMoneyListBinding) {
+            tvDetailSharedItemTitle.text = item.title
+            tvDetailSharedItemMoney.text = String.format(Locale.KOREA, "-%s원", item.money) // toMoneyString
         }
     }
 

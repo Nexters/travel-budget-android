@@ -3,30 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_detail_shared_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="식비"
-            android:textSize="16sp"
-            android:textColor="#757575"
-            android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_detail_shared_item_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="525,100원"
-            android:textSize="20sp"
-            android:textColor="#000"
+        <View
+            android:id="@+id/v_detail_shared_view"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/ic_rectangle_border"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/v_detail_shared_view"
+            app:layout_constraintLeft_toLeftOf="@id/v_detail_shared_view"
+            app:layout_constraintRight_toRightOf="@id/v_detail_shared_view"
+            app:layout_constraintTop_toTopOf="@id/v_detail_shared_view">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_detail_shared_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_snack"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_detail_shared_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/colorFillGrey1"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@id/iv_detail_shared_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="식비" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_detail_shared_item_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:textColor="@color/colorFillGrey1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="525,100원" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

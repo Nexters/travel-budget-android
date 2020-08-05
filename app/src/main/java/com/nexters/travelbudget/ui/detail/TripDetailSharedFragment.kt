@@ -22,13 +22,6 @@ class TripDetailSharedFragment() : BaseFragment<FragmentDetailSharedBinding, Tri
     }
 
     private fun observeViewModel() {
-        with(viewModel) {
-            newDetailSharedList.observe(this@TripDetailSharedFragment, Observer {
-                for (pie in it) {
-                    binding.rvDetailSharedList.addData(pie)
-                }
-            })
-        }
     }
 
     private fun setupDetailSharedRV() {

@@ -16,9 +16,6 @@ class TripDetailSharedViewModel : BaseViewModel() {
     fun addData() {
         val dataList = getData()
         _newDetailSharedList.value = dataList
-
-//        _newDetailSharedList.value = dataList
-//        _detailSharedMoney.value = ?
     }
 
     private fun getData(): ArrayList<DetailSharedData> {
