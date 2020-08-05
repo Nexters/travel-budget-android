@@ -26,4 +26,8 @@
     <string name="date_record_title">지출 기록하기</string>
     <string name="date_ready">준비</string>
 
+
+    <!-- main -->
+    <string name="travel_to_record">기록할 여행</string>
+    <string name="a_trip">다녀온 여행</string>
 </resources>

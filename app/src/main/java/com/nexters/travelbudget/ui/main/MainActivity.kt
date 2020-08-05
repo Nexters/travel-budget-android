@@ -16,12 +16,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.toTest.observe(this@MainActivity, Observer {
-            if (it) {
-                startActivity(Intent(applicationContext, TripDetailActivity::class.java))
-            }
-        })
     }
 
     companion object {

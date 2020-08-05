@@ -23,6 +23,20 @@
     <color name="colorButtonBlack">#2b2b2b</color>
     <color name="colorButtonGray">#eeeeee</color>
 
+    <color name="fill_blue">#336ee8</color>
+    <color name="fill_blue_2">#4e88ff</color>
+    <color name="fill_blue_3">#629aff</color>
+    <color name="fill_blue_4">#79b0fb</color>
+    <color name="fill_blue_5">#95c4ff</color>
+    <color name="fill_blue_6">#b8d6ff</color>
+    <color name="fill_blue_7">#d5e6ff</color>
+    <color name="fill_blue_8">#e6edfc</color>
+    <color name="fill_orange">#ff7935</color>
+    <color name="fill_orange_2">#ffece4</color>
+    <color name="fill_grey_1">#2b2b2b</color>
+    <color name="fill_grey_2">#9e9e9e</color>
+    <color name="fill_grey_3">#e0e0e0</color>
+    <color name="fill_light_grey">#eeeeee</color>
 
     <color name="colorKakaoButton">#fee500</color>
 </resources>
