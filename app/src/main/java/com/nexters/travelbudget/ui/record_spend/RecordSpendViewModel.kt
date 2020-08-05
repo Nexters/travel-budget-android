@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.model.enums.SpendCategoryEnum
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
+import java.text.DecimalFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 class RecordSpendViewModel : BaseViewModel() {
@@ -31,14 +34,23 @@ class RecordSpendViewModel : BaseViewModel() {
     val notifySelectedCategoryItem: LiveData<Pair<Pair<SpendCategoryModel, Int>, Pair<SpendCategoryModel, Int>>>
         get() = _notifySelectedCategoryItem
 
+    private val _isShared = MutableLiveData(true)
+    val isShared: LiveData<Boolean> get() = _isShared
+
+    private val _spendAmount = MutableLiveData<String>()
+    val spendAmount: LiveData<String> get() = _spendAmount
+
+    private val _spendExplain = MutableLiveData<String>()
+    val spendExplain: LiveData<String> get() = _spendExplain
+
     private val _selectedDate = MutableLiveData<String>()
     val selectedDate: LiveData<String> get() = _selectedDate
 
     private val _selectedTime = MutableLiveData<String>()
     val selectedTime: LiveData<String> get() = _selectedTime
 
-    private val _isShared = MutableLiveData(true)
-    val isShared: LiveData<Boolean> get() = _isShared
+    private val _isActivated = MutableLiveData(false)
+    val isActivated: LiveData<Boolean> get() = _isActivated
 
     val selectDateEvent = SingleLiveEvent<Unit>()
     val selectTimeEvent = SingleLiveEvent<Unit>()
@@ -64,6 +76,10 @@ class RecordSpendViewModel : BaseViewModel() {
         }
     }
 
+    fun setSpendAmount(value: String) {
+        _spendAmount.value = value
+    }
+
     fun selectDate() {
         selectDateEvent.call()
     }
@@ -82,5 +98,9 @@ class RecordSpendViewModel : BaseViewModel() {
 
     fun selectShared(b: Boolean) {
         _isShared.value = b
+    }
+
+    fun checkComplete() {
+
     }
 }
