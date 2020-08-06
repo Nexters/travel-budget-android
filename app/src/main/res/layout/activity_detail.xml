@@ -18,33 +18,42 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_detail"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                />
             
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
                 android:layout_gravity="end">
-                
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:goneIf="@{isPersonal}"
-                    android:src="@drawable/ic_launcher_background"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:src="@drawable/ic_launcher_background"/>
+                    android:src="@drawable/ic_invite"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"/>
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/ic_pie"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="24dp"
+                    android:src="@drawable/ic_edit"/>
                 
                 
             </LinearLayout>
@@ -54,18 +63,20 @@
             android:id="@+id/tv_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="28dp"
             android:text="@{vm.detailTitle}"
             android:textColor="@color/colorBlack"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tb_detail"/>
 
         <LinearLayout
             android:id="@+id/ll_detail_action"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -73,33 +84,73 @@
 
             <Button
                 android:id="@+id/btn_detail_shared"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:background="@color/colorWhite"
+                android:textStyle="bold"
                 android:onClick="@{() -> vm.toShared()}"
                 android:text="공용" />
 
             <Button
                 android:id="@+id/btn_detail_personal"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:background="@color/colorWhite"
+                android:textStyle="bold"
                 android:onClick="@{() -> vm.toPersonal()}"
                 android:text="개인" />
         </LinearLayout>
+
+        <View
+            android:id="@+id/v_detail_required_money"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:background="@drawable/ic_rectangle_detail"
+            app:layout_constraintTop_toBottomOf="@id/ll_detail_action"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            />
+
+        <TextView
+            android:text="여행 중 하루 권장 지출 금액"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/v_detail_required_money"
+            app:layout_constraintBottom_toBottomOf="@id/v_detail_required_money"
+            app:layout_constraintLeft_toLeftOf="@id/v_detail_required_money"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/colorGrey3"
+            />
+
+        <TextView
+            android:text="약 200,185원"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/v_detail_required_money"
+            app:layout_constraintBottom_toBottomOf="@id/v_detail_required_money"
+            app:layout_constraintRight_toRightOf="@id/v_detail_required_money"
+            android:layout_marginRight="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorGrey3"
+
+            />
 
         <TextView
             android:id="@+id/tv_detail_total_money_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="여행 총 예산"
-            app:layout_constraintTop_toBottomOf="@id/ll_detail_action"
+            app:layout_constraintTop_toBottomOf="@id/v_detail_required_money"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
             android:textColor="@color/colorBlack"
-            android:textSize="16dp"
+            android:textSize="16sp"
             />
 
         <TextView
@@ -107,12 +158,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/tv_detail_total_money_title"
             android:id="@+id/tv_detail_total_money"
-            app:layout_constraintTop_toBottomOf="@id/ll_detail_action"
+            app:layout_constraintTop_toBottomOf="@id/v_detail_required_money"
             android:layout_marginLeft="4dp"
             android:text="2,000,000원"
             android:textColor="@color/colorBlack"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_marginTop="20dp"
             />
 
         <ImageView
@@ -121,7 +173,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_illus"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_total_money"
             android:layout_marginTop="67dp"
             />
@@ -132,10 +184,10 @@
             app:layout_constraintTop_toBottomOf="@id/iv_detail_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="4dp"
             android:text="지출을 기록해주세요!"
             android:textColor="@color/colorFillGrey"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:id="@+id/tv_require_write"
             />
@@ -148,9 +200,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_require_write"
             android:text="1,600,000원"
-            android:textSize="27dp"
+            android:textSize="27sp"
             android:textStyle="bold"
             android:textColor="@color/colorFillGrey"
+            />
+
+        <TextView
+            android:id="@+id/tv_remain_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="남았어요"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_remain_money"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/colorFillGrey1"
+            android:textSize="12sp"
             />
 
         <View
@@ -158,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="12dp"
             android:background="@drawable/ic_rectangle"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_remain_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_remain_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="24dp"
@@ -182,6 +246,7 @@
             android:layout_marginBottom="28dp"
             android:text="지출입력"
             android:textColor="@color/colorWhite"
+            app:layout_constraintCircleRadius="21.5dp"
             app:fabColor="@color/colorFillBlue"
             app:fabSizes="mini"
             app:fabType="roundedSquare"
