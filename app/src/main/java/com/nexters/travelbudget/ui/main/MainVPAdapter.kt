@@ -3,8 +3,8 @@ package com.nexters.travelbudget.ui.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.nexters.travelbudget.ui.main.record.TripRecordedFragment
-import com.nexters.travelbudget.ui.main.record.TripRecordingFragment
+import com.nexters.travelbudget.ui.main.record.RecordedTravelFragment
+import com.nexters.travelbudget.ui.main.record.RecordingTravelFragment
 
 /**
  * 메인 viewpager 탭 adapter
@@ -19,8 +19,8 @@ class MainVPAdapter(
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> TripRecordingFragment.newInstance()
-            else -> TripRecordedFragment.newInstance()
+            0 -> RecordingTravelFragment.newInstance()
+            else -> RecordedTravelFragment.newInstance()
         }
     }
 
