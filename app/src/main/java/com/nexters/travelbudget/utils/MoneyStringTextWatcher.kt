@@ -5,6 +5,12 @@ import android.text.TextWatcher
 import android.widget.EditText
 import com.nexters.travelbudget.utils.ext.toMoneyString
 
+/**
+ * EditText에 작성한 숫자를 DecimalFormat으로 변환
+ *
+ * author: AKMUNNY
+ */
+
 class MoneyStringTextWatcher(
     private val et: EditText,
     private val onReplaced: (String) -> Unit

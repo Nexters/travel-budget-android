@@ -3,6 +3,12 @@ package com.nexters.travelbudget.model.enums
 import androidx.annotation.DrawableRes
 import com.nexters.travelbudget.R
 
+/**
+ * 카테고리 이름과 리소스 관리를 위한 enum
+ *
+ * author: AKMUNNY
+ */
+
 enum class SpendCategoryEnum(
     val title: String,
     @DrawableRes val defaultRes: Int,
