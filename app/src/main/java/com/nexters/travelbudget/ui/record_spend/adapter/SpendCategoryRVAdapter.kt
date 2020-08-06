@@ -27,6 +27,11 @@ class SpendCategoryRVAdapter(
                     root.resources.getColor(R.color.colorTextHint, null)
                 }
             )
+            if (item.isSelect) {
+                ivIcon.setBackgroundResource(R.drawable.bg_circle_fill_blue_8)
+            } else {
+                ivIcon.background = null
+            }
         }
     }
 

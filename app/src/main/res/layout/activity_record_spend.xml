@@ -92,10 +92,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="39.5dp"
             android:orientation="horizontal"
+            android:layout_marginStart="16dp"
             app:addAll="@{vm.spendCategoryList}"
             app:notifySelectSpendCategoryItem="@{vm.notifySelectedCategoryItem}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_spend_amount"/>
         <com.nexters.travelbudget.utils.widget.TripEditText

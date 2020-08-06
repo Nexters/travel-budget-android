@@ -10,6 +10,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             tools:src="@drawable/ic_snack_default_32dp"/>
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"
@@ -18,7 +19,7 @@
             tools:text="간식"
             android:textSize="12sp"
             android:textColor="@color/colorTextHint"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="2dp"/>
 
     </LinearLayout>
 </layout>

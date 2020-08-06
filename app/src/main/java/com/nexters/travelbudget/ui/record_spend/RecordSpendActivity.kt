@@ -84,13 +84,13 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                         val dp = if (position != itemCount - 1) {
                             TypedValue.applyDimension(
                                 TypedValue.COMPLEX_UNIT_DIP,
-                                20f,
+                                16f,
                                 resources.displayMetrics
                             )
                         } else {
                             TypedValue.applyDimension(
                                 TypedValue.COMPLEX_UNIT_DIP,
-                                24f,
+                                16f,
                                 resources.displayMetrics
                             )
                         }
