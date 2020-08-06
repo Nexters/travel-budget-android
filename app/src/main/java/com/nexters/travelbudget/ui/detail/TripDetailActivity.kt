@@ -23,12 +23,14 @@ class TripDetailActivity :
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fl_detail_fragment, TripDetailSharedFragment.newInstance())
         fragmentTransaction.commit()
+        binding.isPersonal = false
 
         //버튼 클릭 이벤트 - 프래그먼트를 교체
         viewModel.toShared.observe(this@TripDetailActivity, Observer {
             supportFragmentManager.beginTransaction().also {
                 it.replace(R.id.fl_detail_fragment, TripDetailSharedFragment.newInstance())
                 it.commit()
+                binding.isPersonal = false
             }
         })
 
@@ -36,6 +38,7 @@ class TripDetailActivity :
             supportFragmentManager.beginTransaction().also {
                 it.replace(R.id.fl_detail_fragment, TripDetailPersonalFragment.newInstance())
                 it.commit()
+                binding.isPersonal = true
             }
         })
 
