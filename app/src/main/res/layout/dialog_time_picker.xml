@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="시간 선택"
-        android:textColor="@color/black"
+        android:textColor="@color/fill_grey_1"
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginStart="16dp"

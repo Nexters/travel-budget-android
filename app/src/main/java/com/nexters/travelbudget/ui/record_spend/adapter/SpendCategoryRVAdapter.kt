@@ -22,7 +22,7 @@ class SpendCategoryRVAdapter(
             tvName.text = item.title
             tvName.setTextColor(
                 if (item.isSelect) {
-                    root.resources.getColor(R.color.black, null)
+                    root.resources.getColor(R.color.fill_grey_1, null)
                 } else {
                     root.resources.getColor(R.color.colorTextHint, null)
                 }

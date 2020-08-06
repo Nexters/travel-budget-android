@@ -10,7 +10,7 @@ fun TextView.isSelected(b: Boolean) {
         setTextColor(resources.getColor(R.color.fill_blue, null))
         setBackgroundResource(R.drawable.bg_blue_radius_20dp)
     } else {
-        setTextColor(resources.getColor(R.color.black, null))
+        setTextColor(resources.getColor(R.color.fill_grey_1, null))
         background = null
     }
 }
