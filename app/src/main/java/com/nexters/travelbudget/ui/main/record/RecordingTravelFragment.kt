@@ -2,6 +2,8 @@ package com.nexters.travelbudget.ui.main.record
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRecordingTravelBinding
@@ -21,9 +23,23 @@ class RecordingTravelFragment :
 
     override val viewModel: MainViewModel by sharedViewModel()
 
+    private var isFirstExecution = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setSwipeRefreshLayout()
+
+        viewModel.startCreateRoom.observe(this, Observer {
+            Toast.makeText(context, "여행 만들기", Toast.LENGTH_LONG).show()
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirstExecution) {
+            isFirstExecution = false
+            viewModel.getTripRecordData(true)
+        }
     }
 
     private fun setSwipeRefreshLayout() {
