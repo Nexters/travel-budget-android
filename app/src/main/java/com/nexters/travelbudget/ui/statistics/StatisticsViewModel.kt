@@ -25,8 +25,8 @@ class StatisticsViewModel : BaseViewModel() {
         for (pie in dataList) {
             totalSpend += pie.value
         }
-        _spendAmount.value = "${totalSpend.toMoneyString()}원"
-        _totalBudget.value = "${3000000.toMoneyString()}원"
+        _spendAmount.value = totalSpend.toMoneyString()
+        _totalBudget.value = 3000000.toMoneyString()
     }
 
     private fun getData(): ArrayList<PieData> {

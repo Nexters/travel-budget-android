@@ -10,6 +10,9 @@
 
     <string name="money_unit">원</string>
 
+    <string name="text_shared">공용</string>
+    <string name="text_personal">개인</string>
+
     <!-- login -->
     <string name="text_kakao_login">카카오 로그인</string>
 
@@ -22,6 +25,7 @@
     <string name="text_personal_budget">개인 예산</string>
     <string name="text_delete">삭제하기</string>
     <string name="text_edit">수정하기</string>
+    <!---->
 
     <!-- bottom_sheet_selected_date -->
     <string name="date_record_title">지출 기록하기</string>
@@ -29,9 +33,12 @@
 
     <!-- record_spend -->
     <string name="record_spend_title">지출 기록하기</string>
-    <string name="text_shared">공용</string>
-    <string name="text_personal">개인</string>
     <string name="spend_detail_hint">지출한 내용을 입력해주세요 (최대 10글자)</string>
     <string name="text_record_submit">기록하기</string>
+
+    <!-- statistics -->
+    <string name="toolbar_statistics">통계</string>
+    <string name="total_budget">총 예산 %s원 중</string>
+    <string name="spend_budget">%s원</string>
 
 </resources>
