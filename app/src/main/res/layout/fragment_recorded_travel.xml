@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.nexters.travelbudget.ui.main.MainViewModel" />
+            type="com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel" />
 
     </data>
 
@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:refreshing="@{vm.isLoading}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -65,7 +66,7 @@
                     android:id="@+id/rv_recorded_travel"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:invisibleIf="@{vm.tripRecordList.size() == 0}"
+                    android:invisibleIf="@{vm.tripRecordedList.size() == 0}"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"

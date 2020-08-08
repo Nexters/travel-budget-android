@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.nexters.travelbudget.ui.main.MainViewModel" />
+            type="com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel" />
 
     </data>
 
@@ -98,7 +98,7 @@
                     android:id="@+id/rv_recording_travel"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:invisibleIf="@{vm.tripRecordList.size() == 0}"
+                    android:invisibleIf="@{vm.tripRecordingList.size() == 0}"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"

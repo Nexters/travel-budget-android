@@ -8,6 +8,7 @@ import com.nexters.travelbudget.databinding.FragmentRecordedTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 다녀온 여행 fragment class
@@ -16,9 +17,10 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  * @since v1.0.0 / 2020.08.05
  */
 class RecordedTravelFragment :
-    BaseFragment<FragmentRecordedTravelBinding, MainViewModel>(R.layout.fragment_recorded_travel), SwipeRefreshLayout.OnRefreshListener {
+    BaseFragment<FragmentRecordedTravelBinding, RecordedTravelViewModel>(R.layout.fragment_recorded_travel),
+    SwipeRefreshLayout.OnRefreshListener {
 
-    override val viewModel: MainViewModel by sharedViewModel()
+    override val viewModel: RecordedTravelViewModel by viewModel()
 
     private var isFirstExecution = true
 
@@ -31,7 +33,7 @@ class RecordedTravelFragment :
         super.onResume()
         if (isFirstExecution) {
             isFirstExecution = false
-            viewModel.getTripRecordData(false)
+            viewModel.getTripRecordedData()
         }
     }
 
@@ -43,6 +45,7 @@ class RecordedTravelFragment :
     }
 
     override fun onRefresh() {
+        viewModel.getTripRecordedData()
     }
 
     companion object {
