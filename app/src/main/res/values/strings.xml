@@ -32,6 +32,7 @@
     <string name="a_trip">다녀온 여행</string>
     <string name="recording_trip_empty_data_title">여행을 계획해보세요!</string>
     <string name="recording_trip_empty_data_content">하단 버튼을 통해 첫 여행을 만들어\n효율적인 예산 관리를 시작해보세요!</string>
+    <string name="recorded_trip_empty_data_content">다녀온 여행이 없습니다.</string>
 
 
     <!-- common -->

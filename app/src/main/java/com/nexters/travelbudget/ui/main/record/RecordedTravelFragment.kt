@@ -20,9 +20,19 @@ class RecordedTravelFragment :
 
     override val viewModel: MainViewModel by sharedViewModel()
 
+    private var isFirstExecution = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setSwipeRefreshLayout()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirstExecution) {
+            isFirstExecution = false
+            viewModel.getTripRecordData(false)
+        }
     }
 
     private fun setSwipeRefreshLayout() {
