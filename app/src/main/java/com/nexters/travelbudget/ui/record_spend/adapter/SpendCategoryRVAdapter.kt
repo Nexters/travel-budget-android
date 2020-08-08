@@ -17,22 +17,7 @@ class SpendCategoryRVAdapter(
         viewHolder: BaseItemVH,
         item: SpendCategoryModel
     ) {
-        with(binding as ItemSpendCategoryBinding) {
-            ivIcon.setImageResource(item.icon)
-            tvName.text = item.title
-            tvName.setTextColor(
-                if (item.isSelect) {
-                    root.resources.getColor(R.color.fill_grey_1, null)
-                } else {
-                    root.resources.getColor(R.color.colorTextHint, null)
-                }
-            )
-            if (item.isSelect) {
-                ivIcon.setBackgroundResource(R.drawable.bg_circle_fill_blue_8)
-            } else {
-                ivIcon.background = null
-            }
-        }
+        (binding as ItemSpendCategoryBinding).model = item
     }
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
