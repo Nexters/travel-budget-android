@@ -1,6 +1,7 @@
 package com.nexters.travelbudget.utils.ext
 
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -26,4 +27,32 @@ fun View.setInvisibleIf(value: Boolean) {
 @BindingAdapter("android:goneIf")
 fun View.setGoneIf(value: Boolean) {
     isGone = value
+}
+
+@BindingAdapter("marginTop")
+fun View.bindMarginTop(dimen: Float) {
+    layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
+        topMargin = dimen.toInt()
+    }
+}
+
+@BindingAdapter("marginBottom")
+fun View.bindMarginBottom(dimen: Float) {
+    layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
+        bottomMargin = dimen.toInt()
+    }
+}
+
+@BindingAdapter("marginEnd")
+fun View.bindMarginEnd(dimen: Float) {
+    layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
+        rightMargin = dimen.toInt()
+    }
+}
+
+@BindingAdapter("marginStart")
+fun View.bindMarginStart(dimen: Float) {
+    layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
+        leftMargin = dimen.toInt()
+    }
 }

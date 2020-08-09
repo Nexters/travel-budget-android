@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.nexters.travelbudget.data.remote.model.response.TripRecordResponse" />
+
+        <variable
+            name="roomType"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background='@{item.isDoing().equals("Y") ? @drawable/bg_traveling_type_room : @drawable/bg_not_traveling_type_room}'
+        tools:background="@drawable/bg_traveling_type_room">
+
+        <TextView
+            android:id="@+id/tv_room_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="23dp"
+            android:text="@{item.name}"
+            android:textColor="@color/fill_blue"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="홍대 호캉스" />
+
+        <LinearLayout
+            android:id="@+id/ll_traveling_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_blue_radius_6dp"
+            android:gravity="center"
+            android:visibleIf='@{item.isDoing().equals("Y")}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="6dp"
+                android:text="@string/traveling"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12sp"
+                android:textStyle="bold"
+                tools:text="여행중" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_trip_date_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_room_title">
+
+            <TextView
+                android:id="@+id/tv_start_trip_d_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.dayCount}"
+                android:textColor='@{item.isDoing().equals("Y") ? @color/fill_blue : @color/fill_grey_2}'
+                android:textStyle="bold"
+                tools:text="D-24"
+                tools:textColor="@color/fill_blue" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="8dp"
+                android:background='@{item.isDoing().equals("Y") ? @color/fill_blue : @color/fill_grey_2}'
+                tools:background="@color/fill_blue_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/start_end_date_format, item.startDate, item.endDate)}"
+                android:textColor='@{item.isDoing().equals("Y") ? @color/fill_blue_3 : @color/fill_grey_2}'
+                android:textSize="@dimen/text_size_12sp"
+                android:textStyle="bold"
+                tools:text="2020.8.18 -2021.8.19"
+                tools:textColor="@color/fill_blue_3" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_trip_date_layout"
+            bind:marginStart='@{item.isPublic().equals("Y") ? @dimen/margin_24dp : @dimen/margin_22dp}'
+            tools:marginStart="24dp">
+
+            <ImageView
+                android:id="@+id/iv_room_type_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_shared_blue" />
+
+            <TextView
+                android:id="@+id/tv_user_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/room_user_count_format, roomType, item.userCount)}"
+                android:textColor='@{item.isDoing().equals("Y") ? @color/fill_blue : @color/fill_grey_2}'
+                android:textSize="@dimen/text_size_12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_room_type_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:marginStart='@{item.isPublic().equals("Y") ? @dimen/margin_4dp : @dimen/margin_2dp}'
+                tools:text="공용 · 1명"
+                tools:textColor="@color/fill_blue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:moneyForm="@{item.purposeAmount}"
+                tools:text="10,000,000원" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
