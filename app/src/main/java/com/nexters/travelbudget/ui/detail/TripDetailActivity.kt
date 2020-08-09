@@ -1,10 +1,14 @@
 package com.nexters.travelbudget.ui.detail
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
+import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TripDetailActivity :
@@ -17,31 +21,41 @@ class TripDetailActivity :
 
         val isPersonal = true
         binding.isPersonal = isPersonal
+        setTabLayout()
 
+    }
 
-        //앱 시작시 적용할 프래그먼트 설정
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fl_detail_fragment, TripDetailSharedFragment.newInstance())
-        fragmentTransaction.commit()
-        binding.isPersonal = false
+    private fun setTabLayout() {
+        binding.tlDetail.run {
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.vpDetailPager.currentItem = tab.position
+                }
 
-        //버튼 클릭 이벤트 - 프래그먼트를 교체
-        viewModel.toShared.observe(this@TripDetailActivity, Observer {
-            supportFragmentManager.beginTransaction().also {
-                it.replace(R.id.fl_detail_fragment, TripDetailSharedFragment.newInstance())
-                it.commit()
-                binding.isPersonal = false
-            }
-        })
+                override fun onTabUnselected(tab: TabLayout.Tab) {
 
-        viewModel.toPersonal.observe(this@TripDetailActivity, Observer {
-            supportFragmentManager.beginTransaction().also {
-                it.replace(R.id.fl_detail_fragment, TripDetailPersonalFragment.newInstance())
-                it.commit()
-                binding.isPersonal = true
-            }
-        })
+                }
 
+                override fun onTabReselected(tab: TabLayout.Tab) {
+
+                }
+
+            })
+        }
+
+        binding.vpDetailPager.run {
+            adapter = DetailVPAdapter(supportFragmentManager, TAB_COUNT)
+            offscreenPageLimit = TAB_COUNT - 1
+            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
+        }
+    }
+
+    companion object {
+        private const val TAB_COUNT = 2
+
+        fun getIntent(context: Context): Intent {
+            return Intent(context, TripDetailActivity::class.java)
+        }
     }
 
 

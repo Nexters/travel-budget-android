@@ -10,7 +10,8 @@ import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TripDetailSharedFragment() : BaseFragment<FragmentDetailSharedBinding, TripDetailSharedViewModel>(R.layout.fragment_detail_shared) {
+class TripDetailSharedFragment() :
+    BaseFragment<FragmentDetailSharedBinding, TripDetailSharedViewModel>(R.layout.fragment_detail_shared) {
 
     override val viewModel: TripDetailSharedViewModel by viewModel()
 

@@ -12,10 +12,15 @@ import java.text.DecimalFormat
 import java.util.*
 
 class SharedDetailRVAdapter : BaseRVAdapter<DetailSharedData>() {
-    override fun onBindView(binding: ViewDataBinding, viewHolder: BaseItemVH, item: DetailSharedData) {
+    override fun onBindView(
+        binding: ViewDataBinding,
+        viewHolder: BaseItemVH,
+        item: DetailSharedData
+    ) {
         with(binding as ItemSharedDetailMoneyListBinding) {
             tvDetailSharedItemTitle.text = item.title
-            tvDetailSharedItemMoney.text = String.format(Locale.KOREA, "-%s원", item.money) // toMoneyString
+            tvDetailSharedItemMoney.text =
+                String.format(Locale.KOREA, "-%s원", item.money) // toMoneyString
         }
     }
 

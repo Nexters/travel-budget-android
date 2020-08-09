@@ -25,6 +25,9 @@ class TripDetailSharedViewModel : BaseViewModel() {
             add(DetailSharedData("문화", 400000))
             add(DetailSharedData("교통", 390000))
             add(DetailSharedData("기타", 200000))
+            add(DetailSharedData("기타", 200000))
+            add(DetailSharedData("기타", 200000))
+            add(DetailSharedData("기타", 200000))
         }
     }
 }

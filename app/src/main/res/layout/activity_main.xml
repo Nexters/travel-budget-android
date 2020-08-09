@@ -26,13 +26,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:text="디테일 화면으로"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{() -> vm.toTest()}"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="디테일 화면으로"
             app:layout_constraintLeft_toLeftOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
