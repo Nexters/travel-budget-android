@@ -55,11 +55,10 @@ class RecordingTravelFragment :
 
     private fun setRecordingTravelRV() {
         binding.rvRecordingTravel.run {
-            adapter =
-                TravelRecordRVAdapter { tripRecordResponse ->
-                    // TODO 여행 상세 화면으로 연결 작업
-                    Toast.makeText(context, "상세 화면 전환", Toast.LENGTH_LONG).show()
-                }
+            adapter = TravelRecordRVAdapter { tripRecordResponse ->
+                // TODO 여행 상세 화면으로 연결 작업
+                Toast.makeText(context, "상세 화면 전환", Toast.LENGTH_LONG).show()
+            }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(
                     outRect: Rect,
