@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRecordingTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
+import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,10 +55,11 @@ class RecordingTravelFragment :
 
     private fun setRecordingTravelRV() {
         binding.rvRecordingTravel.run {
-            adapter = RecordingTravelRVAdapter { tripRecordResponse ->
-                // TODO 여행 상세 화면으로 연결 작업
-                Toast.makeText(context, "상세 화면 전환", Toast.LENGTH_LONG).show()
-            }
+            adapter =
+                TravelRecordRVAdapter { tripRecordResponse ->
+                    // TODO 여행 상세 화면으로 연결 작업
+                    Toast.makeText(context, "상세 화면 전환", Toast.LENGTH_LONG).show()
+                }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(
                     outRect: Rect,

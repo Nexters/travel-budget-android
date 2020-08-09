@@ -1,4 +1,4 @@
-package com.nexters.travelbudget.ui.main.record
+package com.nexters.travelbudget.ui.main.record.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.data.remote.model.response.TripRecordResponse
-import com.nexters.travelbudget.databinding.ItemRecordingTravelBinding
+import com.nexters.travelbudget.databinding.ItemTravelRecordBinding
 import com.nexters.travelbudget.ui.base.adapter.BaseItemVH
 import com.nexters.travelbudget.ui.base.adapter.BaseListAdapter
-import com.nexters.travelbudget.ui.base.adapter.BaseRVAdapter
 import com.nexters.travelbudget.ui.base.adapter.OnRecyclerViewItemClick
 
 /**
@@ -19,7 +18,7 @@ import com.nexters.travelbudget.ui.base.adapter.OnRecyclerViewItemClick
  * @since v1.0.0 / 2020.08.09
  */
 
-class RecordingTravelRVAdapter(onItemClick: OnRecyclerViewItemClick<TripRecordResponse>) :
+class TravelRecordRVAdapter(onItemClick: OnRecyclerViewItemClick<TripRecordResponse>) :
     BaseListAdapter<TripRecordResponse>(object : DiffUtil.ItemCallback<TripRecordResponse>() {
         override fun areItemsTheSame(
             oldItem: TripRecordResponse,
@@ -34,7 +33,7 @@ class RecordingTravelRVAdapter(onItemClick: OnRecyclerViewItemClick<TripRecordRe
     }, onItemClick) {
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
-        return ItemRecordingTravelBinding.inflate(
+        return ItemTravelRecordBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -46,7 +45,7 @@ class RecordingTravelRVAdapter(onItemClick: OnRecyclerViewItemClick<TripRecordRe
         viewHolder: BaseItemVH,
         item: TripRecordResponse
     ) {
-        (binding as? ItemRecordingTravelBinding)?.run {
+        (binding as? ItemTravelRecordBinding)?.run {
             this.item = item
             roomType = if (item.isPublic == "Y") {
                 "공용"
