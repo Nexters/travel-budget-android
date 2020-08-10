@@ -10,6 +10,7 @@ import com.nexters.travelbudget.ui.detail.TripDetailViewModel
 import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel
 import com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel
 import com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel
+import com.nexters.travelbudget.ui.record_spend.RecordSpendViewModel
 import com.nexters.travelbudget.ui.select_date.SelectDateViewModel
 import com.nexters.travelbudget.ui.statistics.StatisticsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -37,4 +38,5 @@ val viewModelModule = module {
     viewModel { TripDetailPersonalViewModel() }
     viewModel { EditTripProfileViewModel() }
     viewModel { SelectDateViewModel() }
+    viewModel { RecordSpendViewModel() }
 }

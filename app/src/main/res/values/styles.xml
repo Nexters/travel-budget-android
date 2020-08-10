@@ -36,6 +36,12 @@
         <item name="android:textSize">0sp</item>
     </style>
 
+    <style name="ToolbarTitleTextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorTextBlack</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="MainTabStyle" parent="Widget.Design.TabLayout">
         <item name="tabContentStart">24dp</item>
         <item name="tabIndicatorColor">@color/fill_blue</item>
@@ -56,7 +62,6 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/spoqahansansbold</item>
     </style>
-
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
