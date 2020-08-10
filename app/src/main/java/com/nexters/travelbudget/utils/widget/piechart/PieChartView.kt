@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import com.nexters.travelbudget.R
@@ -77,7 +78,11 @@ class PieChartView @JvmOverloads constructor(
                 false,
                 Paint().apply {
                     color = colorList[colorIdx++]
-                    strokeWidth = 90f
+                    strokeWidth = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        50f,
+                        context.resources.displayMetrics
+                    )
                     style = Paint.Style.STROKE
                 }
             )

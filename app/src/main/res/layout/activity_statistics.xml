@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_title"
@@ -26,23 +27,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/toolbar_statistics"
-                android:textColor="@color/fill_grey_1" />
+                android:textColor="@color/fill_grey_1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_statistics_shared"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_tab_select_bottom_bar_blue"
+            android:padding="12dp"
             android:text="@string/text_shared"
+            android:textColor="@color/fill_grey_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb_title" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_statistics_personal"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
             android:text="@string/text_personal"
+            android:textColor="@color/fill_grey_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/btn_statistics_shared"
             app:layout_constraintTop_toBottomOf="@id/tb_title" />
 
@@ -55,20 +71,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_statistics_personal">
+            app:layout_constraintTop_toBottomOf="@id/btn_statistics_shared">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="24dp"
-                android:background="#fff"
+                android:background="@color/colorWhite"
                 android:padding="24dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_total_budget_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@{String.format(@string/total_budget, vm.totalBudget)}"
+                    android:textColor="@color/fill_grey_1"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="총 예산 2,000,000원 중" />
@@ -78,8 +96,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{String.format(@string/money_unit, vm.spendAmount)}"
-                    android:textColor="#000"
-                    android:textSize="22sp"
+                    android:textColor="@color/fill_blue"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_total_budget_title"
                     tools:text="1,785,500원" />
@@ -87,7 +106,9 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" 지출했어요"
+                    android:text="@string/current_spend"
+                    android:textColor="@color/fill_grey_1"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_spend_budget"
                     app:layout_constraintStart_toEndOf="@id/tv_spend_budget"
                     app:layout_constraintTop_toTopOf="@id/tv_spend_budget" />
@@ -96,8 +117,9 @@
                     android:id="@+id/pc_statistics"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginEnd="36dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginEnd="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_spend_budget" />
@@ -106,13 +128,14 @@
                     android:id="@+id/rv_statistics"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:nestedScrollingEnabled="false"
-                    app:setPieDataItemList="@{vm.newPieDataList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pc_statistics" />
+                    app:layout_constraintTop_toBottomOf="@id/pc_statistics"
+                    app:setPieDataItemList="@{vm.newPieDataList}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
