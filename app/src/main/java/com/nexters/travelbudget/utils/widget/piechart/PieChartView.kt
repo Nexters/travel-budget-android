@@ -7,6 +7,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.nexters.travelbudget.R
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.asin
@@ -20,6 +21,18 @@ class PieChartView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
     private var dataList = ArrayList<PieData>()
     private var anglePointList = ArrayList<AnglePoint>()
+    private val colorList by lazy {
+        ArrayList<Int>().apply {
+            add(resources.getColor(R.color.fill_blue, null))
+            add(resources.getColor(R.color.fill_blue_2, null))
+            add(resources.getColor(R.color.fill_blue_3, null))
+            add(resources.getColor(R.color.fill_blue_4, null))
+            add(resources.getColor(R.color.fill_blue_5, null))
+            add(resources.getColor(R.color.fill_blue_6, null))
+            add(resources.getColor(R.color.fill_blue_7, null))
+            add(resources.getColor(R.color.fill_blue_8, null))
+        }
+    }
 
     private var onPieTouchListener: OnPieTouchListener? = null
 
@@ -52,6 +65,7 @@ class PieChartView @JvmOverloads constructor(
         var anglePointer = 0f
 
         anglePointList.clear()
+        var colorIdx = 0
 
         for (pie in dataList) {
             var sweepAngle = pie.value / totalData * ANGLE
@@ -62,7 +76,7 @@ class PieChartView @JvmOverloads constructor(
                 sweepAngle,
                 false,
                 Paint().apply {
-                    color = pie.color
+                    color = colorList[colorIdx++]
                     strokeWidth = 90f
                     style = Paint.Style.STROKE
                 }

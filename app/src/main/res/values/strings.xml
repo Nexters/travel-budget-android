@@ -8,7 +8,9 @@
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
     <string name="detail_shared_title">오늘의 공용 여행비</string>
 
-    <string name="money_unit">원</string>
+    <string name="money_unit">%s원</string>
+
+    <string name="percent_unit">%s%%</string>
 
     <string name="text_shared">공용</string>
     <string name="text_personal">개인</string>
@@ -39,6 +41,6 @@
     <!-- statistics -->
     <string name="toolbar_statistics">통계</string>
     <string name="total_budget">총 예산 %s원 중</string>
-    <string name="spend_budget">%s원</string>
+
 
 </resources>

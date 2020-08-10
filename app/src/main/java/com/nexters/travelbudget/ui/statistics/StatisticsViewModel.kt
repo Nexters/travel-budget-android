@@ -31,11 +31,11 @@ class StatisticsViewModel : BaseViewModel() {
 
     private fun getData(): ArrayList<PieData> {
         return ArrayList<PieData>().apply {
-            add(PieData("식비", 1500000, Color.rgb(190,50,50)))
-            add(PieData("간식", 375000, Color.rgb(190,190,20)))
-            add(PieData("문화", 400000, Color.rgb(100,180,70)))
-            add(PieData("교통", 390000, Color.rgb(220,90,100)))
-            add(PieData("기타", 200000, Color.rgb(50,150,130)))
+            add(PieData("식비", 1500000))
+            add(PieData("간식", 375000))
+            add(PieData("문화", 400000))
+            add(PieData("교통", 390000))
+            add(PieData("기타", 200000))
         }.apply {
             sort()
         }

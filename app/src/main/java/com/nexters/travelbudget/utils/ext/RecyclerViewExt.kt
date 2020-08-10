@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.ui.base.adapter.BaseRVAdapter
 import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
+import com.nexters.travelbudget.ui.statistics.adapter.PieChartRVAdapter
 import com.nexters.travelbudget.utils.DLog
+import com.nexters.travelbudget.utils.widget.piechart.PieData
 
 /**
  * RecyclerView 관련 Extension methods
@@ -42,5 +44,12 @@ fun RecyclerView.notifySelectSpendCategoryItem(pair: Pair<Pair<SpendCategoryMode
     pair?.let {
         (adapter as? SpendCategoryRVAdapter)?.updateItem(it.first.first, it.first.second)
         (adapter as? SpendCategoryRVAdapter)?.updateItem(it.second.first, it.second.second)
+    }
+}
+
+@BindingAdapter("setPieDataItemList")
+fun RecyclerView.setPieDataItemList(items: List<PieData>?) {
+    items?.let {
+        (adapter as? PieChartRVAdapter)?.setItemList(it)
     }
 }

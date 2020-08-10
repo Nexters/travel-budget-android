@@ -1,32 +1,69 @@
 package com.nexters.travelbudget.ui.statistics.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.recyclerview.widget.RecyclerView
+import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ItemPieDataListBinding
-import com.nexters.travelbudget.ui.base.adapter.BaseItemVH
-import com.nexters.travelbudget.ui.base.adapter.BaseRVAdapter
+import com.nexters.travelbudget.model.StatisticsItemModel
+import com.nexters.travelbudget.model.enums.SpendCategoryEnum
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.widget.piechart.PieData
-import java.text.DecimalFormat
-import java.util.*
+import kotlin.collections.ArrayList
 
-class PieChartRVAdapter : BaseRVAdapter<PieData>() {
-    override fun onBindView(binding: ViewDataBinding, viewHolder: BaseItemVH, item: PieData) {
-        with(binding as ItemPieDataListBinding) {
-            tvCategoryTitle.text = item.tag
-            tvSpendPercent.text = String.format(Locale.KOREA, "%d%%", (item.value / getTotalValue() * 100).toInt())
-            tvSpendAmount.text = String.format(Locale.KOREA, "%s원", item.value.toMoneyString())
-            viewColor.setBackgroundColor(item.color)
+class PieChartRVAdapter : RecyclerView.Adapter<PieChartRVAdapter.PieChartViewHolder>() {
+    private val items = ArrayList<PieData>()
+    private val colorList = ArrayList<Int>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PieChartViewHolder {
+        colorList.apply {
+            add(parent.context.resources.getColor(R.color.fill_blue, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_2, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_3, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_4, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_5, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_6, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_7, null))
+            add(parent.context.resources.getColor(R.color.fill_blue_8, null))
+        }
+
+        return PieChartViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_pie_data_list, parent, false)
+        )
+    }
+
+    override fun getItemCount() = items.size
+
+    override fun onBindViewHolder(holder: PieChartViewHolder, position: Int) {
+        with(ItemPieDataListBinding.bind(holder.itemView)) {
+            val pieData = items[position]
+            val perc = (100f * pieData.value / getTotalValue()).toInt()
+            var icon = 0
+            for (category in SpendCategoryEnum.values()) {
+                if (category.title == pieData.tag) {
+                    icon = category.selectedRes
+                    break
+                }
+            }
+
+            model = StatisticsItemModel(
+                pieData.tag,
+                pieData.value.toMoneyString(),
+                perc,
+                colorList[position],
+                icon
+            )
         }
     }
 
-    override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
-        return ItemPieDataListBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-        )
+    fun setItemList(items: List<PieData>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     private fun getTotalValue(): Float {
@@ -37,4 +74,6 @@ class PieChartRVAdapter : BaseRVAdapter<PieData>() {
 
         return value
     }
+
+    class PieChartViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }
