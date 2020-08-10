@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.ui.main.record
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripRecordResponse
 import com.nexters.travelbudget.data.repository.MainTripRecordRepository
@@ -26,7 +27,7 @@ class RecordingTravelViewModel(private val mainTripRecordRepository: MainTripRec
     val isEmptyList = _isEmptyList
 
     private val _tripRecordingList = MutableLiveData<List<TripRecordResponse>>()
-    val tripRecordingList = _tripRecordingList
+    val tripRecordingList: LiveData<List<TripRecordResponse>> = _tripRecordingList
 
     private val _startCreateRoom = SingleLiveEvent<Unit>()
     val startCreateRoom = _startCreateRoom

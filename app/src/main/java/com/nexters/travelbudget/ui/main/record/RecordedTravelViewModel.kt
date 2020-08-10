@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.ui.main.record
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripRecordResponse
 import com.nexters.travelbudget.data.repository.MainTripRecordRepository
@@ -25,7 +26,7 @@ class RecordedTravelViewModel(private val mainTripRecordRepository: MainTripReco
     val isEmptyList = _isEmptyList
 
     private val _tripRecordedList = MutableLiveData<List<TripRecordResponse>>()
-    val tripRecordedList = _tripRecordedList
+    val tripRecordedList: LiveData<List<TripRecordResponse>> = _tripRecordedList
 
     fun getTripRecordedData() {
         mainTripRecordRepository.getTripRecordInfo(false)
