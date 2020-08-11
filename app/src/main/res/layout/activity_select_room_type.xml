@@ -15,110 +15,119 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:fillViewport="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/toolbar_height"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/toolbar_height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/make_trip"
+                    android:textColor="@color/fill_grey_1"
+                    android:textSize="@dimen/text_size_16sp"
+                    android:textStyle="bold"
+                    tools:text="여행 만들기" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:onClick="@{() -> vm.finishActivity()}"
+                    android:src="@drawable/btn_close" />
+
+            </androidx.appcompat.widget.Toolbar>
 
             <TextView
+                android:id="@+id/tv_select_room_type_screen_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/make_trip"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="28dp"
+                android:text="@{String.format(@string/tv_select_room_type_screen_title_format, vm.userName)}"
                 android:textColor="@color/fill_grey_1"
-                android:textSize="@dimen/text_size_16sp"
+                android:textSize="@dimen/text_size_20sp"
                 android:textStyle="bold"
-                tools:text="여행 만들기" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:text="엄격한 관리자님,\n누구와 여행을 떠나세요?" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/iv_select_room_type_screen_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/bg_default_room_type"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_select_room_type_screen_title"
+                app:layout_constraintWidth_percent="0.666" />
+
+            <RadioGroup
+                android:id="@+id/rg_travel_room_type"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:onClick="@{() -> vm.finishActivity()}"
-                android:src="@drawable/btn_close" />
+                android:layout_marginTop="24dp"
+                android:onCheckedChanged="@{(radioGroup, checkedId) -> activity.onCheckedChanged(checkedId)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_select_room_type_screen_image"
+                app:layout_constraintWidth_percent="0.8666">
 
-        </androidx.appcompat.widget.Toolbar>
+                <RadioButton
+                    android:id="@+id/rb_personal_travel_room"
+                    style="@style/SelectRoomTypeRadioBtnStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="@string/travel_alone"
+                    tools:text="혼자 즐기는 여행" />
 
-        <TextView
-            android:id="@+id/tv_select_room_type_screen_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
-            android:text="@{String.format(@string/tv_select_room_type_screen_title_format, vm.userName)}"
-            android:textColor="@color/fill_grey_1"
-            android:textSize="@dimen/text_size_20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:text="엄격한 관리자님,\n누구와 여행을 떠나세요?" />
+                <RadioButton
+                    android:id="@+id/rb_shared_travel_room"
+                    style="@style/SelectRoomTypeRadioBtnStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/travel_together"
+                    tools:text="함께 즐기는 여행" />
 
-        <ImageView
-            android:id="@+id/iv_select_room_type_screen_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_select_room_type_screen_title"
-            app:layout_constraintWidth_percent="0.666" />
+            </RadioGroup>
 
-        <RadioGroup
-            android:id="@+id/rg_travel_room_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:onCheckedChanged="@{(radioGroup, checkedId) -> activity.onCheckedChanged(checkedId)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_select_room_type_screen_image"
-            app:layout_constraintWidth_percent="0.8666">
+            <Button
+                android:id="@+id/btn_next_step"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="28dp"
+                android:background="@{vm.allowsGotoNextScreen ? @drawable/bg_next_btn_enable_type : @drawable/bg_next_btn_disable_type}"
+                android:enabled="@{vm.allowsGotoNextScreen}"
+                android:onClick="@{() -> vm.goToNextScreen()}"
+                android:text="@string/next"
+                android:textColor="@{vm.allowsGotoNextScreen ? @color/colorWhite : @color/fill_grey_2}"
+                android:textSize="@dimen/text_size_16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.8666"
+                tools:background="@drawable/bg_next_btn_disable_type"
+                tools:textColor="@color/fill_grey_2" />
 
-            <RadioButton
-                android:id="@+id/rb_personal_travel_room"
-                style="@style/SelectRoomTypeRadioBtnStyle"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="@string/travel_alone"
-                tools:text="혼자 즐기는 여행" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RadioButton
-                android:id="@+id/rb_shared_travel_room"
-                style="@style/SelectRoomTypeRadioBtnStyle"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/travel_together"
-                tools:text="함께 즐기는 여행" />
-
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/btn_next_step"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginBottom="28dp"
-            android:background="@{vm.allowsGotoNextScreen ? @drawable/bg_next_btn_enable_type : @drawable/bg_next_btn_disable_type}"
-            android:enabled="@{vm.allowsGotoNextScreen}"
-            android:onClick="@{() -> vm.goToNextScreen()}"
-            android:text="@string/next"
-            android:textColor="@{vm.allowsGotoNextScreen ? @color/colorWhite : @color/fill_grey_2}"
-            android:textSize="@dimen/text_size_16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.8666" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </ScrollView>
 </layout>

@@ -50,6 +50,9 @@ class SelectRoomTypeActivity :
         when (checkedId) {
             R.id.rb_personal_travel_room -> {
                 viewModel.travelRoomType.value = TravelRoomType.PERSONAL.name
+                /** 이미지 변경 */
+                binding.ivSelectRoomTypeScreenImage.setImageResource(R.drawable.bg_personal_room_type)
+                /** 라디오 속성 변경 */
                 binding.rbSharedTravelRoom.run {
                     setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                     typeface = Typeface.DEFAULT
@@ -61,6 +64,9 @@ class SelectRoomTypeActivity :
             }
             R.id.rb_shared_travel_room -> {
                 viewModel.travelRoomType.value = TravelRoomType.SHARED.name
+                /** 이미지 변경 */
+                binding.ivSelectRoomTypeScreenImage.setImageResource(R.drawable.bg_shared_room_type)
+                /** 라디오 속성 변경 */
                 binding.rbPersonalTravelRoom.run {
                     setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                     typeface = Typeface.DEFAULT
