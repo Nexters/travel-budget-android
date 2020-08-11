@@ -8,6 +8,8 @@ import com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailViewModel
 import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel
+import com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel
+import com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel
 import com.nexters.travelbudget.ui.record_spend.RecordSpendViewModel
 import com.nexters.travelbudget.ui.select_date.SelectDateViewModel
 import com.nexters.travelbudget.ui.statistics.StatisticsViewModel
@@ -28,6 +30,8 @@ val viewModelModule = module {
         LoginViewModel(kakaoLogin, get(), get())
     }
     viewModel { MainViewModel() }
+    viewModel { RecordingTravelViewModel(get()) }
+    viewModel { RecordedTravelViewModel(get()) }
     viewModel { StatisticsViewModel() }
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
