@@ -11,6 +11,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRecordingTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
+import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,7 +35,9 @@ class RecordingTravelFragment :
         setRecordingTravelRV()
 
         viewModel.startCreateRoom.observe(this, Observer {
-            Toast.makeText(context, "여행 만들기", Toast.LENGTH_LONG).show()
+            context?.run {
+                startActivity(SelectRoomTypeActivity.getIntent(this))
+            }
         })
     }
 

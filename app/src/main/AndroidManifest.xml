@@ -28,13 +28,16 @@
         <activity
             android:name=".ui.statistics.StatisticsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.select_room_type.SelectRoomTypeActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -48,7 +51,6 @@
             android:name=".ui.edit_trip_profile.EditTripProfileActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.record_spend.RecordSpendActivity" />
-
     </application>
 
 </manifest>

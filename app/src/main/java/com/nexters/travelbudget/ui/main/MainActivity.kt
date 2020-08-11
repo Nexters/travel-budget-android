@@ -9,6 +9,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.TripDetailActivity
+import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -19,6 +20,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         setTabLayout()
+
+        viewModel.startCreateRoom.observe(this, Observer {
+            startActivity(SelectRoomTypeActivity.getIntent(this))
+        })
     }
 
     private fun setTabLayout() {
