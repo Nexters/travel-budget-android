@@ -19,6 +19,7 @@ import com.nexters.travelbudget.R
 import java.util.*
 
 class TimePickerDialogFragment(
+    private val date: String,
     private val listener: (String) -> Unit
 ) : DialogFragment() {
     private var time = ""
@@ -30,22 +31,16 @@ class TimePickerDialogFragment(
     ): View? {
         return inflater.inflate(R.layout.dialog_time_picker, container, false).also {
             val timePicker: TimePicker = it.findViewById(R.id.time_picker)
-            timePicker.hour = 15
-            timePicker.minute = 15
+            val st = StringTokenizer(date, ":")
+            val h = st.nextToken().toInt()
+            val m = st.nextToken().toInt()
+
+            timePicker.hour = h
+            timePicker.minute = m
+            time = getTimeString(h, m)
 
             timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
-                val h = if (hourOfDay < 10) {
-                    "0$hourOfDay"
-                } else {
-                    "$hourOfDay"
-                }
-
-                val m = if (minute < 10) {
-                    "0$minute"
-                } else {
-                    "$minute"
-                }
-                time = "$h:$m"
+                time = getTimeString(hourOfDay, minute)
             }
 
             val btnComplete: Button = it.findViewById(R.id.btn_complete)
@@ -55,9 +50,24 @@ class TimePickerDialogFragment(
         }
     }
 
-    fun complete() {
+    private fun complete() {
         listener(time)
         dismiss()
+    }
+
+    private fun getTimeString(hour: Int, minute: Int): String {
+        val h = if (hour < 10) {
+            "0$hour"
+        } else {
+            "$hour"
+        }
+
+        val m = if (minute < 10) {
+            "0$minute"
+        } else {
+            "$minute"
+        }
+        return "$h:$m"
     }
 
     override fun setupDialog(dialog: Dialog, style: Int) {
