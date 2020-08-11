@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRecordingTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
+import com.nexters.travelbudget.ui.main.MainActivity
 import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
 import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.CustomItemDecoration
@@ -36,7 +37,7 @@ class RecordingTravelFragment :
 
         viewModel.startCreateRoom.observe(this, Observer {
             context?.run {
-                startActivity(SelectRoomTypeActivity.getIntent(this, "엄격한 관리자"))
+                (activity as? MainActivity)?.goToSelectRoomTypeActivity()
             }
         })
     }

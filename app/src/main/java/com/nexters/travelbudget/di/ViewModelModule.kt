@@ -30,7 +30,7 @@ val viewModelModule = module {
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get(), get())
     }
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(get()) }
     viewModel { RecordingTravelViewModel(get()) }
     viewModel { RecordedTravelViewModel(get()) }
     viewModel { (userName: String) ->

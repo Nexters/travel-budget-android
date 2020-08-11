@@ -20,9 +20,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         setTabLayout()
+        viewModel.getUserInfo()
 
         viewModel.startCreateRoom.observe(this, Observer {
-            startActivity(SelectRoomTypeActivity.getIntent(this, "엄격한 관리자"))
+            goToSelectRoomTypeActivity()
         })
     }
 
@@ -45,6 +46,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             offscreenPageLimit = TAB_COUNT - 1
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlMainTab))
         }
+    }
+
+    fun goToSelectRoomTypeActivity() {
+        startActivity(
+            SelectRoomTypeActivity.getIntent(
+                this,
+                viewModel.userName.value ?: getString(R.string.default_user_name)
+            )
+        )
     }
 
     companion object {

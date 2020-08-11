@@ -61,6 +61,28 @@
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
+        <LinearLayout
+            android:id="@+id/ll_main_title_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="18dp"
+                android:text="@{String.format(@string/main_title_format, vm.userName)}"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_20sp"
+                android:textStyle="bold"
+                tools:text="엄격한 관리자님,\n여행을 기록해주세요" />
+
+        </LinearLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_main_tab"
             style="@style/MainTabStyle"
@@ -68,7 +90,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toBottomOf="@id/ll_main_title_layout">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

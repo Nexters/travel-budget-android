@@ -34,6 +34,7 @@
     <string name="recording_trip_empty_data_content">하단 버튼을 통해 첫 여행을 만들어\n효율적인 예산 관리를 시작해보세요!</string>
     <string name="recorded_trip_empty_data_content">다녀온 여행이 없습니다.</string>
     <string name="room_user_count_format">%s · %d명</string>
+    <string name="main_title_format">%s님,\n여행을 기록해주세요</string>
 
     <!-- select room type -->
     <string name="tv_select_room_type_screen_title_format">%s님,\n누구와 여행을 떠나세요?</string>
@@ -46,6 +47,7 @@
     <string name="traveling">여행중</string>
     <string name="start_end_date_format">%s -%s</string>
     <string name="next">다음</string>
+    <string name="default_user_name">트립파이</string>
 
     <!-- record_spend -->
     <string name="record_spend_title">지출 기록하기</string>
