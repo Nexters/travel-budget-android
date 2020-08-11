@@ -26,12 +26,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/btn_to_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{() -> vm.toTest()}"
             android:text="디테일 화면으로"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> vm.toTestAlone()}"
+            android:text="혼자가는 여행 디테일 화면으로"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_to_detail" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

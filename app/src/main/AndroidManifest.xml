@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.detail.TripDetailActivity" />
+        <activity android:name=".ui.detail.TripDetailAloneActivity" />
     </application>
 
 </manifest>

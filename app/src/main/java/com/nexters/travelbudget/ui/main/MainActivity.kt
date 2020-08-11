@@ -8,6 +8,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.TripDetailActivity
+import com.nexters.travelbudget.ui.detail.TripDetailAloneActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -20,6 +21,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         viewModel.toTest.observe(this@MainActivity, Observer {
             if (it) {
                 startActivity(Intent(applicationContext, TripDetailActivity::class.java))
+            }
+        })
+
+        viewModel.toTestAlone.observe(this@MainActivity, Observer {
+            if (it) {
+                startActivity(Intent(applicationContext, TripDetailAloneActivity::class.java))
             }
         })
     }

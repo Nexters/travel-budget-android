@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.di
 
+import com.nexters.travelbudget.ui.detail.TripDetailAloneViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailViewModel
@@ -20,4 +21,5 @@ val viewModelModule = module {
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
     viewModel { TripDetailPersonalViewModel() }
+    viewModel { TripDetailAloneViewModel() }
 }
