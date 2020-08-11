@@ -35,11 +35,32 @@
     <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">0sp</item>
     </style>
-    
+
     <style name="ToolbarTitleTextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorTextBlack</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MainTabStyle" parent="Widget.Design.TabLayout">
+        <item name="tabContentStart">24dp</item>
+        <item name="tabIndicatorColor">@color/fill_blue</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabPaddingStart">16dp</item>
+        <item name="tabPaddingEnd">16dp</item>
+        <item name="tabPaddingTop">12dp</item>
+        <item name="tabPaddingBottom">12dp</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabSelectedTextColor">@color/fill_grey_1</item>
+        <item name="tabTextColor">@color/fill_grey_2</item>
+        <item name="tabTextAppearance">@style/MainTabTextStyle</item>
+    </style>
+
+    <style name="MainTabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/spoqahansansbold</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
