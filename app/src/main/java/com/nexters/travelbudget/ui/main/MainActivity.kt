@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         setTabLayout()
 
         viewModel.startCreateRoom.observe(this, Observer {
-            startActivity(SelectRoomTypeActivity.getIntent(this))
+            startActivity(SelectRoomTypeActivity.getIntent(this, "엄격한 관리자"))
         })
     }
 

@@ -36,7 +36,7 @@ class RecordingTravelFragment :
 
         viewModel.startCreateRoom.observe(this, Observer {
             context?.run {
-                startActivity(SelectRoomTypeActivity.getIntent(this))
+                startActivity(SelectRoomTypeActivity.getIntent(this, "엄격한 관리자"))
             }
         })
     }

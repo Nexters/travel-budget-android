@@ -18,6 +18,9 @@ interface Constant {
 
     companion object {
 
+        // Intent
+        const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
+
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
