@@ -2,12 +2,16 @@ package com.nexters.travelbudget.ui.select_room_type
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivitySelectRoomTypeBinding
+import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.Constant
@@ -30,10 +34,43 @@ class SelectRoomTypeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.activity = this
 
         viewModel.finishScreen.observe(this, Observer {
             finish()
         })
+
+        viewModel.goToNextScreen.observe(this, Observer {
+            // TODO 여행 만들기 화면 전환
+        })
+    }
+
+    fun onCheckedChanged(@IdRes checkedId: Int) {
+        viewModel.allowsGotoNextScreen.value = true
+        when (checkedId) {
+            R.id.rb_personal_travel_room -> {
+                viewModel.travelRoomType.value = TravelRoomType.PERSONAL.name
+                binding.rbSharedTravelRoom.run {
+                    setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                    typeface = Typeface.DEFAULT
+                }
+                binding.rbPersonalTravelRoom.run {
+                    setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_enable_icon, 0)
+                    typeface = Typeface.DEFAULT_BOLD
+                }
+            }
+            R.id.rb_shared_travel_room -> {
+                viewModel.travelRoomType.value = TravelRoomType.SHARED.name
+                binding.rbPersonalTravelRoom.run {
+                    setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                    typeface = Typeface.DEFAULT
+                }
+                binding.rbSharedTravelRoom.run {
+                    setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_enable_icon, 0)
+                    typeface = Typeface.DEFAULT_BOLD
+                }
+            }
+        }
     }
 
     companion object {

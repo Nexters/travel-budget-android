@@ -16,13 +16,25 @@ import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 class SelectRoomTypeViewModel(userName: String) : BaseViewModel() {
 
     private val _userName = MutableLiveData<String>(userName)
-    val userName = _userName
+    val userName: LiveData<String> = _userName
+
+    private val _travelRoomType = MutableLiveData<String>()
+    val travelRoomType = _travelRoomType
 
     private val _finishScreen = SingleLiveEvent<Unit>()
     val finishScreen = _finishScreen
 
+    private val _goToNextScreen = SingleLiveEvent<Unit>()
+    val goToNextScreen = _goToNextScreen
+
+    val allowsGotoNextScreen = MutableLiveData<Boolean>(false)
+
     fun finishActivity() {
         _finishScreen.call()
+    }
+
+    fun goToNextScreen() {
+        _goToNextScreen.call()
     }
 
 }
