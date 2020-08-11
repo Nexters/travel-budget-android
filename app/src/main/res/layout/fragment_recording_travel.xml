@@ -32,19 +32,19 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="320dp"
                     android:visibleIf="@{vm.isEmptyList()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.503">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/iv_create_trip_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_create_trip"
+                        android:layout_marginTop="44dp"
+                        android:src="@drawable/ic_empty_record_travel"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
                         android:id="@+id/tv_recording_trip_empty_data_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="16dp"
                         android:text="@string/recording_trip_empty_data_title"
                         android:textColor="@color/fill_grey_1"
                         android:textSize="@dimen/text_size_16sp"
@@ -67,7 +67,7 @@
                         android:id="@+id/tv_recording_trip_empty_data_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="8dp"
                         android:text="@string/recording_trip_empty_data_content"
                         android:textColor="@color/fill_grey_2"
                         android:textSize="@dimen/text_size_12sp"
@@ -80,7 +80,7 @@
                         android:id="@+id/btn_create_room"
                         android:layout_width="0dp"
                         android:layout_height="44dp"
-                        android:layout_marginTop="26dp"
+                        android:layout_marginTop="24dp"
                         android:background="@drawable/bg_create_room"
                         android:onClick="@{() -> vm.createTripRoom()}"
                         android:text="@string/create_trip"
