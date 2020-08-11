@@ -34,4 +34,8 @@
     <string name="spend_detail_hint">지출한 내용을 입력해주세요 (최대 10글자)</string>
     <string name="text_record_submit">기록하기</string>
 
+    <!-- time picker -->
+    <string name="time_picker_title">시간 선택</string>
+    <string name="text_complete">완료</string>
+
 </resources>

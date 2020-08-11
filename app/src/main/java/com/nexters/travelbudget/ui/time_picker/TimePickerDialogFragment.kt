@@ -9,8 +9,11 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialDialogs
 import com.nexters.travelbudget.R
 import java.util.*
@@ -18,6 +21,8 @@ import java.util.*
 class TimePickerDialogFragment(
     private val listener: (String) -> Unit
 ) : DialogFragment() {
+    private var time = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,9 +34,35 @@ class TimePickerDialogFragment(
             timePicker.minute = 15
 
             timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
-                listener("$hourOfDay:$minute")
+                val h = if (hourOfDay < 10) {
+                    "0$hourOfDay"
+                } else {
+                    "$hourOfDay"
+                }
+
+                val m = if (minute < 10) {
+                    "0$minute"
+                } else {
+                    "$minute"
+                }
+                time = "$h:$m"
+            }
+
+            val btnComplete: Button = it.findViewById(R.id.btn_complete)
+            btnComplete.setOnClickListener {
+                complete()
             }
         }
+    }
+
+    fun complete() {
+        listener(time)
+        dismiss()
+    }
+
+    override fun setupDialog(dialog: Dialog, style: Int) {
+        dialog.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_dialog)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,11 +76,9 @@ class TimePickerDialogFragment(
             ).toInt(),
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                300f,
+                350f,
                 resources.displayMetrics
             ).toInt()
         )
-
     }
-
 }
