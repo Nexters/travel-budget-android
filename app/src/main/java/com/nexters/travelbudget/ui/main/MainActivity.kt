@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.TripDetailActivity
-import com.nexters.travelbudget.ui.detail.TripDetailAloneActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -17,23 +17,36 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(binding.toolbar)
+        setTabLayout()
+    }
 
-        viewModel.toTest.observe(this@MainActivity, Observer {
-            if (it) {
-                startActivity(Intent(applicationContext, TripDetailActivity::class.java))
-            }
-        })
+    private fun setTabLayout() {
+        binding.tlMainTab.run {
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.vpMainPager.currentItem = tab.position
+                }
 
-        viewModel.toTestAlone.observe(this@MainActivity, Observer {
-            if (it) {
-                startActivity(Intent(applicationContext, TripDetailAloneActivity::class.java))
-            }
-        })
+                override fun onTabUnselected(tab: TabLayout.Tab) = Unit
+
+                override fun onTabReselected(tab: TabLayout.Tab) = Unit
+
+            })
+        }
+
+        binding.vpMainPager.run {
+            adapter = MainVPAdapter(supportFragmentManager, TAB_COUNT)
+            offscreenPageLimit = TAB_COUNT - 1
+            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlMainTab))
+        }
     }
 
     companion object {
-        fun startActivity(context: Context) {
-            context.startActivity(Intent(context, MainActivity::class.java))
+        private const val TAB_COUNT = 2
+
+        fun getIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 }

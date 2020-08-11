@@ -20,6 +20,7 @@ interface Constant {
 
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
+        const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1

@@ -1,10 +1,14 @@
 package com.nexters.travelbudget.di
 
 import com.nexters.travelbudget.BuildConfig
-import com.nexters.travelbudget.data.remote.api.ApiService
+import com.nexters.travelbudget.data.remote.api.AuthService
+import com.nexters.travelbudget.data.remote.api.TripieService
 import com.nexters.travelbudget.data.remote.interceptor.AuthInterceptor
+import com.nexters.travelbudget.data.remote.interceptor.TokenRefreshAuthenticator
+import com.nexters.travelbudget.data.remote.model.enums.RetrofitQualifiers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -19,31 +23,37 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
-    single { AuthInterceptor() }
-    factory { provideOkHttpClient(get()) }
-    factory { provideApi(get()) }
-    single { provideRetrofit(get()) }
+    single { AuthInterceptor(androidContext()) }
+    single { TokenRefreshAuthenticator(androidContext()) }
+    single { provideAuthApi(get(qualifier = RetrofitQualifiers.DEFAULT)) }
+    single { provideTripieApi(get(qualifier = RetrofitQualifiers.AUTH)) }
+    single(RetrofitQualifiers.AUTH) { provideAuthOkHttpClient(get(), get()) }
+    single(RetrofitQualifiers.DEFAULT) { provideOkHttpClient() }
 }
 
-/** Retrofit 설정 */
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-    return Retrofit.Builder().baseUrl("baseUrl")
+/** Auth Api 접근을 위한 메소드 */
+fun provideAuthApi(okHttpClient: OkHttpClient): AuthService {
+    return Retrofit.Builder().baseUrl("http://175.123.172.42:9050/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
+        .create(AuthService::class.java)
 }
 
-/** OkHttp 설정 */
-fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+/** Tripie Api 접근을 위한 메소드 */
+fun provideTripieApi(okHttpClient: OkHttpClient): TripieService {
+    return Retrofit.Builder().baseUrl("http://175.123.172.42:9050/")
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(TripieService::class.java)
+}
+
+/** 기본 OkHttp 설정 */
+fun provideOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
-        .addInterceptor {
-            val request = it.request()
-                .newBuilder()
-                .build()
-            it.proceed(request)
-        }
-        .addInterceptor(authInterceptor)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
@@ -54,7 +64,20 @@ fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         .build()
 }
 
-/** Api 접근을 위한 메소드 */
-fun provideApi(retrofit: Retrofit): ApiService {
-    return retrofit.create(ApiService::class.java)
+/** Auth 관련 OkHttp 설정 */
+fun provideAuthOkHttpClient(
+    authInterceptor: AuthInterceptor,
+    tokenRefreshAuthenticator: TokenRefreshAuthenticator
+): OkHttpClient {
+    return OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
+        .authenticator(tokenRefreshAuthenticator)
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        })
+        .build()
 }
