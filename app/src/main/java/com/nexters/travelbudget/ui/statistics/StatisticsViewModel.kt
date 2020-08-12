@@ -1,13 +1,18 @@
 package com.nexters.travelbudget.ui.statistics
 
-import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
+import com.nexters.travelbudget.data.repository.StatisticsRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.toMoneyString
+import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import com.nexters.travelbudget.utils.widget.piechart.PieData
+import io.reactivex.rxkotlin.addTo
+import java.util.concurrent.TimeUnit
 
-class StatisticsViewModel : BaseViewModel() {
+class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : BaseViewModel() {
     private val _newPieDataList = MutableLiveData<ArrayList<PieData>>()
     val newPieDataList: LiveData<ArrayList<PieData>> get() = _newPieDataList
 
@@ -17,25 +22,39 @@ class StatisticsViewModel : BaseViewModel() {
     private val _spendAmount = MutableLiveData<String>()
     val spendAmount: LiveData<String> get() = _spendAmount
 
-    private val _isShared = MutableLiveData(true)
-    val isShared: LiveData<Boolean> get() = _isShared
+    fun setData(budgetId: Long) {
+        statisticsRepo.getStatisticsInfo(budgetId)
+            .delay(500, TimeUnit.MILLISECONDS)
+            .applySchedulers()
+//            .doOnSubscribe { _isLoading.value = true }
+//            .doAfterTerminate { _isLoading.value = false }
+            .doOnSuccess {
+//                _isEmptyList.value = it.isEmpty()
+            }
+            .subscribeWith(object : TripDisposableSingleObserver<StatisticsResponse>() {
+                override fun onSuccess(result: StatisticsResponse) {
+                    _spendAmount.value = result.usedAmount.toMoneyString()
+                    _totalBudget.value = result.purposeAmount.toMoneyString()
 
-    private var type = ""
-
-    fun addData() {
-        val dataList = getData()
-        _newPieDataList.value = dataList
-
-        var totalSpend = 0
-        for (pie in dataList) {
-            totalSpend += pie.value
-        }
-        _spendAmount.value = totalSpend.toMoneyString()
-        _totalBudget.value = 3000000.toMoneyString()
+                    _newPieDataList.value = ArrayList<PieData>().apply {
+                        val category = result.categories
+                        addIfNotZero(PieData("식비", category.food))
+                        addIfNotZero(PieData("문화", category.culture))
+                        addIfNotZero(PieData("교통", category.traffic))
+                        addIfNotZero(PieData("쇼핑", category.shopping))
+                        addIfNotZero(PieData("숙박", category.sleep))
+                        addIfNotZero(PieData("간식", category.snack))
+                        addIfNotZero(PieData("기타", category.etc))
+                        addIfNotZero(PieData("기타", category.etc))
+                    }
+                }
+            }).addTo(compositeDisposable)
     }
 
-    fun setType(type: String) {
-        this.type = type
+    private fun ArrayList<PieData>.addIfNotZero(data: PieData) {
+        if (data.value != 0) {
+            add(data)
+        }
     }
 
     private fun getData(): ArrayList<PieData> {
@@ -48,9 +67,5 @@ class StatisticsViewModel : BaseViewModel() {
         }.apply {
             sort()
         }
-    }
-
-    fun setShared(isShared: Boolean) {
-        _isShared.value = isShared
     }
 }

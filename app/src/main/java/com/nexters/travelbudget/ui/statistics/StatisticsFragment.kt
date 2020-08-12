@@ -13,20 +13,12 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
 ) {
     override val viewModel: StatisticsViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            viewModel.setType(it.getString("type", BUNDLE_STATISTICS_SHARED))
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         observeViewModel()
         setupStatisticsRV()
-        viewModel.addData()
+//        viewModel.setData(14)
     }
 
     private fun observeViewModel() {
@@ -46,15 +38,8 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
     }
 
     companion object {
-        const val BUNDLE_STATISTICS_SHARED = "bundle_statistics_shared"
-        const val BUNDLE_STATISTICS_PERSONAL = "bundle_statistics_personal"
-
-        fun newInstance(type: String): StatisticsFragment {
-            return StatisticsFragment().apply {
-                arguments = Bundle().apply {
-                    putString("type", type)
-                }
-            }
+        fun newInstance(): StatisticsFragment {
+            return StatisticsFragment()
         }
     }
 }

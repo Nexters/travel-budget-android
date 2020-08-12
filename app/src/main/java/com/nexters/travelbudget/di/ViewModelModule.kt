@@ -32,7 +32,7 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { RecordingTravelViewModel(get()) }
     viewModel { RecordedTravelViewModel(get()) }
-    viewModel { StatisticsViewModel() }
+    viewModel { StatisticsViewModel(get()) }
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
     viewModel { TripDetailPersonalViewModel() }
