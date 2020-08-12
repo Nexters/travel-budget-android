@@ -17,6 +17,11 @@ class StatisticsViewModel : BaseViewModel() {
     private val _spendAmount = MutableLiveData<String>()
     val spendAmount: LiveData<String> get() = _spendAmount
 
+    private val _isShared = MutableLiveData(true)
+    val isShared: LiveData<Boolean> get() = _isShared
+
+    private var type = ""
+
     fun addData() {
         val dataList = getData()
         _newPieDataList.value = dataList
@@ -29,6 +34,10 @@ class StatisticsViewModel : BaseViewModel() {
         _totalBudget.value = 3000000.toMoneyString()
     }
 
+    fun setType(type: String) {
+        this.type = type
+    }
+
     private fun getData(): ArrayList<PieData> {
         return ArrayList<PieData>().apply {
             add(PieData("식비", 1500000))
@@ -39,5 +48,9 @@ class StatisticsViewModel : BaseViewModel() {
         }.apply {
             sort()
         }
+    }
+
+    fun setShared(isShared: Boolean) {
+        _isShared.value = isShared
     }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.statistics.StatisticsViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F6F6F6"
+        android:descendantFocusability="blocksDescendants"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:padding="24dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_total_budget_title"
+                tools:text="총 예산 2,000,000원 중"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{String.format(@string/total_budget, vm.totalBudget)}"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_spend_budget"
+                tools:text="1,785,500원"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/money_unit, vm.spendAmount)}"
+                android:textColor="@color/fill_blue"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_budget_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_spend"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_spend_budget"
+                app:layout_constraintStart_toEndOf="@id/tv_spend_budget"
+                app:layout_constraintTop_toTopOf="@id/tv_spend_budget" />
+
+            <com.nexters.travelbudget.utils.widget.piechart.PieChartView
+                android:id="@+id/pc_statistics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_spend_budget" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_statistics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pc_statistics"
+                app:setPieDataItemList="@{vm.newPieDataList}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
