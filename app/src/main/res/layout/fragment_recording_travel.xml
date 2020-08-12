@@ -76,7 +76,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_recording_trip_empty_data_title"
                         tools:text="하단 버튼을 통해 첫 여행을 만들어\n효율적인 예산 관리를 시작해보세요!" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_create_room"
                         android:layout_width="0dp"
                         android:layout_height="44dp"
