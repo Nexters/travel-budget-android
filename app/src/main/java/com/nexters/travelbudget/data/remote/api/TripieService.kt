@@ -1,8 +1,10 @@
 package com.nexters.travelbudget.data.remote.api
 
+import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
 import com.nexters.travelbudget.data.remote.model.response.TripRecordResponse
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -16,4 +18,7 @@ interface TripieService {
 
     @GET("api/plans")
     fun getMainTripInfo(@Query("isComing") isComing: Boolean): Single<List<TripRecordResponse>>
+
+    @GET("api/budgets/{id}/statics")
+    fun getStatisticsInfo(@Path("id") id: Long): Single<StatisticsResponse>
 }
