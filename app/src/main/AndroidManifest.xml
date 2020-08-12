@@ -35,9 +35,12 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.select_room_type.SelectRoomTypeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.create_room.CreateRoomActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

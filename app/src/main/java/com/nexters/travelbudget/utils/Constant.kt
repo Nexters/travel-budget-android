@@ -20,6 +20,7 @@ interface Constant {
 
         // Intent
         const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
+        const val EXTRA_ROOM_TYPE = "EXTRA_ROOM_TYPE"
 
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"

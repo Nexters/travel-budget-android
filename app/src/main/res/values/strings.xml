@@ -5,7 +5,6 @@
 
     <string name="connection_failed">연결에 실패했습니다.\n잠시 후 다시 시도해주세요.</string>
 
-    <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
     <string name="detail_shared_title">오늘의 공용 여행비</string>
 
     <string name="money_unit">원</string>
@@ -48,6 +47,10 @@
     <string name="start_end_date_format">%s -%s</string>
     <string name="next">다음</string>
     <string name="default_user_name">트립파이</string>
+
+    <!-- error message -->
+    <string name="request_fail">잠시 후 다시 시도해주세요.</string>
+    <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
 
     <!-- record_spend -->
     <string name="record_spend_title">지출 기록하기</string>

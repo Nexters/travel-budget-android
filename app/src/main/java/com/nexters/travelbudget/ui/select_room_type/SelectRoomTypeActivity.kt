@@ -14,6 +14,7 @@ import com.nexters.travelbudget.databinding.ActivitySelectRoomTypeBinding
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.ui.create_room.CreateRoomActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -41,7 +42,12 @@ class SelectRoomTypeActivity :
         })
 
         viewModel.goToNextScreen.observe(this, Observer {
-            // TODO 여행 만들기 화면 전환
+            if (viewModel.travelRoomType.value != null) {
+                startActivity(CreateRoomActivity.getIntent(this, viewModel.userName.value ?: getString(R.string.default_user_name), viewModel.travelRoomType.value!!))
+            } else {
+                Toast.makeText(this, getString(R.string.request_fail), Toast.LENGTH_SHORT).show()
+            }
+            finish()
         })
     }
 
