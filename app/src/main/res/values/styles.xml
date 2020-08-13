@@ -81,5 +81,33 @@
         <item name="android:background">@drawable/bg_bottom_sheet_top_round</item>
     </style>
 
+    <style name="MaterialRangeDatePickerStyle" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/fill_blue</item>
+        <item name="colorAccent">@color/fill_blue</item>
+        <item name="materialCalendarFullscreenTheme">
+            @style/CustomThemeOverlay_MaterialCalendar_Fullscreen
+        </item>
+        <item name="buttonBarPositiveButtonStyle">@style/ThemeMaterialCalendarButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ThemeMaterialCalendarButton</item>
+        <item name="materialButtonStyle">@style/ThemeMaterialCalendarTextButton</item>
+    </style>
+
+    <style name="ThemeMaterialCalendarButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/fill_blue</item>
+    </style>
+
+    <style name="ThemeMaterialCalendarTextButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog.Flush">
+        <item name="android:textColor">@color/fill_blue</item>
+        <item name="iconTint">@color/fill_blue</item>
+    </style>
+
+    <style name="CustomThemeOverlay_MaterialCalendar_Fullscreen" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.Fullscreen</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.Fullscreen" parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
 
 </resources>

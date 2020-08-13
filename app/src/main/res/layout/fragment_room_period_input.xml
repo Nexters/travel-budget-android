@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="com.nexters.travelbudget.model.enums.TravelRoomType" />
+
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.create_room.CreateRoomViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
+            android:text="@{String.format(@string/room_period_title_format, vm.userName)}"
             android:textColor="@color/fill_grey_1"
             android:textSize="@dimen/text_size_20sp"
             android:textStyle="bold"
@@ -29,8 +36,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
-            android:hint="@string/room_period_hint"
             android:focusableInTouchMode="false"
+            android:hint="@string/room_period_hint"
+            android:onClick="@{() -> vm.openCalendar()}"
+            android:text='@{vm.travelStartDate != null &amp;&amp; vm.travelEndDate != null ? String.format(@string/start_end_date_format, vm.travelStartDate, vm.travelEndDate) : ""}'
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,9 +50,11 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginBottom="28dp"
-            android:background="@drawable/bg_next_btn_disable_type"
-            android:text="@string/next"
-            android:textColor="@color/fill_grey_2"
+            android:background="@{vm.travelStartDate != null &amp;&amp; vm.travelEndDate != null ? @drawable/bg_next_btn_enable_type : @drawable/bg_next_btn_disable_type}"
+            android:enabled="@{vm.travelStartDate != null &amp;&amp; vm.travelEndDate != null ? true : false}"
+            android:onClick="@{() -> vm.nextScreen()}"
+            android:text="@{vm.roomType.equals(TravelRoomType.SHARED.name()) ? @string/next : @string/create_trip}"
+            android:textColor="@{vm.travelStartDate != null &amp;&amp; vm.travelEndDate != null ? @color/colorWhite : @color/fill_grey_2}"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

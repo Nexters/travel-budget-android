@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.create_room.CreateRoomViewModel" />
 
     </data>
 
@@ -18,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
+            android:text="@{String.format(@string/room_shared_budget_title_format, vm.userName)}"
             android:textColor="@color/fill_grey_1"
             android:textSize="@dimen/text_size_20sp"
             android:textStyle="bold"
@@ -43,32 +49,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/room_shared_budget_hint"
+            android:inputType="numberDecimal"
+            android:maxLength="9"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            bind:moneyStringTextWatcher="@{vm.sharedBudgetChanged}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_edit_text_title" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:inputType="numberDecimal"
+            android:maxLength="9"
             android:text="@string/money_unit"
             android:textColor="@color/fill_grey_1"
             android:textSize="16sp"
-            android:inputType="numberDecimal"
-            android:maxLength="9"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintEnd_toEndOf="@id/et_trip_shared_budget"
-            app:layout_constraintBottom_toBottomOf="@id/et_trip_shared_budget"/>
+            app:layout_constraintBottom_toBottomOf="@id/et_trip_shared_budget"
+            app:layout_constraintEnd_toEndOf="@id/et_trip_shared_budget" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_create_trip"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginBottom="28dp"
-            android:background="@drawable/bg_next_btn_disable_type"
+            android:background="@{!vm.travelSharedBudget.empty ? @drawable/bg_next_btn_enable_type : @drawable/bg_next_btn_disable_type}"
+            android:enabled="@{!vm.travelSharedBudget.empty}"
+            android:textColor="@{!vm.travelSharedBudget.empty ? @color/colorWhite : @color/fill_grey_2}"
+            android:onClick="@{() -> vm.nextScreen()}"
             android:text="@string/create_trip"
-            android:textColor="@color/fill_grey_2"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

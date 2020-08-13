@@ -2,9 +2,11 @@ package com.nexters.travelbudget.ui.create_room
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityCreateRoomBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -26,6 +28,75 @@ class CreateRoomActivity :
             intent.getStringExtra(Constant.EXTRA_USER_NAME),
             intent.getStringExtra(Constant.EXTRA_ROOM_TYPE)
         )
+    }
+
+    private val createRoomStepVPAdapter by lazy {
+        CreateRoomStepVPAdapter(supportFragmentManager, childFragments)
+    }
+
+    private val childFragments: List<Fragment> by lazy {
+        if (viewModel.isSharedRoom) {
+            listOf(
+                RoomTitleInputFragment.newInstance(),
+                RoomPeriodInputFragment.newInstance(),
+                RoomSharedBudgetInputFragment.newInstance()
+            )
+        } else {
+            listOf(
+                RoomTitleInputFragment.newInstance(),
+                RoomPeriodInputFragment.newInstance()
+            )
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setCreateRoomVP()
+
+        viewModel.nextScreen.observe(this, Observer {
+            with(binding.nonSwipeViewPager) {
+                currentItem = currentItem.plus(1)
+            }
+        })
+
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
+
+        viewModel.finishScreen.observe(this, Observer {
+            finish()
+        })
+    }
+
+    private fun setCreateRoomVP() {
+        binding.nonSwipeViewPager.run {
+            adapter = createRoomStepVPAdapter
+            offscreenPageLimit = childFragments.size - 1
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) = Unit
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    viewModel.isLastScreen.value = childFragments.size - 1 == position
+                }
+
+                override fun onPageSelected(position: Int) = Unit
+
+            })
+        }
+    }
+
+    override fun onBackPressed() {
+        if (binding.nonSwipeViewPager.currentItem == 0) {
+            super.onBackPressed()
+        } else {
+            with(binding.nonSwipeViewPager) {
+                currentItem = currentItem.minus(1)
+            }
+        }
     }
 
     companion object {

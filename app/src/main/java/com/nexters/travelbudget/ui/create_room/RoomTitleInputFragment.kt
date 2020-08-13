@@ -1,10 +1,7 @@
 package com.nexters.travelbudget.ui.create_room
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRoomTitleInputBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
