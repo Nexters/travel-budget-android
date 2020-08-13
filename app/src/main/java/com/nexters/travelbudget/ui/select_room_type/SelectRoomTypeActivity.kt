@@ -16,6 +16,7 @@ import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.ui.create_room.CreateRoomActivity
 import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -48,7 +49,7 @@ class SelectRoomTypeActivity :
                 }
                 startActivity(intent)
             } else {
-                Toast.makeText(this, getString(R.string.request_fail), Toast.LENGTH_SHORT).show()
+                showToastMessage(getString(R.string.request_fail))
             }
             finish()
         })

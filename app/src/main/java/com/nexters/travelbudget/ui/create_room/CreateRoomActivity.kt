@@ -12,6 +12,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityCreateRoomBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -61,15 +62,13 @@ class CreateRoomActivity :
         })
 
         viewModel.successCreateRoom.observe(this, Observer {
-            Toast.makeText(this, getString(R.string.create_travel_room_success), Toast.LENGTH_LONG)
-                .show()
+            showToastMessage(getString(R.string.create_travel_room_success))
             setResult(Constant.RESULT_OK)
             finish()
         })
 
         viewModel.errorCreateRoom.observe(this, Observer {
-            Toast.makeText(this, getString(R.string.create_travel_room_fail), Toast.LENGTH_LONG)
-                .show()
+            showToastMessage(getString(R.string.create_travel_room_fail))
             setResult(Constant.RESULT_ERROR)
             finish()
         })

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.nexters.travelbudget.BR
+import com.nexters.travelbudget.utils.ext.showToastMessage
 
 /**
  * Activity Base 클래스
@@ -33,7 +34,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(@LayoutRes 
         }
 
         viewModel.liveToastMessage.observe(this, Observer { message ->
-            Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
+            showToastMessage(message)
         })
     }
 }

@@ -16,6 +16,7 @@ import com.nexters.travelbudget.ui.main.MainActivity
 import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
 import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -68,7 +69,7 @@ class RecordingTravelFragment :
         binding.rvRecordingTravel.run {
             adapter = TravelRecordRVAdapter { tripRecordResponse ->
                 // TODO 여행 상세 화면으로 연결 작업
-                Toast.makeText(context, "상세 화면 전환", Toast.LENGTH_LONG).show()
+                context.showToastMessage("상세 화면 전환")
             }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(

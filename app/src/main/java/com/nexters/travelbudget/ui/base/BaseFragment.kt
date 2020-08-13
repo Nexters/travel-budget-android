@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.nexters.travelbudget.BR
+import com.nexters.travelbudget.utils.ext.showToastMessage
 
 /**
  * Fragment Base 클래스
@@ -32,10 +33,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(@LayoutRes 
         }
 
         viewModel.liveToastMessage.observe(viewLifecycleOwner, Observer { message ->
-            context?.let { context ->
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            }
-
+            context?.showToastMessage(message)
         })
     }
 }
