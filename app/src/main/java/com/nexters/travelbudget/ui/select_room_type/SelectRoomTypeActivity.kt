@@ -43,7 +43,10 @@ class SelectRoomTypeActivity :
 
         viewModel.goToNextScreen.observe(this, Observer {
             if (viewModel.travelRoomType.value != null) {
-                startActivity(CreateRoomActivity.getIntent(this, viewModel.userName.value ?: getString(R.string.default_user_name), viewModel.travelRoomType.value!!))
+                val intent = CreateRoomActivity.getIntent(this, viewModel.userName.value ?: getString(R.string.default_user_name), viewModel.travelRoomType.value!!).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+                }
+                startActivity(intent)
             } else {
                 Toast.makeText(this, getString(R.string.request_fail), Toast.LENGTH_SHORT).show()
             }

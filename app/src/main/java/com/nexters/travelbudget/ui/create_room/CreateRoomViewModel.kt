@@ -61,6 +61,9 @@ class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() 
     private val _nextScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val nextScreen: SingleLiveEvent<Unit> = _nextScreen
 
+    private val _successCreateRoom: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val successCreateRoom: SingleLiveEvent<Unit> = _successCreateRoom
+
     private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val backScreen: SingleLiveEvent<Unit> = _backScreen
 
@@ -74,7 +77,7 @@ class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() 
                 if (it == NEXT_STEP) {
                     _nextScreen.call()
                 } else {
-                    // TODO 여행 생성 작업
+                    _successCreateRoom.call()
                 }
             }.addTo(compositeDisposable)
     }

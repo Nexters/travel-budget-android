@@ -59,11 +59,17 @@ class CreateRoomActivity :
             }
         })
 
+        viewModel.successCreateRoom.observe(this, Observer {
+            setResult(Constant.RESULT_OK)
+            finish()
+        })
+
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })
 
         viewModel.finishScreen.observe(this, Observer {
+            setResult(Constant.RESULT_CANCEL)
             finish()
         })
     }
@@ -91,6 +97,7 @@ class CreateRoomActivity :
 
     override fun onBackPressed() {
         if (binding.nonSwipeViewPager.currentItem == 0) {
+            setResult(Constant.RESULT_CANCEL)
             super.onBackPressed()
         } else {
             with(binding.nonSwipeViewPager) {

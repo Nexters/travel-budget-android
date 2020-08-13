@@ -1,7 +1,9 @@
 package com.nexters.travelbudget.ui.main.record
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -48,6 +50,11 @@ class RecordingTravelFragment :
             isFirstExecution = false
             viewModel.getRecordingTravelData()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.getRecordingTravelData()
     }
 
     private fun setSwipeRefreshLayout() {
