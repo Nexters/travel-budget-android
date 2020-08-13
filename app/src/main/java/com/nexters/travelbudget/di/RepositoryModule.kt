@@ -1,9 +1,6 @@
 package com.nexters.travelbudget.di
 
-import com.nexters.travelbudget.data.repository.MainTripRecordRepository
-import com.nexters.travelbudget.data.repository.SignUpRepository
-import com.nexters.travelbudget.data.repository.UserInfoRepository
-import com.nexters.travelbudget.data.repository.UserTokenRepository
+import com.nexters.travelbudget.data.repository.*
 import org.koin.dsl.module
 
 /**
@@ -18,4 +15,5 @@ val repositoryModule = module {
     single { UserTokenRepository(get(), get()) }
     single { MainTripRecordRepository(get()) }
     single { UserInfoRepository(get()) }
+    single { CreateRoomRepository(get()) }
 }

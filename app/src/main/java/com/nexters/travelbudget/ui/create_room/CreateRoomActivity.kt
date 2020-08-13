@@ -3,6 +3,7 @@ package com.nexters.travelbudget.ui.create_room
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -60,7 +61,16 @@ class CreateRoomActivity :
         })
 
         viewModel.successCreateRoom.observe(this, Observer {
+            Toast.makeText(this, getString(R.string.create_travel_room_success), Toast.LENGTH_LONG)
+                .show()
             setResult(Constant.RESULT_OK)
+            finish()
+        })
+
+        viewModel.errorCreateRoom.observe(this, Observer {
+            Toast.makeText(this, getString(R.string.create_travel_room_fail), Toast.LENGTH_LONG)
+                .show()
+            setResult(Constant.RESULT_ERROR)
             finish()
         })
 

@@ -2,9 +2,16 @@ package com.nexters.travelbudget.ui.create_room
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nexters.travelbudget.data.remote.model.request.CreateRoomRequest
+import com.nexters.travelbudget.data.remote.model.response.CreateRoomResponse
+import com.nexters.travelbudget.data.remote.model.response.TripRecordResponse
+import com.nexters.travelbudget.data.repository.CreateRoomRepository
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.ext.applySchedulers
+import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
+import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
@@ -16,7 +23,11 @@ import java.util.concurrent.TimeUnit
  * @author Wayne
  * @since v1.0.0 / 2020.08.12
  */
-class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() {
+class CreateRoomViewModel(
+    userName: String,
+    roomType: String,
+    private val createRoomRepository: CreateRoomRepository
+) : BaseViewModel() {
 
     private val nextScreenSubject: PublishSubject<String> = PublishSubject.create()
 
@@ -24,7 +35,8 @@ class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() 
     private val _userName: MutableLiveData<String> = MutableLiveData(userName)
     val userName: LiveData<String> = _userName
 
-    /** 여행 타입
+    /**
+     *  여행 타입
      *  Shared : 공동 여행
      *  Personal : 개인 여행
      *  */
@@ -51,7 +63,7 @@ class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() 
     private val _travelSharedBudget: MutableLiveData<String> = MutableLiveData("")
     val travelSharedBudget: MutableLiveData<String> = _travelSharedBudget
     val sharedBudgetChanged = fun(value: String) {
-        _travelSharedBudget.value = value
+        _travelSharedBudget.value = value.replace(",", "")
     }
 
     /** 마지막 스크린인지 여부 */
@@ -63,6 +75,9 @@ class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() 
 
     private val _successCreateRoom: SingleLiveEvent<Unit> = SingleLiveEvent()
     val successCreateRoom: SingleLiveEvent<Unit> = _successCreateRoom
+
+    private val _errorCreateRoom: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val errorCreateRoom: SingleLiveEvent<Unit> = _errorCreateRoom
 
     private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val backScreen: SingleLiveEvent<Unit> = _backScreen
@@ -77,9 +92,44 @@ class CreateRoomViewModel(userName: String, roomType: String) : BaseViewModel() 
                 if (it == NEXT_STEP) {
                     _nextScreen.call()
                 } else {
-                    _successCreateRoom.call()
+                    requestCreateRoom()
                 }
             }.addTo(compositeDisposable)
+    }
+
+    private fun requestCreateRoom() {
+        val isPublic = if (isSharedRoom) {
+            "Y"
+        } else {
+            "N"
+        }
+        val sharedBudget = if (_travelSharedBudget.value!!.isEmpty()) {
+            0
+        } else {
+            _travelSharedBudget.value!!.toInt()
+        }
+        val roomName = _roomName.value ?: ""
+        val travelStartDate = _travelStartDate.value?.convertToServerDate() ?: ""
+        val travelEndDate = _travelEndDate.value?.convertToServerDate() ?: ""
+
+        if (roomName.isEmpty() || travelStartDate.isEmpty() || travelEndDate.isEmpty()) {
+            _errorCreateRoom.call()
+        } else {
+            val createRoomRequest =
+                CreateRoomRequest(roomName, sharedBudget, isPublic, travelStartDate, travelEndDate)
+            createRoomRepository.requestCreateRoom(createRoomRequest)
+                .applySchedulers()
+                .subscribeWith(object : TripDisposableSingleObserver<CreateRoomResponse>() {
+                    override fun onSuccess(result: CreateRoomResponse) {
+                        _successCreateRoom.call()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        super.onError(e)
+                        _errorCreateRoom.call()
+                    }
+                }).addTo(compositeDisposable)
+        }
     }
 
     fun openCalendar() {

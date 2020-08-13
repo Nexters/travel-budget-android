@@ -46,6 +46,8 @@
     <string name="start_end_date_format">%s - %s</string>
     <string name="next">다음</string>
     <string name="default_user_name">트립파이</string>
+    <string name="create_travel_room_success">여행이 추가되었습니다.</string>
+    <string name="create_travel_room_fail">여행 항목을 추가하는데 실패했습니다. 잠시 후 다시 시도해주세요.</string>
 
     <!-- create room -->
     <string name="room_title_format">%s,\n어떤 여행을 떠나세요?</string>
