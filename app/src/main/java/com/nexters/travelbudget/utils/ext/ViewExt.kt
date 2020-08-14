@@ -7,6 +7,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import com.nexters.travelbudget.utils.listener.OnSingleClickListener
 
 /**
  * View 관련 Extension methods
@@ -61,4 +62,9 @@ fun View.bindMarginStart(dimen: Float) {
 @BindingAdapter("android:onCheckedChanged")
 fun RadioGroup.setOnCheckedChangeListener(listener: RadioGroup.OnCheckedChangeListener) {
     setOnCheckedChangeListener(listener)
+}
+
+@BindingAdapter("singleClick")
+fun View.setSingleClickListener(listener: View.OnClickListener) {
+    setOnClickListener(OnSingleClickListener(listener))
 }
