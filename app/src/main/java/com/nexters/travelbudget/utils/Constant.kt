@@ -28,6 +28,7 @@ interface Constant {
 
         // Request code
         const val REQUEST_CODE_CREATE_ROOM = 20
+        const val REQUEST_CODE_ENTER_ROOM = 30
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1

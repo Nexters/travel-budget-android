@@ -32,7 +32,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         })
 
         viewModel.startEnterRoom.observe(this, Observer {
-            startActivity(EnterRoomActivity.getIntent(this))
+            startActivityForResult(
+                EnterRoomActivity.getIntent(this),
+                Constant.REQUEST_CODE_ENTER_ROOM
+            )
         })
     }
 

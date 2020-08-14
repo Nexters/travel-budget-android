@@ -41,7 +41,7 @@ val viewModelModule = module {
     viewModel { (userName: String, roomType: String) ->
         CreateRoomViewModel(userName, roomType, get())
     }
-    viewModel { EnterRoomViewModel() }
+    viewModel { EnterRoomViewModel(get()) }
     viewModel { StatisticsViewModel() }
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
