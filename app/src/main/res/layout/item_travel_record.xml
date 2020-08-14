@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.nexters.travelbudget.utils.ext.StringExtKt" />
+
         <variable
             name="item"
             type="com.nexters.travelbudget.data.remote.model.response.TripRecordResponse" />
@@ -94,7 +96,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.format(@string/start_end_date_format, item.startDate, item.endDate)}"
+                android:text="@{String.format(@string/start_end_date_format, StringExtKt.convertToViewDate(item.startDate), StringExtKt.convertToViewDate(item.endDate))}"
                 android:textColor='@{item.isDoing().equals("Y") ? @color/fill_blue_3 : @color/fill_grey_2}'
                 android:textSize="@dimen/text_size_12sp"
                 android:textStyle="bold"

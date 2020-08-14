@@ -1,7 +1,9 @@
 package com.nexters.travelbudget.ui.main.record
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -10,8 +12,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRecordingTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
+import com.nexters.travelbudget.ui.main.MainActivity
 import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
+import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -34,7 +39,9 @@ class RecordingTravelFragment :
         setRecordingTravelRV()
 
         viewModel.startCreateRoom.observe(this, Observer {
-            Toast.makeText(context, "여행 만들기", Toast.LENGTH_LONG).show()
+            context?.run {
+                (activity as? MainActivity)?.goToSelectRoomTypeActivity()
+            }
         })
     }
 
@@ -44,6 +51,11 @@ class RecordingTravelFragment :
             isFirstExecution = false
             viewModel.getRecordingTravelData()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.getRecordingTravelData()
     }
 
     private fun setSwipeRefreshLayout() {
@@ -57,7 +69,7 @@ class RecordingTravelFragment :
         binding.rvRecordingTravel.run {
             adapter = TravelRecordRVAdapter { tripRecordResponse ->
                 // TODO 여행 상세 화면으로 연결 작업
-                Toast.makeText(context, "상세 화면 전환", Toast.LENGTH_LONG).show()
+                context.showToastMessage("상세 화면 전환")
             }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(

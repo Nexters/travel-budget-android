@@ -3,6 +3,7 @@ package com.nexters.travelbudget.utils
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.databinding.BindingAdapter
 import com.nexters.travelbudget.utils.ext.toMoneyString
 
 /**
@@ -58,4 +59,11 @@ class MoneyStringTextWatcher(
         }
         et.setSelection(pos)
     }
+}
+
+@BindingAdapter("moneyStringTextWatcher")
+fun EditText.bindMoneyStringTextWatcher(onReplaced: (String) -> Unit) {
+    addTextChangedListener(MoneyStringTextWatcher(this) {
+        onReplaced(it)
+    })
 }

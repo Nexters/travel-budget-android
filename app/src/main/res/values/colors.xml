@@ -21,6 +21,11 @@
     <color name="fill_light_grey">#eeeeee</color>
     <!---->
 
+    <!-- toast message -->
+    <color name="color_toast_message_background">#6e737d</color>
+    <color name="color_toast_message_text">#ffffff</color>
+    <!---->
+
     <color name="colorRippleEffect">#1F000000</color>
 
     <color name="colorBlack">#000000</color>
