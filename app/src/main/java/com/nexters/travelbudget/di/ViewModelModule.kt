@@ -9,6 +9,7 @@ import com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailViewModel
 import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel
+import com.nexters.travelbudget.ui.enter_room.EnterRoomViewModel
 import com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel
 import com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel
 import com.nexters.travelbudget.ui.record_spend.RecordSpendViewModel
@@ -40,6 +41,7 @@ val viewModelModule = module {
     viewModel { (userName: String, roomType: String) ->
         CreateRoomViewModel(userName, roomType, get())
     }
+    viewModel { EnterRoomViewModel() }
     viewModel { StatisticsViewModel() }
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
