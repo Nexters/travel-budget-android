@@ -18,9 +18,16 @@ interface Constant {
 
     companion object {
 
+        // Intent
+        const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
+        const val EXTRA_ROOM_TYPE = "EXTRA_ROOM_TYPE"
+
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
+
+        // Request code
+        const val REQUEST_CODE_CREATE_ROOM = 20
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1

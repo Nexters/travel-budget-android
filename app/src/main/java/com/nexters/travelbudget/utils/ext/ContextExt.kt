@@ -1,11 +1,17 @@
 package com.nexters.travelbudget.utils.ext
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Toast
 import androidx.core.content.edit
+import com.nexters.travelbudget.R
 import com.nexters.travelbudget.utils.Constant
+import kotlinx.android.synthetic.main.view_toast_message.view.*
 
 /**
  * Context 관련 Extension methods
@@ -23,6 +29,17 @@ fun Context.isNetworkConnected(): Boolean {
         actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
         else -> false
     }
+}
+
+@SuppressLint("InflateParams")
+fun Context.showToastMessage(message: String) {
+    val view: View = LayoutInflater.from(this).inflate(R.layout.view_toast_message, null, false)
+    view.tv_toast_message.text = message
+
+    Toast(this).apply {
+        this.view = view
+        this.duration = Toast.LENGTH_SHORT
+    }.show()
 }
 
 fun Context.putSharedPreference(key: String, data: Any) {

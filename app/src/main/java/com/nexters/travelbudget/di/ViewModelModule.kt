@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.di
 
+import com.nexters.travelbudget.ui.create_room.CreateRoomViewModel
 import com.nexters.travelbudget.ui.login.LoginViewModel
 import com.nexters.travelbudget.ui.login.kakao.KakaoLogin
 import com.nexters.travelbudget.ui.main.MainViewModel
@@ -12,6 +13,7 @@ import com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel
 import com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel
 import com.nexters.travelbudget.ui.record_spend.RecordSpendViewModel
 import com.nexters.travelbudget.ui.select_date.SelectDateViewModel
+import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeViewModel
 import com.nexters.travelbudget.ui.statistics.StatisticsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -29,9 +31,16 @@ val viewModelModule = module {
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get(), get())
     }
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(get()) }
     viewModel { RecordingTravelViewModel(get()) }
     viewModel { RecordedTravelViewModel(get()) }
+    viewModel { (userName: String) ->
+        SelectRoomTypeViewModel(userName)
+    }
+    viewModel { (userName: String, roomType: String) ->
+        CreateRoomViewModel(userName, roomType, get())
+    }
+    viewModel { StatisticsViewModel() }
     viewModel { StatisticsViewModel(get()) }
     viewModel { TripDetailViewModel() }
     viewModel { TripDetailSharedViewModel() }
