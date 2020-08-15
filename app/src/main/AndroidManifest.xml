@@ -38,11 +38,15 @@
         <activity
             android:name=".ui.select_room_type.SelectRoomTypeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.create_room.CreateRoomActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.enter_room.EnterRoomActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

@@ -16,6 +16,9 @@ class MainViewModel(private val userInfoRepository: UserInfoRepository) : BaseVi
     private val _startCreateRoom = SingleLiveEvent<Unit>()
     val startCreateRoom = _startCreateRoom
 
+    private val _startEnterRoom = SingleLiveEvent<Unit>()
+    val startEnterRoom = _startEnterRoom
+
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
 
@@ -32,5 +35,9 @@ class MainViewModel(private val userInfoRepository: UserInfoRepository) : BaseVi
 
     fun createTripRoom() {
         _startCreateRoom.call()
+    }
+
+    fun enterTripRoom() {
+        _startEnterRoom.call()
     }
 }

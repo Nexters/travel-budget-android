@@ -16,4 +16,5 @@ val repositoryModule = module {
     single { MainTripRecordRepository(get()) }
     single { UserInfoRepository(get()) }
     single { CreateRoomRepository(get()) }
+    single { EnterRoomRepository(get()) }
 }
