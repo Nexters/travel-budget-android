@@ -1,13 +1,8 @@
 package com.nexters.travelbudget.data.remote.api
 
-import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
-
-import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
 import com.nexters.travelbudget.data.remote.model.request.CreateRoomRequest
-import com.nexters.travelbudget.data.remote.model.response.CreateRoomResponse
+import com.nexters.travelbudget.data.remote.model.response.*
 
-import com.nexters.travelbudget.data.remote.model.response.TripRecordResponse
-import com.nexters.travelbudget.data.remote.model.response.UserResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.Body
@@ -51,4 +46,7 @@ interface TripieService {
 
     @PUT("api/users/me")
     fun requestEditUserProfile(@Body request: HashMap<String, String>): Completable
+
+    @GET("api/plans/{id}/members")
+    fun getTripMembers(@Path("id") planId: Long): Single<TripMemberResponse>
 }

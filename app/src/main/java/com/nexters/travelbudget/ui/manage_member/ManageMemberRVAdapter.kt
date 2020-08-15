@@ -29,10 +29,10 @@ class ManageMemberRVAdapter(
     override fun getItemCount(): Int = items.size.plus(1)
 
     override fun getItemViewType(position: Int): Int {
-        return if (items.size - 1 == position) {
-            MANAGE_MEMBER_TYPE
-        } else {
+        return if (items.size  == position) {
             INVITE_MEMBER_TYPE
+        } else {
+            MANAGE_MEMBER_TYPE
         }
     }
 
