@@ -1,4 +1,4 @@
-package com.nexters.travelbudget.ui.manage_friend
+package com.nexters.travelbudget.ui.manage_member
 
 import com.nexters.travelbudget.ui.base.BaseViewModel
 
@@ -8,5 +8,5 @@ import com.nexters.travelbudget.ui.base.BaseViewModel
  * @author Wayne
  * @since v1.0.0 / 2020.08.15
  */
-class ManageFriendViewModel : BaseViewModel() {
+class ManageMemberViewModel : BaseViewModel() {
 }

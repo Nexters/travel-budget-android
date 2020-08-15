@@ -71,7 +71,7 @@
             android:name=".ui.detail.TripDetailAloneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.manage_friend.ManageFriendActivity"
+            android:name=".ui.manage_member.ManageMemberActivity"
             android:screenOrientation="portrait" />
     </application>
 
