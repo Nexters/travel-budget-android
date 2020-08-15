@@ -45,7 +45,7 @@ class ManageMemberActivity :
         viewModel.getTripMembers()
 
         viewModel.tripMembers.observe(this, Observer {
-            manageMemberRVAdapter.setItems(it.members)
+            manageMemberRVAdapter.setItems(it.members, it.myAuthority)
         })
 
         viewModel.backScreen.observe(this, Observer {

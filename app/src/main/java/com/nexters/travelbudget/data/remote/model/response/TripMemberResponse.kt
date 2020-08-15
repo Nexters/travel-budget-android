@@ -12,6 +12,8 @@ import com.google.gson.annotations.SerializedName
 data class TripMemberResponse(
     @SerializedName("invite_code")
     val inviteCode: String,
+    @SerializedName("my_authority")
+    val myAuthority: String,
     @SerializedName("members")
     val members: List<Member>
 ) {

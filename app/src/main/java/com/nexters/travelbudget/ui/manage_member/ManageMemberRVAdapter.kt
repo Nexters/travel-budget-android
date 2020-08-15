@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.data.remote.model.response.TripMemberResponse
 import com.nexters.travelbudget.databinding.ItemInviteMemberBinding
 import com.nexters.travelbudget.databinding.ItemManageMemberBinding
+import com.nexters.travelbudget.model.enums.TripMemberType
 
 /**
  * 여행 친구 목록 Recyclerview adapter
@@ -20,16 +21,19 @@ class ManageMemberRVAdapter(
 
     private val items: MutableList<TripMemberResponse.Member> = mutableListOf()
 
-    fun setItems(items: List<TripMemberResponse.Member>) {
+    private var isOwner: Boolean = false
+
+    fun setItems(items: List<TripMemberResponse.Member>, myAuthorityType: String) {
         this.items.clear()
         this.items.addAll(items)
+        isOwner = myAuthorityType == TripMemberType.OWNER.name
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = items.size.plus(1)
 
     override fun getItemViewType(position: Int): Int {
-        return if (items.size  == position) {
+        return if (items.size == position) {
             INVITE_MEMBER_TYPE
         } else {
             MANAGE_MEMBER_TYPE
@@ -44,7 +48,7 @@ class ManageMemberRVAdapter(
                     parent,
                     false
                 ).apply {
-                    root.setOnClickListener {
+                    tvExportMemger.setOnClickListener {
                         item?.let(onClickExportMember)
                     }
                 }
@@ -75,6 +79,7 @@ class ManageMemberRVAdapter(
 
         fun bind(item: TripMemberResponse.Member) {
             binding.item = item
+            binding.isOwner = isOwner
         }
     }
 

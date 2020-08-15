@@ -6,9 +6,15 @@
 
     <data>
 
+        <import type="com.nexters.travelbudget.model.enums.TripMemberType" />
+
         <variable
             name="item"
             type="com.nexters.travelbudget.data.remote.model.response.TripMemberResponse.Member" />
+
+        <variable
+            name="isOwner"
+            type="boolean" />
 
     </data>
 
@@ -45,6 +51,8 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_light_blue_radius_6dp"
             android:gravity="center"
+            android:visibility="invisible"
+            android:visibleIf="@{item.authority.equals(TripMemberType.OWNER.name())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_user_name"
             app:layout_constraintTop_toTopOf="parent">
@@ -64,13 +72,17 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_export_memger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:text="@string/export"
             android:textColor="@color/fill_grey_2"
             android:textSize="@dimen/text_size_12sp"
+            android:visibility="invisible"
+            android:visibleIf="@{isOwner}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
