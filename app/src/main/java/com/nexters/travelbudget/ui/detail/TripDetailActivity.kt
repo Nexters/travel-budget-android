@@ -11,6 +11,7 @@ import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
+import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
@@ -29,7 +30,8 @@ class TripDetailActivity :
         binding.isPersonal = isPersonal
         setTabLayout()
         observeViewModel()
-        viewModel.getTripDetailData(39)
+
+        viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
 //        intent.getBundleExtra()
     }
 
@@ -65,7 +67,13 @@ class TripDetailActivity :
         personalBudgetData: TripDetailResponse.Data
     ) {
         binding.vpDetailPager.run {
-            adapter = DetailVPAdapter(supportFragmentManager, TAB_COUNT, dates, sharedBudgetData, personalBudgetData)
+            adapter = DetailVPAdapter(
+                supportFragmentManager,
+                TAB_COUNT,
+                dates,
+                sharedBudgetData,
+                personalBudgetData
+            )
             offscreenPageLimit = TAB_COUNT - 1
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
         }
