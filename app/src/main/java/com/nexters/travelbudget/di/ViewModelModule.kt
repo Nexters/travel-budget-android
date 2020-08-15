@@ -44,6 +44,7 @@ val viewModelModule = module {
     viewModel { (userName: String, roomType: String) ->
         CreateRoomViewModel(userName, roomType, get())
     }
+    viewModel { StatisticsViewModel(get()) }
     viewModel { MyPageViewModel(get()) }
     viewModel { (userResponse: UserResponse) ->
         EditUserProfileViewModel(userResponse, get())

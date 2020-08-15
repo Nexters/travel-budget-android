@@ -42,14 +42,15 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="MainTabStyle" parent="Widget.Design.TabLayout">
+    <style name="TabStyle" parent="Widget.Design.TabLayout">
         <item name="tabContentStart">24dp</item>
         <item name="tabIndicatorColor">@color/fill_blue</item>
         <item name="tabIndicatorFullWidth">false</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabMode">scrollable</item>
-        <item name="tabPaddingStart">16dp</item>
-        <item name="tabPaddingEnd">16dp</item>
+        <item name="tabPaddingStart">18dp</item>
+        <item name="tabPaddingEnd">18dp</item>
+        <item name="tabMinWidth">12dp</item>
         <item name="tabPaddingTop">12dp</item>
         <item name="tabPaddingBottom">12dp</item>
         <item name="tabRippleColor">@null</item>

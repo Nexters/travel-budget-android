@@ -1,49 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.nexters.travelbudget.model.StatisticsItemModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="68dp">
 
-        <View
-            android:id="@+id/view_color"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <com.nexters.travelbudget.utils.widget.CircleView
+            android:id="@+id/circle_view"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            bind:setCircleColor="@{model.color}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_category_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            bind:imgRes="@{model.icon}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/circle_view"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:src="@drawable/ic_category_meal_32dp"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="식비"
+            android:layout_marginStart="16dp"
+            android:text="@{model.tag}"
+            android:textColor="@color/fill_grey_1"
             android:textSize="16sp"
-            android:textColor="#757575"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/view_color"
-            app:layout_constraintTop_toTopOf="@id/view_color"
-            app:layout_constraintBottom_toTopOf="@id/tv_spend_percent"/>
+            app:layout_constraintBottom_toTopOf="@id/tv_spend_percent"
+            app:layout_constraintStart_toEndOf="@id/iv_category_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_category_icon"
+            tools:text="식비" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_spend_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="70%"
-            android:textSize="16sp"
-            android:textColor="#757575"
+            android:text="@{String.format(@string/percent_unit, model.percent)}"
+            android:textColor="@color/fill_blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_category_icon"
             app:layout_constraintStart_toStartOf="@id/tv_category_title"
             app:layout_constraintTop_toBottomOf="@id/tv_category_title"
-            app:layout_constraintBottom_toBottomOf="@id/view_color" />
+            tools:text="70%" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_spend_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="525,100원"
-            android:textSize="20sp"
-            android:textColor="#000"
+            android:text="@{String.format(@string/money_unit, model.moneyAmount)}"
+            android:textColor="@color/fill_grey_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="525,100원" />
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/fill_light_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
