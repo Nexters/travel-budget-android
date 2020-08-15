@@ -21,6 +21,9 @@ class MyPageViewModel(private val userInfoRepository: UserInfoRepository) : Base
     private val _userInfo: MutableLiveData<UserResponse> = MutableLiveData()
     val userInfo: LiveData<UserResponse> = _userInfo
 
+    private val _startEditUserProfile: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val startEditUserProfile: SingleLiveEvent<Unit> = _startEditUserProfile
+
     private val _logout: SingleLiveEvent<Unit> = SingleLiveEvent()
     val logout: SingleLiveEvent<Unit> = _logout
 
@@ -36,6 +39,10 @@ class MyPageViewModel(private val userInfoRepository: UserInfoRepository) : Base
                 }
 
             }).addTo(compositeDisposable)
+    }
+
+    fun startEditUserProfile() {
+        _startEditUserProfile.call()
     }
 
     fun logout() {

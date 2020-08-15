@@ -25,6 +25,15 @@ class MyPageActivity :
         super.onCreate(savedInstanceState)
         viewModel.getUserInfo()
 
+        viewModel.startEditUserProfile.observe(this, Observer {
+            startActivity(
+                EditUserProfileActivity.getIntent(
+                    this,
+                    viewModel.userInfo.value ?: return@Observer
+                )
+            )
+        })
+
         viewModel.logout.observe(this, Observer {
             TravelApplication.instance.logout()
         })
