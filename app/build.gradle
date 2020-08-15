@@ -87,6 +87,9 @@ dependencies {
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
 
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     // social login
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.29.0'
 
