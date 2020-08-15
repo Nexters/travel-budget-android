@@ -6,6 +6,10 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.nexters.travelbudget.data.remote.model.response.TripMemberResponse.Member" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

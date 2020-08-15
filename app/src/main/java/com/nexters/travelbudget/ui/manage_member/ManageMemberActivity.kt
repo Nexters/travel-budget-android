@@ -21,8 +21,23 @@ class ManageMemberActivity :
 
     override val viewModel: ManageMemberViewModel by viewModel()
 
+    private val manageMemberRVAdapter by lazy {
+        ManageMemberRVAdapter(onClickExportMember = {
+
+        }, onClickInviteMember = {
+
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setManageMemberRV()
+    }
+
+    private fun setManageMemberRV() {
+        binding.rvMembers.run {
+            adapter = manageMemberRVAdapter
+        }
     }
 
     companion object {
