@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -51,7 +52,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_user_info_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="104dp"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:paddingStart="24dp"
@@ -62,19 +63,19 @@
 
             <ImageView
                 android:id="@+id/iv_user_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                bind:imgUrl="@{vm.userInfo.profileImage}" />
 
             <TextView
                 android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:text="@{vm.userInfo.nickname}"
                 android:textColor="@color/fill_grey_1"
                 android:textSize="@dimen/text_size_14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -263,6 +264,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
+            android:onClick="@{() -> vm.logout()}"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:text="@string/logout"

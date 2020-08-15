@@ -2,12 +2,12 @@ package com.nexters.travelbudget.ui.mypage
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMyPageBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
+import com.nexters.travelbudget.ui.base.TravelApplication
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -23,6 +23,11 @@ class MyPageActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getUserInfo()
+
+        viewModel.logout.observe(this, Observer {
+            TravelApplication.instance.logout()
+        })
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
