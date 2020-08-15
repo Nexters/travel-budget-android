@@ -8,11 +8,10 @@ import com.nexters.travelbudget.ui.statistics.StatisticsFragment
 class StatisticsPageAdapter(
     fragmentManager: FragmentManager
 ) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> StatisticsFragment.newInstance()
-            else -> StatisticsFragment.newInstance()
+            0 -> StatisticsFragment.newInstance(26)
+            else -> StatisticsFragment.newInstance(26)
         }
     }
 

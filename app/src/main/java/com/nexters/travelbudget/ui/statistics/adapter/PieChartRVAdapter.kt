@@ -1,11 +1,8 @@
 package com.nexters.travelbudget.ui.statistics.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ItemPieDataListBinding
@@ -58,6 +55,12 @@ class PieChartRVAdapter : RecyclerView.Adapter<PieChartRVAdapter.PieChartViewHol
                 colorList[position],
                 icon
             )
+
+            viewDivider.visibility = if (position != itemCount - 1) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
         }
     }
 

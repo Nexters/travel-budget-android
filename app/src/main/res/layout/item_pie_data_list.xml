@@ -74,6 +74,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="525,100원" />
         <View
+            android:id="@+id/view_divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/fill_light_grey"

@@ -11,12 +11,19 @@ data class StatisticsResponse(
     val categories: Category
 ) {
     data class Category(
+        @SerializedName("TRAFFIC")
         val traffic: Int,
+        @SerializedName("SLEEP")
         val sleep: Int,
+        @SerializedName("FOOD")
         val food: Int,
+        @SerializedName("SNACK")
         val snack: Int,
+        @SerializedName("SHOPPING")
         val shopping: Int,
+        @SerializedName("CULTURE")
         val culture: Int,
+        @SerializedName("ETC")
         val etc: Int
     )
 }

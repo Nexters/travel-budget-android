@@ -18,7 +18,9 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
 
         observeViewModel()
         setupStatisticsRV()
-//        viewModel.setData(14)
+        arguments?.let {
+            viewModel.setData(it.getLong(BUNDLE_BUDGET_ID))
+        }
     }
 
     private fun observeViewModel() {
@@ -38,8 +40,14 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
     }
 
     companion object {
-        fun newInstance(): StatisticsFragment {
-            return StatisticsFragment()
+        const val BUNDLE_BUDGET_ID = "bundle_budget_id"
+
+        fun newInstance(budgetId: Long): StatisticsFragment {
+            return StatisticsFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(BUNDLE_BUDGET_ID, budgetId)
+                }
+            }
         }
     }
 }

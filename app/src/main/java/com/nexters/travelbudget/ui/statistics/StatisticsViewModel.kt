@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
 import com.nexters.travelbudget.data.repository.StatisticsRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
@@ -22,15 +23,13 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
     private val _spendAmount = MutableLiveData<String>()
     val spendAmount: LiveData<String> get() = _spendAmount
 
+    private val _isEmptyData = MutableLiveData(false)
+    val isEmptyData: LiveData<Boolean> get() = _isEmptyData
+
     fun setData(budgetId: Long) {
         statisticsRepo.getStatisticsInfo(budgetId)
             .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
-//            .doOnSubscribe { _isLoading.value = true }
-//            .doAfterTerminate { _isLoading.value = false }
-            .doOnSuccess {
-//                _isEmptyList.value = it.isEmpty()
-            }
             .subscribeWith(object : TripDisposableSingleObserver<StatisticsResponse>() {
                 override fun onSuccess(result: StatisticsResponse) {
                     _spendAmount.value = result.usedAmount.toMoneyString()
@@ -45,27 +44,16 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
                         addIfNotZero(PieData("숙박", category.sleep))
                         addIfNotZero(PieData("간식", category.snack))
                         addIfNotZero(PieData("기타", category.etc))
-                        addIfNotZero(PieData("기타", category.etc))
                     }
+                    _isEmptyData.value = newPieDataList.value.isNullOrEmpty()
                 }
             }).addTo(compositeDisposable)
     }
 
     private fun ArrayList<PieData>.addIfNotZero(data: PieData) {
         if (data.value != 0) {
+            DLog.d("")
             add(data)
-        }
-    }
-
-    private fun getData(): ArrayList<PieData> {
-        return ArrayList<PieData>().apply {
-            add(PieData("식비", 1500000))
-            add(PieData("간식", 375000))
-            add(PieData("문화", 400000))
-            add(PieData("교통", 390000))
-            add(PieData("기타", 200000))
-        }.apply {
-            sort()
         }
     }
 }
