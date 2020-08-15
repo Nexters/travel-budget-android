@@ -102,5 +102,7 @@
     <string name="current_spend"> 지출 했어요.</string>
     <string name="statistics_empty_data_content">지출 내역이 없어 통계를 만들 수 없습니다.</string>
 
+    <!-- manage friend -->
+    <string name="travel_friend_management">여행 친구 관리</string>
 
 </resources>
