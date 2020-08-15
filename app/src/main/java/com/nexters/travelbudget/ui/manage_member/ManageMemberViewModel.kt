@@ -6,6 +6,7 @@ import com.nexters.travelbudget.data.remote.model.response.TripMemberResponse
 import com.nexters.travelbudget.data.repository.TripMemberRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.ext.applySchedulers
+import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
 
@@ -27,6 +28,9 @@ class ManageMemberViewModel(planId: Long, private val tripMemberRepository: Trip
     private val _tripMembers: MutableLiveData<TripMemberResponse> = MutableLiveData()
     val tripMembers: LiveData<TripMemberResponse> = _tripMembers
 
+    private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val backScreen: SingleLiveEvent<Unit> = _backScreen
+
     fun getTripMembers() {
         val planId = _planId.value ?: return
 
@@ -42,5 +46,9 @@ class ManageMemberViewModel(planId: Long, private val tripMemberRepository: Trip
                 }
 
             }).addTo(compositeDisposable)
+    }
+
+    fun backScreen() {
+        _backScreen.call()
     }
 }

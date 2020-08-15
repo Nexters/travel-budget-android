@@ -47,6 +47,10 @@ class ManageMemberActivity :
         viewModel.tripMembers.observe(this, Observer {
             manageMemberRVAdapter.setItems(it.members)
         })
+
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     override fun onRefresh() {
