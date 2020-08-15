@@ -8,6 +8,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMyPageBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.base.TravelApplication
+import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -26,11 +27,11 @@ class MyPageActivity :
         viewModel.getUserInfo()
 
         viewModel.startEditUserProfile.observe(this, Observer {
-            startActivity(
+            startActivityForResult(
                 EditUserProfileActivity.getIntent(
                     this,
                     viewModel.userInfo.value ?: return@Observer
-                )
+                ), Constant.REQUEST_CODE_EDIT_USER_NAME
             )
         })
 
@@ -41,6 +42,21 @@ class MyPageActivity :
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.REQUEST_CODE_EDIT_USER_NAME && resultCode == Constant.RESULT_OK) {
+            viewModel.editUserProfile.value = true
+            viewModel.getUserInfo()
+        }
+    }
+
+    override fun finish() {
+        if (viewModel.editUserProfile.value!!) {
+            setResult(Constant.RESULT_OK)
+        }
+        super.finish()
     }
 
     companion object {

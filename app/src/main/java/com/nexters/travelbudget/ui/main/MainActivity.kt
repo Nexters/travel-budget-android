@@ -33,7 +33,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         })
 
         viewModel.startMyPage.observe(this, Observer {
-            startActivity(MyPageActivity.getIntent(this))
+            startActivityForResult(
+                MyPageActivity.getIntent(this),
+                Constant.REQUEST_CODE_EDIT_USER_NAME
+            )
         })
 
         viewModel.startEnterRoom.observe(this, Observer {
@@ -67,10 +70,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        binding.vpMainPager.currentItem = 0
-        for (fragment in supportFragmentManager.fragments) {
-            if (fragment is RecordingTravelFragment && resultCode == Constant.RESULT_OK) {
-                fragment.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Constant.RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_EDIT_USER_NAME) {
+                viewModel.getUserInfo()
+            } else {
+                binding.vpMainPager.currentItem = 0
+                for (fragment in supportFragmentManager.fragments) {
+                    if (fragment is RecordingTravelFragment && resultCode == Constant.RESULT_OK) {
+                        fragment.onActivityResult(requestCode, resultCode, data)
+                    }
+                }
             }
         }
     }

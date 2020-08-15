@@ -24,6 +24,9 @@ class MyPageViewModel(private val userInfoRepository: UserInfoRepository) : Base
     private val _startEditUserProfile: SingleLiveEvent<Unit> = SingleLiveEvent()
     val startEditUserProfile: SingleLiveEvent<Unit> = _startEditUserProfile
 
+    private val _editsUserProfile: MutableLiveData<Boolean> = MutableLiveData(false)
+    val editUserProfile: MutableLiveData<Boolean> = _editsUserProfile
+
     private val _logout: SingleLiveEvent<Unit> = SingleLiveEvent()
     val logout: SingleLiveEvent<Unit> = _logout
 

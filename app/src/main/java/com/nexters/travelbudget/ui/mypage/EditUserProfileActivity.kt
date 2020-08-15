@@ -32,6 +32,7 @@ class EditUserProfileActivity :
 
         viewModel.successEditNickname.observe(this, Observer {
             showToastMessage(getString(R.string.success_edit_nickname_toast_message))
+            setResult(Constant.RESULT_OK)
             finish()
         })
 
