@@ -11,6 +11,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.TripDetailActivity
+import com.nexters.travelbudget.ui.enter_room.EnterRoomActivity
 import com.nexters.travelbudget.ui.main.record.RecordingTravelFragment
 import com.nexters.travelbudget.ui.mypage.MyPageActivity
 import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
@@ -33,6 +34,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
         viewModel.startMyPage.observe(this, Observer {
             startActivity(MyPageActivity.getIntent(this))
+        })
+
+        viewModel.startEnterRoom.observe(this, Observer {
+            startActivityForResult(
+                EnterRoomActivity.getIntent(this),
+                Constant.REQUEST_CODE_ENTER_ROOM
+            )
         })
     }
 

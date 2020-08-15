@@ -68,6 +68,11 @@
     <string name="version_info">버전정보</string>
     <string name="logout">로그아웃</string>
 
+    <!-- enter room -->
+    <string name="invitation_code_title">초대 코드를 입력해주세요</string>
+    <string name="invitation_code_hint">초대 코드 입력</string>
+    <string name="enter_travel_room">여행 참여하기</string>
+
     <!-- error message -->
     <string name="request_fail">잠시 후 다시 시도해주세요.</string>
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
