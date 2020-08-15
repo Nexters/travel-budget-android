@@ -13,14 +13,11 @@
             type="com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nv_detail_shared"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -102,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="67dp"
-                        android:src="@drawable/ic_illus"
+                        android:src="@drawable/ic_illust_whole_pie"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_total_money" />
@@ -217,8 +214,8 @@
                         <androidx.appcompat.widget.AppCompatButton
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:clickable="false"
                             android:background="@drawable/ic_icon_system_dropdown_32_px_blue"
+                            android:clickable="false"
                             app:layout_constraintRight_toRightOf="@id/v_detail_shared_history"
                             app:layout_constraintTop_toTopOf="@id/v_detail_shared_history" />
 
@@ -264,6 +261,4 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

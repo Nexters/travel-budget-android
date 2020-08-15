@@ -7,9 +7,9 @@ data class TripRecordResponse(
     @SerializedName("day_count")
     val dayCount: String, // D-DAY
     @SerializedName("budget_id")
-    val budgetId: Int,
+    val budgetId: Long,
     @SerializedName("plan_id")
-    val planId: Int,
+    val planId: Long,
     @SerializedName("invite_code")
     val inviteCode: String, // 방 초대 해시 코드
     @SerializedName("is_doing")

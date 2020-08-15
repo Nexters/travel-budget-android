@@ -7,6 +7,7 @@ import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
 import com.nexters.travelbudget.utils.ext.toMoneyString
+import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 
 class TripDetailAloneViewModel : BaseViewModel() {
     private val _newDetailAloneList = MutableLiveData<ArrayList<DetailSharedData>>()
@@ -15,10 +16,13 @@ class TripDetailAloneViewModel : BaseViewModel() {
     private val _detailAloneMoney = MutableLiveData<String>()
     val detailAloneMoney: LiveData<String> get() = _detailAloneMoney
 
-    private val _detailAloneTitle = MutableLiveData<String>().apply { value =
-        TripDetailAloneViewModel.DEFAULT_TITLE
+    private val _detailAloneTitle = MutableLiveData<String>().apply {
+        value = TripDetailAloneViewModel.DEFAULT_TITLE
     }
     val detailAloneTitle: LiveData<String> get() = _detailAloneTitle
+
+    private val _detailAloneDate = MutableLiveData<String>("준비")
+    val detailAloneDate: LiveData<String> get() = _detailAloneDate
 
     private val _purposeAloneAmount = MutableLiveData<String>()
     val purposeAloneAmount: LiveData<String> = _purposeAloneAmount
@@ -32,6 +36,11 @@ class TripDetailAloneViewModel : BaseViewModel() {
     private val _suggestAloneAmount = MutableLiveData<String>()
     val suggestAloneAmount: LiveData<String> = _suggestAloneAmount
 
+    val showDateAloneDialogEvent = SingleLiveEvent<Unit>()
+
+    fun showDateAloneDialog() {
+        showDateAloneDialogEvent.call()
+    }
 
     fun addData() {
         val dataList = getData()

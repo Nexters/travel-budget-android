@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_detail_alone"
@@ -22,6 +22,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_detail_alone_go_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_back" />
@@ -33,48 +34,36 @@
                 android:layout_marginTop="8dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_detail_alone_go_pie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:src="@drawable/ic_pie" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_detail_alone_go_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="24dp"
                     android:src="@drawable/ic_edit" />
 
 
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/tv_detail_alone_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="28dp"
-            android:text="@{vm.detailAloneTitle}"
-            android:textColor="@color/colorBlack"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tb_detail_alone" />
-
-        <ScrollView
-            android:id="@+id/nv_detail_alone"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nv_detail_alone_shared"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
             android:fillViewport="true"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_title">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_detail_alone">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_detail_alone_main"
@@ -108,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
-                        android:text="약 200,185원"
+                        android:text="@{String.format(@string/money_unit3, vm.suggestAloneAmount)}"
                         android:textColor="@color/fill_grey_2"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/v_detail_alone_required_money"
@@ -130,12 +119,12 @@
                         app:layout_constraintTop_toBottomOf="@id/v_detail_alone_required_money" />
 
                     <TextView
-                        android:id="@+id/tv_detail_total_money"
+                        android:id="@+id/tv_detail_alone_total_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="20dp"
-                        android:text="2,000,000원"
+                        android:text="@{String.format(@string/money_unit2, vm.purposeAloneAmount)}"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -147,13 +136,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="67dp"
-                        android:src="@drawable/ic_illus"
+                        android:src="@drawable/ic_illust_whole_pie"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_detail_total_money" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_total_money" />
 
                     <TextView
-                        android:id="@+id/tv_alone_require_write"
+                        android:id="@+id/tv_require_alone_write"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -173,13 +162,13 @@
                         android:background="@drawable/ic_rectangle_black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_alone_require_write" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_require_alone_write" />
 
                     <TextView
                         android:id="@+id/tv_detail_alone_remain_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,600,000원"
+                        android:text="@{String.format(@string/money_unit2, vm.remainAloneAmount)}"
                         android:textColor="@color/fill_grey"
                         android:textSize="27sp"
                         android:textStyle="bold"
@@ -188,7 +177,7 @@
                         app:layout_constraintTop_toBottomOf="@id/v_detail_alone_bar" />
 
                     <TextView
-                        android:id="@+id/tv_alone_remain_info"
+                        android:id="@+id/tv_remain_alone_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="남았어요"
@@ -199,14 +188,14 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_remain_money" />
 
                     <View
-                        android:id="@+id/v_alone_divide_section"
+                        android:id="@+id/v_divide_alone_section"
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
                         android:layout_marginTop="24dp"
                         android:background="@drawable/ic_rectangle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_alone_remain_info" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_remain_alone_info" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,7 +205,7 @@
                     app:layout_constraintTop_toBottomOf="@id/cl_detail_alone_main">
 
                     <TextView
-                        android:id="@+id/tv_detail_alone_history"
+                        android:id="@+id/tv_detail_alone_shared_history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
@@ -229,48 +218,48 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_detail_alone_history"
+                        android:id="@+id/cl_detail_alone_shared_history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="16dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_history">
+                        app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_shared_history">
 
                         <View
-                            android:id="@+id/v_detail_alone_history"
+                            android:id="@+id/v_detail_shared_history"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:background="@drawable/ic_rectangle_shared_history"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tv_detail_alone_history_date"
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_detail_history_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:text="2020.7.26"
+                            android:text="test"
                             android:textColor="@color/colorFillBlue"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="@id/v_detail_alone_history"
-                            app:layout_constraintTop_toTopOf="@id/v_detail_alone_history" />
+                            app:layout_constraintLeft_toLeftOf="@id/v_detail_shared_history"
+                            app:layout_constraintTop_toTopOf="@id/v_detail_shared_history" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:background="@drawable/ic_icon_system_dropdown_32_px_blue"
-                            app:layout_constraintRight_toRightOf="@id/v_detail_alone_history"
-                            app:layout_constraintTop_toTopOf="@id/v_detail_alone_history" />
-
+                            android:clickable="false"
+                            app:layout_constraintRight_toRightOf="@id/v_detail_shared_history"
+                            app:layout_constraintTop_toTopOf="@id/v_detail_shared_history" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <TextView
-                        android:id="@+id/tv_detail_alone_money_title"
+                        android:id="@+id/tv_detail_alone_shared_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
@@ -278,10 +267,10 @@
                         android:text="사용 금액"
                         android:textColor="@color/fill_grey_2"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cl_detail_alone_history" />
+                        app:layout_constraintTop_toBottomOf="@id/cl_detail_alone_shared_history" />
 
                     <TextView
-                        android:id="@+id/tv_detail_alone_total_money"
+                        android:id="@+id/tv_detail_alone_shared_total_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
@@ -291,22 +280,24 @@
                         android:textColor="@color/fill_grey_2"
                         android:textStyle="bold"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cl_detail_alone_history" />
+                        app:layout_constraintTop_toBottomOf="@id/cl_detail_alone_shared_history" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_detail_alone_list"
+                        android:id="@+id/rv_detail_alone_shared_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:nestedScrollingEnabled="false"
                         app:addAll="@{vm.newDetailSharedList}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_money_title" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_shared_total_money" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
