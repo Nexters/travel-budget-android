@@ -59,11 +59,11 @@
     <string name="create_travel_room_fail">여행 항목을 추가하는데 실패했습니다. 잠시 후 다시 시도해주세요.</string>
 
     <!-- create room -->
-    <string name="room_title_format">%s,\n어떤 여행을 떠나세요?</string>
+    <string name="room_title_format">%s님,\n어떤 여행을 떠나세요?</string>
     <string name="room_title_hint">ex) 친구들과 여름 제주도</string>
-    <string name="room_period_title_format">%s,\n언제 여행을 떠나세요?</string>
+    <string name="room_period_title_format">%s님,\n언제 여행을 떠나세요?</string>
     <string name="room_period_hint">여행 기간을 입력해주세요</string>
-    <string name="room_shared_budget_title_format">%s,\n이번 여행의 예산을 적어주세요</string>
+    <string name="room_shared_budget_title_format">%s님,\n이번 여행의 예산을 적어주세요</string>
     <string name="room_shared_budget_hint">공용 예산을 입력해주세요</string>
 
     <string name="room_input_shared_budget_title">공용으로 함께 사용할 예산</string>
