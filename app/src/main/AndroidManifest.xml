@@ -42,6 +42,14 @@
             android:name=".ui.create_room.CreateRoomActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.mypage.MyPageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mypage.EditUserProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.enter_room.EnterRoomActivity"

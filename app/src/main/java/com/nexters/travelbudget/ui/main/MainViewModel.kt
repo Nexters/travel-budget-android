@@ -8,13 +8,15 @@ import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
-import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
 
 class MainViewModel(private val userInfoRepository: UserInfoRepository) : BaseViewModel() {
 
     private val _startCreateRoom = SingleLiveEvent<Unit>()
     val startCreateRoom = _startCreateRoom
+
+    private val _startMyPage = SingleLiveEvent<Unit>()
+    val startMyPage = _startMyPage
 
     private val _startEnterRoom = SingleLiveEvent<Unit>()
     val startEnterRoom = _startEnterRoom
@@ -35,6 +37,10 @@ class MainViewModel(private val userInfoRepository: UserInfoRepository) : BaseVi
 
     fun createTripRoom() {
         _startCreateRoom.call()
+    }
+
+    fun goToMyPage() {
+        _startMyPage.call()
     }
 
     fun enterTripRoom() {
