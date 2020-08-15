@@ -13,6 +13,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.nexters.travelbudget.utils.ext.showToastMessage
 
 abstract class BaseBottomSheetDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutRes: Int
@@ -39,9 +40,7 @@ abstract class BaseBottomSheetDialogFragment<B : ViewDataBinding, VM : BaseViewM
         }
 
         viewModel.liveToastMessage.observe(viewLifecycleOwner, Observer { message ->
-            context?.let { context ->
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            }
+            context?.showToastMessage(message)
         })
     }
 

@@ -4,6 +4,7 @@ import android.widget.Toast
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.ui.base.TravelApplication
 import com.nexters.travelbudget.utils.ext.isNetworkConnected
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import io.reactivex.observers.DisposableSingleObserver
 import retrofit2.HttpException
 
@@ -23,11 +24,7 @@ abstract class TripDisposableSingleObserver<T> :
                 logout()
             } else {
                 if (!isNetworkConnected()) {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.network_disconnected_notice),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToastMessage(getString(R.string.network_disconnected_notice))
                 }
             }
         }

@@ -28,7 +28,6 @@
         <activity
             android:name=".ui.statistics.StatisticsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
@@ -36,6 +35,26 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.select_room_type.SelectRoomTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_room.CreateRoomActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.mypage.MyPageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mypage.EditUserProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.enter_room.EnterRoomActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -47,9 +66,14 @@
         <activity
             android:name=".ui.edit_trip_profile.EditTripProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.record_spend.RecordSpendActivity" />
 
-        <activity android:name=".ui.detail.TripDetailAloneActivity" />
+        <activity
+            android:name=".ui.record_spend.RecordSpendActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.detail.TripDetailAloneActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

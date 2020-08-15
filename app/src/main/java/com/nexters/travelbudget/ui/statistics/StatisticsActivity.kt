@@ -1,39 +1,30 @@
 package com.nexters.travelbudget.ui.statistics
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
-import com.nexters.travelbudget.databinding.ActivityStatisticsBinding
-import com.nexters.travelbudget.ui.base.BaseActivity
-import com.nexters.travelbudget.ui.statistics.adapter.PieChartRVAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.nexters.travelbudget.ui.statistics.adapter.StatisticsPageAdapter
 
-class StatisticsActivity : BaseActivity<ActivityStatisticsBinding, StatisticsViewModel>(
-    R.layout.activity_statistics
-) {
-    override val viewModel: StatisticsViewModel by viewModel()
-
+class StatisticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_statistics)
 
-        observeViewModel()
-        setupStatisticsRV()
-        viewModel.addData()
-    }
-
-    private fun observeViewModel() {
-        with(viewModel) {
-            newPieDataList.observe(this@StatisticsActivity, Observer {
-                for (pie in it) {
-                    binding.pcStatistics.addData(pie)
-                }
-            })
+        val tl = findViewById<TabLayout>(R.id.tl_spend_statistics)
+        val vp = findViewById<ViewPager>(R.id.vp_statistics).apply {
+            adapter = StatisticsPageAdapter(supportFragmentManager)
+            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tl))
         }
-    }
 
-    private fun setupStatisticsRV() {
-        with(binding.rvStatistics) {
-            adapter = PieChartRVAdapter()
-        }
+        tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                vp.currentItem = tab.position
+            }
+        })
     }
 }
