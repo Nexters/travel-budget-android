@@ -12,6 +12,7 @@ import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel
 import com.nexters.travelbudget.ui.enter_room.EnterRoomViewModel
 import com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel
 import com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel
+import com.nexters.travelbudget.ui.mypage.EditUserProfileViewModel
 import com.nexters.travelbudget.ui.mypage.MyPageViewModel
 import com.nexters.travelbudget.ui.record_spend.RecordSpendViewModel
 import com.nexters.travelbudget.ui.select_date.SelectDateViewModel
@@ -43,6 +44,7 @@ val viewModelModule = module {
         CreateRoomViewModel(userName, roomType, get())
     }
     viewModel { MyPageViewModel(get()) }
+    viewModel { EditUserProfileViewModel() }
     viewModel { EnterRoomViewModel(get()) }
     viewModel { StatisticsViewModel() }
     viewModel { TripDetailViewModel() }
