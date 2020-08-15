@@ -71,6 +71,7 @@
 
     <!-- modify profile -->
     <string name="modify_profile">프로필 수정</string>
+    <string name="success_edit_nickname_toast_message">닉네임 변경이 완료되었습니다</string>
 
     <!-- enter room -->
     <string name="invitation_code_title">초대 코드를 입력해주세요</string>

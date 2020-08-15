@@ -17,4 +17,5 @@ val remoteModule = module {
     single { UserInfoRemoteDataSource(get()) }
     single { CreateRoomRemoteDataSource(get()) }
     single { EnterRoomRemoteDataSource(get()) }
+    single { EditUserProfileRemoteDataSource(get()) }
 }

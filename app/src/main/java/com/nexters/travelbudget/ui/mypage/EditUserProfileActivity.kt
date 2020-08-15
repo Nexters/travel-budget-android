@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.data.remote.model.response.UserResponse
 import com.nexters.travelbudget.databinding.ActivityEditUserProfileBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -27,6 +29,15 @@ class EditUserProfileActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.successEditNickname.observe(this, Observer {
+            showToastMessage(getString(R.string.success_edit_nickname_toast_message))
+            finish()
+        })
+
+        viewModel.errorEditNickname.observe(this, Observer {
+            showToastMessage(getString(R.string.request_fail))
+        })
     }
 
     companion object {

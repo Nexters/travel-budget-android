@@ -46,7 +46,7 @@ val viewModelModule = module {
     }
     viewModel { MyPageViewModel(get()) }
     viewModel { (userResponse: UserResponse) ->
-        EditUserProfileViewModel(userResponse)
+        EditUserProfileViewModel(userResponse, get())
     }
     viewModel { EnterRoomViewModel(get()) }
     viewModel { StatisticsViewModel() }
