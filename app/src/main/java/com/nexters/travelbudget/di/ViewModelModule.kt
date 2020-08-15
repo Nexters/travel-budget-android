@@ -51,7 +51,6 @@ val viewModelModule = module {
         EditUserProfileViewModel(userResponse, get())
     }
     viewModel { EnterRoomViewModel(get()) }
-    viewModel { StatisticsViewModel(get()) }
     viewModel { TripDetailViewModel(get()) }
     viewModel { TripDetailSharedViewModel(get()) }
     viewModel { TripDetailPersonalViewModel() }
