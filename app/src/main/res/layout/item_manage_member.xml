@@ -82,7 +82,7 @@
             android:textColor="@color/fill_grey_2"
             android:textSize="@dimen/text_size_12sp"
             android:visibility="invisible"
-            android:visibleIf="@{isOwner}"
+            android:visibleIf="@{isOwner &amp;&amp; item.authority.equals(TripMemberType.MEMBER.name())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

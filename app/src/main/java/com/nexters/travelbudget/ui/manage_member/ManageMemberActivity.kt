@@ -9,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nexters.travelbudget.R
+import com.nexters.travelbudget.data.remote.model.response.TripMemberResponse
 import com.nexters.travelbudget.databinding.ActivityManageMemberBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,11 +33,13 @@ class ManageMemberActivity :
     }
 
     private val manageMemberRVAdapter by lazy {
-        ManageMemberRVAdapter(onClickExportMember = {
+        ManageMemberRVAdapter(
+            onClickExportMember = {
+                viewModel.deleteTripMember(it.memberId)
+            },
+            onClickInviteMember = {
 
-        }, onClickInviteMember = {
-
-        })
+            })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +48,16 @@ class ManageMemberActivity :
         setManageMemberRV()
         viewModel.getTripMembers()
 
-        viewModel.tripMembers.observe(this, Observer {
+        viewModel.tripMemberResponse.observe(this, Observer {
             manageMemberRVAdapter.setItems(it.members, it.myAuthority)
+        })
+
+        viewModel.successDeleteMember.observe(this, Observer {
+            viewModel.getTripMembers()
+        })
+
+        viewModel.failedDeleteMember.observe(this, Observer {
+            showToastMessage(getString(R.string.request_fail))
         })
 
         viewModel.backScreen.observe(this, Observer {

@@ -2,6 +2,7 @@ package com.nexters.travelbudget.data.repository
 
 import com.nexters.travelbudget.data.remote.model.response.TripMemberResponse
 import com.nexters.travelbudget.data.remote.source.TripMemberRemoteDataSource
+import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -14,5 +15,9 @@ class TripMemberRepository(private val tripMemberRemoteDataSource: TripMemberRem
 
     fun getTripMembers(planId: Long): Single<TripMemberResponse> {
         return tripMemberRemoteDataSource.getTripMembers(planId)
+    }
+
+    fun deleteTripMember(planId: Long, memberId: Long): Completable {
+        return tripMemberRemoteDataSource.deleteTripMember(planId, memberId)
     }
 }

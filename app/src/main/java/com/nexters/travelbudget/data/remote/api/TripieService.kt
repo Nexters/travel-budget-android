@@ -49,4 +49,10 @@ interface TripieService {
 
     @GET("api/plans/{id}/members")
     fun getTripMembers(@Path("id") planId: Long): Single<TripMemberResponse>
+
+    @DELETE("api/plans/{planId}/members/{memberId}")
+    fun deleteTripMember(
+        @Path("planId") planId: Long,
+        @Path("memberId") memberId: Long
+    ): Completable
 }
