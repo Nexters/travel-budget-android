@@ -7,7 +7,9 @@
 
     <string name="detail_shared_title">오늘의 공용 여행비</string>
 
-    <string name="money_unit">%s원</string>
+    <string name="money_unit">원</string>
+    <string name="money_unit2">%s원</string>
+    <string name="money_unit3">약 %s원</string>
 
     <string name="percent_unit">%s%%</string>
 

@@ -66,7 +66,14 @@
         <activity
             android:name=".ui.edit_trip_profile.EditTripProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.record_spend.RecordSpendActivity" />
+
+        <activity
+            android:name=".ui.record_spend.RecordSpendActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.detail.TripDetailAloneActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

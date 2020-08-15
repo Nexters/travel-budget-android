@@ -3,14 +3,11 @@ package com.nexters.travelbudget.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
-import com.nexters.travelbudget.ui.detail.TripDetailActivity
 import com.nexters.travelbudget.ui.enter_room.EnterRoomActivity
 import com.nexters.travelbudget.ui.main.record.RecordingTravelFragment
 import com.nexters.travelbudget.ui.mypage.MyPageActivity

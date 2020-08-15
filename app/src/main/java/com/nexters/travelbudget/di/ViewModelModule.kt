@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.di
 
+import com.nexters.travelbudget.ui.detail.TripDetailAloneViewModel
 import com.nexters.travelbudget.data.remote.model.response.UserResponse
 import com.nexters.travelbudget.ui.create_room.CreateRoomViewModel
 import com.nexters.travelbudget.ui.login.LoginViewModel
@@ -50,10 +51,11 @@ val viewModelModule = module {
         EditUserProfileViewModel(userResponse, get())
     }
     viewModel { EnterRoomViewModel(get()) }
-    viewModel { StatisticsViewModel() }
-    viewModel { TripDetailViewModel() }
-    viewModel { TripDetailSharedViewModel() }
+    viewModel { StatisticsViewModel(get()) }
+    viewModel { TripDetailViewModel(get()) }
+    viewModel { TripDetailSharedViewModel(get()) }
     viewModel { TripDetailPersonalViewModel() }
+    viewModel { TripDetailAloneViewModel() }
     viewModel { EditTripProfileViewModel() }
     viewModel { SelectDateViewModel() }
     viewModel { RecordSpendViewModel() }

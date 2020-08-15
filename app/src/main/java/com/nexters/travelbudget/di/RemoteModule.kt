@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.di
 
+import com.nexters.travelbudget.data.remote.source.DetailTripRemoteDataSource
 import com.nexters.travelbudget.data.remote.source.MainTripRecordRemoteDataSource
 import com.nexters.travelbudget.data.remote.source.SignUpRemoteDataSource
 import com.nexters.travelbudget.data.remote.source.StatisticsRemoteDataSource
@@ -18,6 +19,7 @@ val remoteModule = module {
     single { SignUpRemoteDataSource(get()) }
     single { UserTokenRemoteDataSource(get()) }
     single { MainTripRecordRemoteDataSource(get()) }
+    single { DetailTripRemoteDataSource(get()) }
     single { UserInfoRemoteDataSource(get()) }
     single { CreateRoomRemoteDataSource(get()) }
     single { StatisticsRemoteDataSource(get()) }

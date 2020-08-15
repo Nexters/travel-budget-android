@@ -76,7 +76,7 @@
                     tools:text="1,785,500원"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.format(@string/money_unit, vm.spendAmount)}"
+                    android:text="@{String.format(@string/money_unit2, vm.spendAmount)}"
                     android:textColor="@color/fill_blue"
                     android:textSize="24sp"
                     android:textStyle="bold"

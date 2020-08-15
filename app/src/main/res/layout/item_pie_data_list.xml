@@ -65,7 +65,7 @@
             android:id="@+id/tv_spend_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.format(@string/money_unit, model.moneyAmount)}"
+            android:text="@{String.format(@string/money_unit2, model.moneyAmount)}"
             android:textColor="@color/fill_grey_1"
             android:textSize="16sp"
             android:textStyle="bold"
