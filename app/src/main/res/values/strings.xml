@@ -9,6 +9,8 @@
     <string name="detail_shared_title">오늘의 공용 여행비</string>
 
     <string name="money_unit">원</string>
+    <string name="money_unit2">%s원</string>
+    <string name="money_unit3">약 %s원</string>
 
     <!-- login -->
     <string name="text_kakao_login">카카오 로그인</string>

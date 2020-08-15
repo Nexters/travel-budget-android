@@ -17,12 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/nv_detail_shared"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:descendantFocusability="blocksDescendants"
             android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
@@ -62,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
-                        android:text="약 200,185원"
+                        android:text="@{String.format(@string/money_unit3, vm.suggestAmount)}"
                         android:textColor="@color/fill_grey_2"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/v_detail_required_money"
@@ -89,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="20dp"
-                        android:text="2,000,000원"
+                        android:text="@{String.format(@string/money_unit2, vm.purposeAmount)}"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -133,7 +134,7 @@
                         android:id="@+id/tv_detail_remain_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,600,000원"
+                        android:text="@{String.format(@string/money_unit2, vm.remainAmount)}"
                         android:textColor="@color/fill_grey"
                         android:textSize="27sp"
                         android:textStyle="bold"
@@ -188,6 +189,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="16dp"
+                        android:onClick="@{()->vm.showDateDialog()}"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_shared_history">
 
@@ -199,12 +201,12 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_detail_history_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:text="2020.7.26"
+                            android:text="@{vm.detailSharedDate}"
                             android:textColor="@color/colorFillBlue"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -212,13 +214,13 @@
                             app:layout_constraintLeft_toLeftOf="@id/v_detail_shared_history"
                             app:layout_constraintTop_toTopOf="@id/v_detail_shared_history" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:layout_width="32dp"
                             android:layout_height="32dp"
+                            android:clickable="false"
                             android:background="@drawable/ic_icon_system_dropdown_32_px_blue"
                             app:layout_constraintRight_toRightOf="@id/v_detail_shared_history"
                             app:layout_constraintTop_toTopOf="@id/v_detail_shared_history" />
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -255,12 +257,13 @@
                         android:nestedScrollingEnabled="false"
                         app:addAll="@{vm.newDetailSharedList}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_shared_total_money" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

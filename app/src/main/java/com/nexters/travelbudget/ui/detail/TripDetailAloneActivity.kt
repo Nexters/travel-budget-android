@@ -16,7 +16,7 @@ class TripDetailAloneActivity :
         observeViewModel()
         setupDetailAloneRV()
         viewModel.addData()
-
+//        setAloneBudgetData()
     }
 
     private fun observeViewModel() {

@@ -49,7 +49,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.record_spend.RecordSpendActivity" />
 
-        <activity android:name=".ui.detail.TripDetailActivity" />
         <activity android:name=".ui.detail.TripDetailAloneActivity" />
     </application>
 

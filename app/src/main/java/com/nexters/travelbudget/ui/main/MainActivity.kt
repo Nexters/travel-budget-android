@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
+import com.kakao.auth.Session
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.TripDetailActivity
+import com.nexters.travelbudget.utils.DLog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -19,6 +21,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         setTabLayout()
+        // DLog.d(Session.getCurrentSession().tokenInfo.accessToken)
+        startActivity(Intent(this, TripDetailActivity::class.java))
     }
 
     private fun setTabLayout() {
