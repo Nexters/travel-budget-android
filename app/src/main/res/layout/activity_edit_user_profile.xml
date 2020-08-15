@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.mypage.EditUserProfileViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:src="@drawable/btn_back" />
+
+                <TextView
+                    style="@style/ToolbarTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/modify_profile"
+                    tools:text="프로필 수정" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/iv_user_image"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            bind:imgUrl="@{vm.userInfo.profileImage}" />
+
+        <com.nexters.travelbudget.utils.widget.TripEditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:text="@={vm.userName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user_image"
+            tools:text="사용자 닉네임" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_edit_user_info"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="28dp"
+            android:background="@{!vm.userName.empty ? @drawable/bg_next_btn_enable_type : @drawable/bg_next_btn_disable_type}"
+            android:enabled="@{!vm.userName.empty}"
+            android:onClick="@{() -> vm.requestEditUserProfile()}"
+            android:text="@string/modify"
+            android:textColor="@{!vm.userName.empty ? @color/colorWhite : @color/fill_grey_2}"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:background="@drawable/bg_next_btn_disable_type"
+            tools:textColor="@color/fill_grey_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

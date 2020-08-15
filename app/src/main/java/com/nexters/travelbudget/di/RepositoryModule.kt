@@ -21,4 +21,6 @@ val repositoryModule = module {
     single { StatisticsRepository(get()) }
     single { UserInfoRepository(get()) }
     single { CreateRoomRepository(get()) }
+    single { EnterRoomRepository(get()) }
+    single { EditUserProfileRepository(get()) }
 }

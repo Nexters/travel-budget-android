@@ -1,8 +1,11 @@
 package com.nexters.travelbudget.data.remote.model.response
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class UserResponse(
     @SerializedName("kakao_id")
     val kakaoId: String,
@@ -14,4 +17,4 @@ data class UserResponse(
     val thumbnailImage: String,
     @SerializedName("user_id")
     val userId: Int
-)
+): Parcelable

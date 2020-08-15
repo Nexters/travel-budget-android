@@ -41,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:background="?android:selectableItemBackgroundBorderless"
+                    android:onClick="@{() -> vm.enterTripRoom()}"
                     android:src="@drawable/btn_input_room_code" />
 
                 <ImageView
@@ -57,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackgroundBorderless"
+                    android:onClick="@{() ->vm.goToMyPage()}"
                     android:src="@drawable/btn_setting" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
