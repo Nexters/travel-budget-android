@@ -59,6 +59,15 @@
 
     <string name="room_input_shared_budget_title">공용으로 함께 사용할 예산</string>
 
+    <!-- my page -->
+    <string name="setting">설정</string>
+    <string name="modification">수정</string>
+    <string name="customer_service">고객센터</string>
+    <string name="terms_of_use">이용약관</string>
+    <string name="privacy_policy">개인정보처리방침</string>
+    <string name="version_info">버전정보</string>
+    <string name="logout">로그아웃</string>
+
     <!-- error message -->
     <string name="request_fail">잠시 후 다시 시도해주세요.</string>
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
