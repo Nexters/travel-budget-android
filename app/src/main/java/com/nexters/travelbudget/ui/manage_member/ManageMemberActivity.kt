@@ -29,7 +29,10 @@ class ManageMemberActivity :
     SwipeRefreshLayout.OnRefreshListener {
 
     override val viewModel: ManageMemberViewModel by viewModel {
-        parametersOf(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1))
+        parametersOf(
+            intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1),
+            intent.getStringExtra(Constant.EXTRA_ROOM_TITLE) ?: ""
+        )
     }
 
     private val manageMemberRVAdapter by lazy {
@@ -40,7 +43,7 @@ class ManageMemberActivity :
                 }.show(supportFragmentManager, "OutMemberNoticeDialog")
             },
             onClickInviteMember = {
-
+                viewModel.createDynamicLink()
             })
     }
 
@@ -60,6 +63,24 @@ class ManageMemberActivity :
 
         viewModel.failedDeleteMember.observe(this, Observer {
             showToastMessage(getString(R.string.request_fail))
+        })
+
+        viewModel.successCreateDeepLink.observe(this, Observer {
+            val roomCode = viewModel.tripMemberResponse.value?.inviteCode ?: return@Observer
+            val roomTitle = viewModel.roomTitle.value ?: return@Observer
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "'${roomTitle}'에 참여하여 친구와 함께 여행 예산을 관리해보세요!\n${it}\n(방코드 : $roomCode)"
+                )
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(intent, null))
+        })
+
+        viewModel.failedCreateDeepLink.observe(this, Observer {
+            showToastMessage(getString(R.string.invite_member_request_fail))
         })
 
         viewModel.backScreen.observe(this, Observer {
@@ -100,9 +121,14 @@ class ManageMemberActivity :
     }
 
     companion object {
-        fun getIntent(context: Context, planId: Long): Intent {
+        fun getIntent(context: Context, planId: Long, roomTitle: String): Intent {
             return Intent(context, ManageMemberActivity::class.java).apply {
-                putExtras(bundleOf(Constant.EXTRA_PLAN_ID to planId))
+                putExtras(
+                    bundleOf(
+                        Constant.EXTRA_PLAN_ID to planId,
+                        Constant.EXTRA_ROOM_TITLE to roomTitle
+                    )
+                )
             }
         }
     }

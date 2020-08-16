@@ -45,8 +45,15 @@ class TripDetailActivity :
 
             startManageMember.observe(this@TripDetailActivity, Observer {
                 val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+                val roomTitle = viewModel.detailTitle.value ?: ""
                 if (planId == -1L) return@Observer
-                startActivity(ManageMemberActivity.getIntent(this@TripDetailActivity, planId))
+                startActivity(
+                    ManageMemberActivity.getIntent(
+                        this@TripDetailActivity,
+                        planId,
+                        roomTitle
+                    )
+                )
             })
         }
     }

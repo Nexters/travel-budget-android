@@ -108,6 +108,7 @@
     <string name="manager">관리자</string>
     <string name="export">내보내기</string>
     <string name="invite_member">친구 초대하기</string>
+    <string name="invite_member_request_fail">친구 초대 기능에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
 
     <!-- out member notice dialog -->
     <string name="out_member_notice_text_format">%s님을 여행 폴더에서\n내보내시겠습니까?</string>

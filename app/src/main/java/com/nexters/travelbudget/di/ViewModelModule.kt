@@ -52,7 +52,9 @@ val viewModelModule = module {
     viewModel { (userResponse: UserResponse) ->
         EditUserProfileViewModel(userResponse, get())
     }
-    viewModel { EnterRoomViewModel(get()) }
+    viewModel { (roomCode: String) ->
+        EnterRoomViewModel(roomCode, get())
+    }
     viewModel { TripDetailViewModel(get()) }
     viewModel { TripDetailSharedViewModel(get()) }
     viewModel { TripDetailPersonalViewModel() }
@@ -60,8 +62,8 @@ val viewModelModule = module {
     viewModel { EditTripProfileViewModel() }
     viewModel { SelectDateViewModel() }
     viewModel { RecordSpendViewModel() }
-    viewModel { (planId: Long) ->
-        ManageMemberViewModel(planId, get())
+    viewModel { (planId: Long, roomTitle: String) ->
+        ManageMemberViewModel(planId, roomTitle, get())
     }
     viewModel { (username: String, memberId: Long) ->
         OutMemberNoticeViewModel(username, memberId)

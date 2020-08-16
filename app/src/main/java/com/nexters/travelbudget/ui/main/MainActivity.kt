@@ -5,12 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.enter_room.EnterRoomActivity
 import com.nexters.travelbudget.ui.main.record.RecordingTravelFragment
-import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.mypage.MyPageActivity
 import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.Constant
@@ -25,6 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         setSupportActionBar(binding.toolbar)
         setTabLayout()
         viewModel.getUserInfo()
+        checkDeepLink()
 
         viewModel.startCreateRoom.observe(this, Observer {
             goToSelectRoomTypeActivity()
@@ -38,10 +40,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         })
 
         viewModel.startEnterRoom.observe(this, Observer {
-            startActivityForResult(
-                EnterRoomActivity.getIntent(this),
-                Constant.REQUEST_CODE_ENTER_ROOM
-            )
+            goToEnterRoomCodeActivity()
         })
     }
 
@@ -80,6 +79,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
                 }
             }
         }
+    }
+
+    private fun checkDeepLink() {
+        Firebase.dynamicLinks.getDynamicLink(intent)
+            .addOnSuccessListener { pendingDynamicLinkData ->
+                if (pendingDynamicLinkData == null) {
+                    return@addOnSuccessListener
+                }
+
+                val deepLink = pendingDynamicLinkData.link
+                when (deepLink?.lastPathSegment) {
+                    Constant.SEGMENT_ROOM -> {
+                        val code = deepLink.getQueryParameter(Constant.KEY_ROOM_CODE)
+                        goToEnterRoomCodeActivity(code ?: "")
+                    }
+                }
+            }
+    }
+
+    private fun goToEnterRoomCodeActivity(roomCode: String = "") {
+        startActivityForResult(
+            EnterRoomActivity.getIntent(this, roomCode),
+            Constant.REQUEST_CODE_ENTER_ROOM
+        )
     }
 
     fun goToSelectRoomTypeActivity() {

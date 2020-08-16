@@ -25,7 +25,8 @@ interface Constant {
         const val EXTRA_PLAN_ID = "EXTRA_PLAN_ID"
         const val EXTRA_MEMBER_ID = "EXTRA_MEMBER_ID"
         const val EXTRA_IS_PUBLIC = "EXTRA_IS_PUBLIC"
-
+        const val EXTRA_ROOM_TITLE = "EXTRA_ROOM_TITLE"
+        const val EXTRA_ROOM_CODE = "EXTRA_ROOM_CODE"
 
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
@@ -40,5 +41,9 @@ interface Constant {
         const val RESULT_OK = 1
         const val RESULT_CANCEL = 0
         const val RESULT_ERROR = -1
+
+        // SEGMENT
+        const val SEGMENT_ROOM = "room"
+        const val KEY_ROOM_CODE = "code"
     }
 }
