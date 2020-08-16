@@ -118,7 +118,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         private const val TAB_COUNT = 2
 
         fun getIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
+            return Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
         }
     }
 }
