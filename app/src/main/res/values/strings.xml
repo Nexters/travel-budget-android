@@ -55,6 +55,7 @@
     <string name="next">다음</string>
     <string name="default_user_name">트리파이</string>
     <string name="modify">수정하기</string>
+    <string name="yes">예</string>
     <string name="create_travel_room_success">여행이 추가되었습니다.</string>
     <string name="create_travel_room_fail">여행 항목을 추가하는데 실패했습니다. 잠시 후 다시 시도해주세요.</string>
 
@@ -107,5 +108,8 @@
     <string name="manager">관리자</string>
     <string name="export">내보내기</string>
     <string name="invite_member">친구 초대하기</string>
+
+    <!-- out member notice dialog -->
+    <string name="out_member_notice_text_format">%s님을 여행 폴더에서\n내보내시겠습니까?</string>
 
 </resources>

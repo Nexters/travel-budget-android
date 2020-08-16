@@ -10,6 +10,7 @@ import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.enter_room.EnterRoomActivity
 import com.nexters.travelbudget.ui.main.record.RecordingTravelFragment
+import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.mypage.MyPageActivity
 import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.Constant
@@ -30,10 +31,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         })
 
         viewModel.startMyPage.observe(this, Observer {
-            startActivityForResult(
-                MyPageActivity.getIntent(this),
-                Constant.REQUEST_CODE_EDIT_USER_NAME
-            )
+            startActivity(ManageMemberActivity.getIntent(this, 41L))
+//            startActivityForResult(
+//                MyPageActivity.getIntent(this),
+//                Constant.REQUEST_CODE_EDIT_USER_NAME
+//            )
         })
 
         viewModel.startEnterRoom.observe(this, Observer {
