@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -95,5 +96,9 @@ dependencies {
 
     //floating action bar
     implementation 'com.robertlevonyan.view:CustomFloatingActionButton:3.0.1'
+
+    // firebase
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
 
 }

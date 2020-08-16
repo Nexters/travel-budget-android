@@ -13,7 +13,8 @@ import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
 
-class TripDetailViewModel(private val detailTripRepository: DetailTripRepository) : BaseViewModel() {
+class TripDetailViewModel(private val detailTripRepository: DetailTripRepository) :
+    BaseViewModel() {
 
     private val _detailTitle = MutableLiveData<String>().apply {
         value = DEFAULT_TITLE
@@ -28,6 +29,9 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
     private val _tripDetail = MutableLiveData<TripDetailResponse>()
     val tripDetail: LiveData<TripDetailResponse> = _tripDetail
+
+    private val _startManageMember: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val startManageMember: SingleLiveEvent<Unit> = _startManageMember
 
 
     fun toShared() {
@@ -48,8 +52,8 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
         detailTripRepository.getTripDetailInfo(id)
             .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
-          //  .doOnSubscribe { _isLoading.value = true }
-          //  .doAfterTerminate { _isLoading.value = false }
+            //  .doOnSubscribe { _isLoading.value = true }
+            //  .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
                 //_isEmptyList.value = it.isEmpty()
             }
@@ -60,6 +64,10 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
             }).addTo(compositeDisposable)
 
+    }
+
+    fun goToManageMemberScreen() {
+        _startManageMember.call()
     }
 
 

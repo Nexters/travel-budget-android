@@ -84,7 +84,6 @@ class RecordingTravelFragment :
                             putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
                         })
                 }
-                context.showToastMessage("상세 화면 전환")
             }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(

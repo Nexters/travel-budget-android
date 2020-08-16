@@ -16,9 +16,10 @@ import retrofit2.HttpException
  * @author Wayne
  * @since v1.0.0 / 2020.08.14
  */
-class EnterRoomViewModel(private val enterRoomRepository: EnterRoomRepository) : BaseViewModel() {
+class EnterRoomViewModel(roomCode: String, private val enterRoomRepository: EnterRoomRepository) :
+    BaseViewModel() {
 
-    private val _invitationCode: MutableLiveData<String> = MutableLiveData()
+    private val _invitationCode: MutableLiveData<String> = MutableLiveData(roomCode)
     val invitationCode: MutableLiveData<String> = _invitationCode
 
     private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()

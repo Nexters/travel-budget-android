@@ -11,6 +11,7 @@ import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
+import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
@@ -40,6 +41,19 @@ class TripDetailActivity :
             tripDetail.observe(this@TripDetailActivity, Observer {
                 setDetailTitle(it.name)
                 setupViewPager(it.dates, it.shared, it.personal)
+            })
+
+            startManageMember.observe(this@TripDetailActivity, Observer {
+                val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+                val roomTitle = viewModel.detailTitle.value ?: ""
+                if (planId == -1L) return@Observer
+                startActivity(
+                    ManageMemberActivity.getIntent(
+                        this@TripDetailActivity,
+                        planId,
+                        roomTitle
+                    )
+                )
             })
         }
     }
