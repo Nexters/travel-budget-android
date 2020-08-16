@@ -17,7 +17,7 @@ class OutMemberNoticeViewModel(username: String, private val memberId: Long) : B
     val username: LiveData<String> = _username
 
     private val _deleteMember: SingleLiveEvent<Long> = SingleLiveEvent()
-    val deleteMember: SingleLiveEvent<Long> = SingleLiveEvent()
+    val deleteMember: SingleLiveEvent<Long> = _deleteMember
 
     private val _dismissDialog: SingleLiveEvent<Unit> = SingleLiveEvent()
     val dismissDialog: SingleLiveEvent<Unit> = _dismissDialog

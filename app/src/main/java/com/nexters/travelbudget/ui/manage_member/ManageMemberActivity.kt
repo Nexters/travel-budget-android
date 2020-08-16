@@ -34,8 +34,10 @@ class ManageMemberActivity :
 
     private val manageMemberRVAdapter by lazy {
         ManageMemberRVAdapter(
-            onClickExportMember = {
-                viewModel.deleteTripMember(it.memberId)
+            onClickExportMember = { member ->
+                OutMemberNoticeDialog.newInstance(member.nickname, member.memberId) { memberId ->
+                    viewModel.deleteTripMember(memberId)
+                }.show(supportFragmentManager, "OutMemberNoticeDialog")
             },
             onClickInviteMember = {
 

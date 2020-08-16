@@ -52,6 +52,7 @@ class OutMemberNoticeDialog(private val onClickDeleteMember: (Long) -> Unit) : D
 
         viewModel.deleteMember.observe(this, Observer {
             onClickDeleteMember.invoke(it)
+            dismiss()
         })
 
         viewModel.dismissDialog.observe(this, Observer {
