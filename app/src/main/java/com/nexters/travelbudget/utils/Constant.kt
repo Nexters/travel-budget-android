@@ -24,6 +24,7 @@ interface Constant {
         const val EXTRA_USER_INFO = "EXTRA_USER_INFO"
         const val EXTRA_PLAN_ID = "EXTRA_PLAN_ID"
         const val EXTRA_MEMBER_ID = "EXTRA_MEMBER_ID"
+        const val EXTRA_IS_PUBLIC = "EXTRA_IS_PUBLIC"
 
 
         // SharedPreferences

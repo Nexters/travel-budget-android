@@ -31,11 +31,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         })
 
         viewModel.startMyPage.observe(this, Observer {
-            startActivity(ManageMemberActivity.getIntent(this, 41L))
-//            startActivityForResult(
-//                MyPageActivity.getIntent(this),
-//                Constant.REQUEST_CODE_EDIT_USER_NAME
-//            )
+            startActivityForResult(
+                MyPageActivity.getIntent(this),
+                Constant.REQUEST_CODE_EDIT_USER_NAME
+            )
         })
 
         viewModel.startEnterRoom.observe(this, Observer {
