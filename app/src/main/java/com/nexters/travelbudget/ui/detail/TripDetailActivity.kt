@@ -33,7 +33,6 @@ class TripDetailActivity :
         observeViewModel()
 
         viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-//        intent.getBundleExtra()
     }
 
     private fun observeViewModel() {

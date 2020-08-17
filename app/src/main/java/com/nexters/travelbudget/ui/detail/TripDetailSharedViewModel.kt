@@ -67,8 +67,6 @@ class TripDetailSharedViewModel(private val detailTripRepository: DetailTripRepo
             _purposeAmount.value = purposeAmount.toMoneyString()
             _remainAmount.value = remainAmount.toMoneyString()
             _suggestAmount.value = suggestAmount.toMoneyString()
-
-
         }
     }
 
