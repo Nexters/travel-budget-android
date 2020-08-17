@@ -6,6 +6,7 @@ import com.nexters.travelbudget.data.remote.source.SignUpRemoteDataSource
 import com.nexters.travelbudget.data.remote.source.StatisticsRemoteDataSource
 import com.nexters.travelbudget.data.remote.source.UserTokenRemoteDataSource
 import com.nexters.travelbudget.data.remote.source.*
+import com.nexters.travelbudget.data.repository.TripMemberRepository
 import org.koin.dsl.module
 
 /**
@@ -25,4 +26,5 @@ val remoteModule = module {
     single { StatisticsRemoteDataSource(get()) }
     single { EnterRoomRemoteDataSource(get()) }
     single { EditUserProfileRemoteDataSource(get()) }
+    single { TripMemberRemoteDataSource(get()) }
 }

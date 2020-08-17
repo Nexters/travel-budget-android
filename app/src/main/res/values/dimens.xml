@@ -14,6 +14,7 @@
     <dimen name="margin_4dp">4dp</dimen>
 
     <dimen name="spacing_size_30dp">30dp</dimen>
+    <dimen name="spacing_size_28dp">28dp</dimen>
     <dimen name="spacing_size_24dp">24dp</dimen>
     <dimen name="spacing_size_20dp">20dp</dimen>
 </resources>

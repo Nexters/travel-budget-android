@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -24,6 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         setSupportActionBar(binding.toolbar)
         setTabLayout()
         viewModel.getUserInfo()
+        checkDeepLink()
 
         viewModel.startCreateRoom.observe(this, Observer {
             goToSelectRoomTypeActivity()
@@ -37,10 +40,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         })
 
         viewModel.startEnterRoom.observe(this, Observer {
-            startActivityForResult(
-                EnterRoomActivity.getIntent(this),
-                Constant.REQUEST_CODE_ENTER_ROOM
-            )
+            goToEnterRoomCodeActivity()
         })
     }
 
@@ -81,6 +81,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         }
     }
 
+    private fun checkDeepLink() {
+        Firebase.dynamicLinks.getDynamicLink(intent)
+            .addOnSuccessListener { pendingDynamicLinkData ->
+                if (pendingDynamicLinkData == null) {
+                    return@addOnSuccessListener
+                }
+
+                val deepLink = pendingDynamicLinkData.link
+                when (deepLink?.lastPathSegment) {
+                    Constant.SEGMENT_ROOM -> {
+                        val code = deepLink.getQueryParameter(Constant.KEY_ROOM_CODE)
+                        goToEnterRoomCodeActivity(code ?: "")
+                    }
+                }
+            }
+    }
+
+    private fun goToEnterRoomCodeActivity(roomCode: String = "") {
+        startActivityForResult(
+            EnterRoomActivity.getIntent(this, roomCode),
+            Constant.REQUEST_CODE_ENTER_ROOM
+        )
+    }
+
     fun goToSelectRoomTypeActivity() {
         startActivityForResult(
             SelectRoomTypeActivity.getIntent(
@@ -94,7 +118,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         private const val TAB_COUNT = 2
 
         fun getIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
+            return Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
         }
     }
 }
