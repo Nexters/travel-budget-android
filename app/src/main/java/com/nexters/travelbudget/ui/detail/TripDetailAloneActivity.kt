@@ -8,6 +8,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
+import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TripDetailAloneActivity :
@@ -19,6 +20,8 @@ class TripDetailAloneActivity :
         super.onCreate(savedInstanceState)
         observeViewModel()
         setupDetailAloneRV()
+
+        viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
         viewModel.addData()
     }
 

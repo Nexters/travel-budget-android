@@ -46,6 +46,11 @@ class TripDetailPersonalViewModel(private val detailTripRepository: DetailTripRe
         _detailPersonalDate.value = date
     }
 
+    fun addData() {
+        val dataList = getData()
+        _newDetailPersonalList.value = dataList
+    }
+
     fun setBudgetData(tripDetailData: TripDetailResponse.Data) {
         DLog.d(tripDetailData.budgetId.toString())
         with(tripDetailData) {

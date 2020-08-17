@@ -28,7 +28,7 @@ class TripDetailPersonalFragment() :
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailPersonalRV()
-//        viewModel.addData()
+        viewModel.addData()
 
         budgetData?.let {
             viewModel.setBudgetData(it)

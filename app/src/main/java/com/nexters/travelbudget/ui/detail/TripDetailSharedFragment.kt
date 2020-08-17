@@ -30,7 +30,7 @@ class TripDetailSharedFragment :
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailSharedRV()
-//        viewModel.addData()
+        viewModel.addData()
 
         budgetData?.let {
             viewModel.setBudgetData(it)

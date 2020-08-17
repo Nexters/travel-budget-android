@@ -58,7 +58,7 @@ val viewModelModule = module {
     viewModel { TripDetailViewModel(get()) }
     viewModel { TripDetailSharedViewModel(get()) }
     viewModel { TripDetailPersonalViewModel(get()) }
-    viewModel { TripDetailAloneViewModel() }
+    viewModel { TripDetailAloneViewModel(get()) }
     viewModel { EditTripProfileViewModel() }
     viewModel { SelectDateViewModel() }
     viewModel { RecordSpendViewModel() }

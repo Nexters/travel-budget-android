@@ -3,13 +3,18 @@ package com.nexters.travelbudget.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
+import com.nexters.travelbudget.data.repository.DetailTripRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
+import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
+import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
+import io.reactivex.rxkotlin.addTo
+import java.util.concurrent.TimeUnit
 
-class TripDetailAloneViewModel : BaseViewModel() {
+class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepository) : BaseViewModel() {
     private val _newDetailAloneList = MutableLiveData<ArrayList<DetailSharedData>>()
     val newDetailSharedList: LiveData<ArrayList<DetailSharedData>> get() = _newDetailAloneList
 
@@ -38,6 +43,9 @@ class TripDetailAloneViewModel : BaseViewModel() {
 
     val showDateAloneDialogEvent = SingleLiveEvent<Unit>()
 
+    private val _tripDetailAlone = MutableLiveData<TripDetailResponse>()
+    val tripDetailAlone: LiveData<TripDetailResponse> = _tripDetailAlone
+
     fun showDateAloneDialog() {
         showDateAloneDialogEvent.call()
     }
@@ -55,6 +63,24 @@ class TripDetailAloneViewModel : BaseViewModel() {
             _suggestAloneAmount.value = suggestAmount.toMoneyString()
 
         }
+    }
+
+    fun getTripDetailAloneData(id: Long) {
+        detailTripRepository.getTripDetailInfo(id)
+            .delay(500, TimeUnit.MILLISECONDS)
+            .applySchedulers()
+            //  .doOnSubscribe { _isLoading.value = true }
+            //  .doAfterTerminate { _isLoading.value = false }
+            .doOnSuccess {
+                //_isEmptyList.value = it.isEmpty()
+            }
+            .subscribeWith(object : TripDisposableSingleObserver<TripDetailResponse>() {
+                override fun onSuccess(result: TripDetailResponse) {
+                    _tripDetailAlone.value = result
+                }
+
+            }).addTo(compositeDisposable)
+
     }
 
     private fun getData(): ArrayList<DetailSharedData> {
