@@ -12,18 +12,15 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.TimePicker
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialDialogs
 import com.nexters.travelbudget.R
+import java.io.Serializable
 import java.util.*
 
-class TimePickerDialogFragment(
-    private val date: String,
-    private val listener: (String) -> Unit
-) : DialogFragment() {
-    private var time = ""
-
+class TimePickerDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,13 +28,12 @@ class TimePickerDialogFragment(
     ): View? {
         return inflater.inflate(R.layout.dialog_time_picker, container, false).also {
             val timePicker: TimePicker = it.findViewById(R.id.time_picker)
+            val date = arguments?.getString(BUNDLE_DATE) ?: "0000.00.00"
             val st = StringTokenizer(date, ":")
             val h = st.nextToken().toInt()
             val m = st.nextToken().toInt()
 
-            timePicker.hour = h
-            timePicker.minute = m
-            time = getTimeString(h, m)
+            var time = getTimeString(h, m)
 
             timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
                 time = getTimeString(hourOfDay, minute)
@@ -45,14 +41,12 @@ class TimePickerDialogFragment(
 
             val btnComplete: Button = it.findViewById(R.id.btn_complete)
             btnComplete.setOnClickListener {
-                complete()
+                @Suppress("UNCHECKED_CAST")
+                val listener = arguments?.get(BUNDLE_LISTENER) as (String) -> Unit
+                listener(time)
+                dismiss()
             }
         }
-    }
-
-    private fun complete() {
-        listener(time)
-        dismiss()
     }
 
     private fun getTimeString(hour: Int, minute: Int): String {
@@ -90,5 +84,19 @@ class TimePickerDialogFragment(
                 resources.displayMetrics
             ).toInt()
         )
+    }
+
+    companion object {
+        private const val BUNDLE_DATE = "bundle_date"
+        private const val BUNDLE_LISTENER = "bundle_listener"
+
+        fun newInstance(date: String, listener: (String) -> Unit): TimePickerDialogFragment {
+            return TimePickerDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putString(BUNDLE_DATE, date)
+                    putSerializable(BUNDLE_LISTENER, listener as Serializable)
+                }
+            }
+        }
     }
 }

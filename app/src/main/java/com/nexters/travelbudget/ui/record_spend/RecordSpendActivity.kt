@@ -34,7 +34,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val date = SimpleDateFormat("yyyy.M.d hh:mm", Locale.KOREA).format(Date())
+        val date = SimpleDateFormat("yyyy.M.d HH:mm", Locale.KOREA).format(Date())
         val st = StringTokenizer(date)
 
         day = st.nextToken()
@@ -55,7 +55,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                 }.show(supportFragmentManager, "")
             })
             selectTimeEvent.observe(this@RecordSpendActivity, Observer {
-                TimePickerDialogFragment(time) {
+                TimePickerDialogFragment.newInstance(time) {
                     setTime(it)
                 }.show(supportFragmentManager, "")
             })
