@@ -22,6 +22,9 @@ interface Constant {
         const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
         const val EXTRA_ROOM_TYPE = "EXTRA_ROOM_TYPE"
         const val EXTRA_USER_INFO = "EXTRA_USER_INFO"
+        const val EXTRA_SHARED_BUDGET_ID = "EXTRA_SHARED_BUDGET_ID"
+        const val EXTRA_PERSONAL_BUDGET_ID = "EXTRA_PERSONAL_BUDGET_ID"
+
 
 
         // SharedPreferences

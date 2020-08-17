@@ -99,7 +99,7 @@
     <!-- statistics -->
     <string name="toolbar_statistics">지출 통계</string>
     <string name="total_budget">총 예산 %s원 중</string>
-    <string name="current_spend"> 지출 했어요.</string>
+    <string name="current_spend">지출 했어요.</string>
     <string name="statistics_empty_data_content">지출 내역이 없어 통계를 만들 수 없습니다.</string>
 
 
