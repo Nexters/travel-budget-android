@@ -33,6 +33,9 @@ class EditUserProfileViewModel(
     private val _errorEditNickname: SingleLiveEvent<Unit> = SingleLiveEvent()
     val errorEditNickname: SingleLiveEvent<Unit> = _errorEditNickname
 
+    private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val backScreen: SingleLiveEvent<Unit> = _backScreen
+
     fun requestEditUserProfile() {
         if (userName.value.isNullOrEmpty()) {
             return
@@ -49,5 +52,9 @@ class EditUserProfileViewModel(
                     _errorEditNickname.call()
                 }
             }).addTo(compositeDisposable)
+    }
+
+    fun backScreen() {
+        _backScreen.call()
     }
 }

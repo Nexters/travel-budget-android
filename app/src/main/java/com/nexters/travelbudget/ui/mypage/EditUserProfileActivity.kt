@@ -39,6 +39,10 @@ class EditUserProfileActivity :
         viewModel.errorEditNickname.observe(this, Observer {
             showToastMessage(getString(R.string.request_fail))
         })
+
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     companion object {
