@@ -97,6 +97,10 @@
     <string name="make_trip">여행 만들기</string>
     <string name="text_record_submit">기록하기</string>
 
+    <!-- time picker -->
+    <string name="time_picker_title">시간 선택</string>
+    <string name="text_complete">완료</string>
+
     <!-- statistics -->
     <string name="toolbar_statistics">지출 통계</string>
     <string name="total_budget">총 예산 %s원 중</string>

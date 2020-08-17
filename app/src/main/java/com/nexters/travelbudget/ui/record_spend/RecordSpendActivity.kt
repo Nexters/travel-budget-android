@@ -20,6 +20,8 @@ import com.nexters.travelbudget.utils.MoneyStringTextWatcher
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.round
 
 class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpendViewModel>(
@@ -27,11 +29,19 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 ) {
     override val viewModel: RecordSpendViewModel by viewModel()
 
+    private var day = ""
+    private var time = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val date = SimpleDateFormat("yyyy.M.d HH:mm", Locale.KOREA).format(Date())
+        val st = StringTokenizer(date)
 
-        viewModel.setDate("2020.8.4")
-        viewModel.setTime("15:14")
+        day = st.nextToken()
+        time = st.nextToken()
+
+        viewModel.setDate(day)
+        viewModel.setTime(time)
         observeViewModel()
         setupSpendCategoryRV()
         setupTextWatcher()
@@ -45,7 +55,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                 }.show(supportFragmentManager, "")
             })
             selectTimeEvent.observe(this@RecordSpendActivity, Observer {
-                TimePickerDialogFragment {
+                TimePickerDialogFragment.newInstance(time) {
                     setTime(it)
                 }.show(supportFragmentManager, "")
             })
