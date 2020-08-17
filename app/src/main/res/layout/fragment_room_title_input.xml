@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.nexters.travelbudget.ui.create_room.CreateRoomViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tv_room_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@{String.format(@string/room_title_format, vm.userName)}"
+            android:textColor="@color/fill_grey_1"
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="엄격한 관리자님,\n어떤 여행을 떠나세요?" />
+
+        <com.nexters.travelbudget.utils.widget.TripEditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:hint="@string/room_title_hint"
+            android:text="@={vm.roomName}"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_room_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next_step"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="28dp"
+            android:background="@{vm.roomName.length() > 1 ? @drawable/bg_next_btn_enable_type : @drawable/bg_next_btn_disable_type}"
+            android:enabled="@{vm.roomName.length() > 1 ? true : false}"
+            android:onClick="@{() -> vm.nextScreen()}"
+            android:text="@string/next"
+            android:textColor="@{vm.roomName.length() > 1 ? @color/colorWhite : @color/fill_grey_2}"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:background="@drawable/bg_next_btn_disable_type"
+            tools:textColor="@color/fill_grey_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

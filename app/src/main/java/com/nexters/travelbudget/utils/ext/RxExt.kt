@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.utils.ext
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -21,4 +22,9 @@ private fun <T> Single<T>.applyScheduler(scheduler: Scheduler) =
 fun <T> Observable<T>.applySchedulers(): Observable<T> = applyScheduler(Schedulers.io())
 
 private fun <T> Observable<T>.applyScheduler(scheduler: Scheduler) =
+    subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
+
+fun Completable.applySchedulers(): Completable = applyScheduler(Schedulers.io())
+
+private fun Completable.applyScheduler(scheduler: Scheduler) =
     subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "140965157337",
+    "firebase_url": "https://tripie-87695.firebaseio.com",
+    "project_id": "tripie-87695",
+    "storage_bucket": "tripie-87695.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140965157337:android:71b19ff1794002f9cb21c8",
+        "android_client_info": {
+          "package_name": "com.nexters.travelbudget"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140965157337-cnmfgtl44r4q95jbj8rhr0p0n42gneiq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nexters.travelbudget",
+            "certificate_hash": "8c6590bea946c088339e37b315e1713f259d2a2b"
+          }
+        },
+        {
+          "client_id": "140965157337-38gpvsrckeh0vhe1qhe74vcglttcegk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQbMdLTUFRwRj6aPrhUhKNe4TPreosXdg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140965157337-38gpvsrckeh0vhe1qhe74vcglttcegk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nexters.travelbudget">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -23,11 +24,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tripie.com"
+                    android:scheme="https" />
+                <data
+                    android:host="tripie.com"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.statistics.StatisticsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
@@ -35,6 +49,24 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.select_room_type.SelectRoomTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_room.CreateRoomActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.mypage.MyPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mypage.EditUserProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.enter_room.EnterRoomActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -46,8 +78,15 @@
         <activity
             android:name=".ui.edit_trip_profile.EditTripProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.record_spend.RecordSpendActivity" />
-
+        <activity
+            android:name=".ui.record_spend.RecordSpendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.detail.TripDetailAloneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.manage_member.ManageMemberActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

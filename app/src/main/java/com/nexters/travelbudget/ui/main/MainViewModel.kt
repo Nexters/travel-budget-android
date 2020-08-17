@@ -2,15 +2,48 @@ package com.nexters.travelbudget.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nexters.travelbudget.data.remote.model.response.UserResponse
+import com.nexters.travelbudget.data.repository.UserInfoRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.ext.applySchedulers
+import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
+import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
+import io.reactivex.rxkotlin.addTo
 
-class MainViewModel : BaseViewModel() {
+class MainViewModel(private val userInfoRepository: UserInfoRepository) : BaseViewModel() {
 
-    private val _toTest = MutableLiveData<Boolean>().apply {value = false}
-    val toTest: LiveData<Boolean> get() = _toTest
+    private val _startCreateRoom = SingleLiveEvent<Unit>()
+    val startCreateRoom = _startCreateRoom
 
-    fun toTest() {
-        _toTest.value = true
+    private val _startMyPage = SingleLiveEvent<Unit>()
+    val startMyPage = _startMyPage
+
+    private val _startEnterRoom = SingleLiveEvent<Unit>()
+    val startEnterRoom = _startEnterRoom
+
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> = _userName
+
+    fun getUserInfo() {
+        userInfoRepository.getUserInfo()
+            .applySchedulers()
+            .subscribeWith(object : TripDisposableSingleObserver<UserResponse>() {
+                override fun onSuccess(userResponse: UserResponse) {
+                    _userName.value = userResponse.nickname
+                }
+
+            }).addTo(compositeDisposable)
     }
 
+    fun createTripRoom() {
+        _startCreateRoom.call()
+    }
+
+    fun goToMyPage() {
+        _startMyPage.call()
+    }
+
+    fun enterTripRoom() {
+        _startEnterRoom.call()
+    }
 }

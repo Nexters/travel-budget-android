@@ -18,13 +18,36 @@ interface Constant {
 
     companion object {
 
+        // Intent
+        const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
+        const val EXTRA_ROOM_TYPE = "EXTRA_ROOM_TYPE"
+        const val EXTRA_USER_INFO = "EXTRA_USER_INFO"
+
+        const val EXTRA_SHARED_BUDGET_ID = "EXTRA_SHARED_BUDGET_ID"
+        const val EXTRA_PERSONAL_BUDGET_ID = "EXTRA_PERSONAL_BUDGET_ID"
+
+        const val EXTRA_PLAN_ID = "EXTRA_PLAN_ID"
+        const val EXTRA_MEMBER_ID = "EXTRA_MEMBER_ID"
+        const val EXTRA_IS_PUBLIC = "EXTRA_IS_PUBLIC"
+        const val EXTRA_ROOM_TITLE = "EXTRA_ROOM_TITLE"
+        const val EXTRA_ROOM_CODE = "EXTRA_ROOM_CODE"
+
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
+
+        // Request code
+        const val REQUEST_CODE_CREATE_ROOM = 20
+        const val REQUEST_CODE_ENTER_ROOM = 30
+        const val REQUEST_CODE_EDIT_USER_NAME = 40
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1
         const val RESULT_CANCEL = 0
         const val RESULT_ERROR = -1
+
+        // SEGMENT
+        const val SEGMENT_ROOM = "room"
+        const val KEY_ROOM_CODE = "code"
     }
 }

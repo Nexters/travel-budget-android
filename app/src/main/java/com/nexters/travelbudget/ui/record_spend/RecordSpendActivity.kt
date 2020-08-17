@@ -50,7 +50,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
     private fun observeViewModel() {
         with(viewModel) {
             selectDateEvent.observe(this@RecordSpendActivity, Observer {
-                SelectDateBottomSheetDialog {
+                SelectDateBottomSheetDialog(listOf()) {
                     setDate(it)
                 }.show(supportFragmentManager, "")
             })

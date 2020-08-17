@@ -6,10 +6,10 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.BottomSheetSelectDateBinding
 import com.nexters.travelbudget.ui.base.BaseBottomSheetDialogFragment
 import com.nexters.travelbudget.ui.select_date.adapter.SelectDateRVAdapter
-import com.nexters.travelbudget.utils.DLog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectDateBottomSheetDialog(
+    private val items: List<String>,
     private val listener: (String) -> Unit
 )
     : BaseBottomSheetDialogFragment<BottomSheetSelectDateBinding, SelectDateViewModel>(
@@ -23,7 +23,7 @@ class SelectDateBottomSheetDialog(
         observeViewModel()
         setupRecyclerView()
 
-        viewModel.addDateData()
+        viewModel.addDateData(items)
     }
 
     private fun observeViewModel() {

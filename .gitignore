@@ -46,6 +46,7 @@ captures/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
+.idea/jarRepositories.xml
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/libraries
@@ -325,3 +326,4 @@ Thumbs.db
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,android,androidstudio,java,intellij
+/.idea/
