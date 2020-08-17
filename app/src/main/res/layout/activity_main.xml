@@ -11,119 +11,117 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/toolbar_height"
-            android:theme="@style/ToolbarStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="51dp"
-                android:layout_height="24dp"
-                android:src="@drawable/bg_logo" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end">
-
-                <ImageView
-                    android:id="@+id/iv_input_room_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:onClick="@{() -> vm.enterTripRoom()}"
-                    android:src="@drawable/btn_input_room_code" />
-
-                <ImageView
-                    android:id="@+id/iv_create_room"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:onClick="@{() -> vm.createTripRoom()}"
-                    android:src="@drawable/btn_create_room" />
-
-                <ImageView
-                    android:id="@+id/iv_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:onClick="@{() ->vm.goToMyPage()}"
-                    android:src="@drawable/btn_setting" />
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-        <LinearLayout
-            android:id="@+id/ll_main_title_layout"
-            android:layout_width="0dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            android:background="@android:color/white"
+            app:elevation="0dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="18dp"
-                android:text="@{String.format(@string/main_title_format, vm.userName)}"
-                android:textColor="@color/fill_grey_1"
-                android:textSize="@dimen/text_size_20sp"
-                android:textStyle="bold"
-                tools:text="엄격한 관리자님,\n여행을 기록해주세요" />
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@{String.format(@string/main_title_format, vm.userName)}"
+                    android:textColor="@color/fill_grey_1"
+                    android:textSize="@dimen/text_size_20sp"
+                    android:textStyle="bold"
+                    app:layout_collapseMode="parallax"
+                    tools:text="엄격한 관리자님,\n여행을 기록해주세요" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_main_tab"
-            style="@style/TabStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_main_title_layout">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar_height"
+                    android:background="@android:color/white"
+                    android:theme="@style/ToolbarStyle"
+                    app:layout_collapseMode="pin">
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/travel_to_record"
-                tools:text="기록할 여행" />
+                    <ImageView
+                        android:layout_width="51dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/bg_logo" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/a_trip"
-                tools:text="다녀온 여행" />
-        </com.google.android.material.tabs.TabLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end">
 
-        <View
-            android:id="@+id/view_divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/fill_light_grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tl_main_tab" />
+                        <ImageView
+                            android:id="@+id/iv_input_room_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:onClick="@{() -> vm.enterTripRoom()}"
+                            android:src="@drawable/btn_input_room_code" />
+
+                        <ImageView
+                            android:id="@+id/iv_create_room"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:onClick="@{() -> vm.createTripRoom()}"
+                            android:src="@drawable/btn_create_room" />
+
+                        <ImageView
+                            android:id="@+id/iv_setting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:onClick="@{() ->vm.goToMyPage()}"
+                            android:src="@drawable/btn_setting" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl_main_tab"
+                style="@style/TabStyle"
+                android:layout_width="match_parent"
+                android:layout_height="54dp">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/travel_to_record"
+                    tools:text="기록할 여행" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/a_trip"
+                    tools:text="다녀온 여행" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/fill_light_grey" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_main_pager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tl_main_tab" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
