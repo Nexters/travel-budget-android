@@ -91,9 +91,9 @@ class KakaoLogin(
                 with(result.kakaoAccount.profile) {
                     val signUpRequest = SignUpRequest(
                         socialId.toString(),
-                        nickname ?: "",
-                        thumbnailImageUrl ?: "",
-                        profileImageUrl ?: ""
+                        nickname,
+                        thumbnailImageUrl,
+                        profileImageUrl
                     )
                     onLoginSuccess?.invoke(signUpRequest)
                 }
