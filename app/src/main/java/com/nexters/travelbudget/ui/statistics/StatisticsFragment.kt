@@ -6,6 +6,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentStatisticsBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.statistics.adapter.PieChartRVAdapter
+import com.nexters.travelbudget.utils.DLog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsViewModel> (
@@ -21,6 +22,7 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
         arguments?.let {
             viewModel.setData(it.getLong(BUNDLE_BUDGET_ID))
         }
+        binding.swipeRefreshLayout.isEnabled = false
     }
 
     private fun observeViewModel() {
@@ -46,6 +48,7 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
             return StatisticsFragment().apply {
                 arguments = Bundle().apply {
                     putLong(BUNDLE_BUDGET_ID, budgetId)
+                    DLog.d("putLong!!: $budgetId")
                 }
             }
         }

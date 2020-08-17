@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
 import com.nexters.travelbudget.data.repository.StatisticsRepository
+import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.ext.applySchedulers
@@ -26,10 +27,20 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
     private val _isEmptyData = MutableLiveData(false)
     val isEmptyData: LiveData<Boolean> get() = _isEmptyData
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     fun setData(budgetId: Long) {
+        if (budgetId == -1L) {
+            _isEmptyData.value = true
+            return
+        }
+
         statisticsRepo.getStatisticsInfo(budgetId)
             .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
+            .doOnSubscribe { _isLoading.postValue(true) }
+            .doAfterTerminate { _isLoading.postValue(false) }
             .subscribeWith(object : TripDisposableSingleObserver<StatisticsResponse>() {
                 override fun onSuccess(result: StatisticsResponse) {
                     _spendAmount.value = result.usedAmount.toMoneyString()
