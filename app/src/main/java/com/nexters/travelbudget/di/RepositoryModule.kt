@@ -27,4 +27,5 @@ val repositoryModule = module {
     single { EditUserProfileRepository(get()) }
     single { TripMemberRepository(get()) }
     single { DetailPaymentRepository(get()) }
+    single { RecordSpendRepository(get()) }
 }

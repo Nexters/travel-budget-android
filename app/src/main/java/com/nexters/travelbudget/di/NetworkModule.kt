@@ -4,7 +4,6 @@ import com.nexters.travelbudget.BuildConfig
 import com.nexters.travelbudget.data.remote.api.AuthService
 import com.nexters.travelbudget.data.remote.api.TripieService
 import com.nexters.travelbudget.data.remote.interceptor.AuthInterceptor
-import com.nexters.travelbudget.data.remote.interceptor.TokenRefreshAuthenticator
 import com.nexters.travelbudget.data.remote.model.enums.RetrofitQualifiers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,10 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 /** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
     single { AuthInterceptor(androidContext()) }
-    single { TokenRefreshAuthenticator(androidContext()) }
     single { provideAuthApi(get(qualifier = RetrofitQualifiers.DEFAULT)) }
     single { provideTripieApi(get(qualifier = RetrofitQualifiers.AUTH)) }
-    single(RetrofitQualifiers.AUTH) { provideAuthOkHttpClient(get(), get()) }
+    single(RetrofitQualifiers.AUTH) { provideAuthOkHttpClient(get()) }
     single(RetrofitQualifiers.DEFAULT) { provideOkHttpClient() }
 }
 
@@ -66,12 +64,10 @@ fun provideOkHttpClient(): OkHttpClient {
 
 /** Auth 관련 OkHttp 설정 */
 fun provideAuthOkHttpClient(
-    authInterceptor: AuthInterceptor,
-    tokenRefreshAuthenticator: TokenRefreshAuthenticator
+    authInterceptor: AuthInterceptor
 ): OkHttpClient {
     return OkHttpClient.Builder()
         .addInterceptor(authInterceptor)
-        .authenticator(tokenRefreshAuthenticator)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY

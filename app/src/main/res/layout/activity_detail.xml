@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackgroundBorderless"
-                    android:onClick="@{() -> vm.goToManageMemberScreen()}"
+                    android:onClick="@{() -> vm.goToShowRecordSpend()}"
                     android:src="@drawable/ic_invite" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -58,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:onClick="@{() -> vm.goToShowRecordSpend()}"
                     android:src="@drawable/ic_edit" />
 
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.nexters.travelbudget.ui.record_spend.RecordSpendViewModel" />
@@ -12,18 +13,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_title"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <TextView
+                style="@style/ToolbarTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/record_spend_title"
-                style="@style/ToolbarTitleTextStyle"/>
+                android:text="@string/record_spend_title" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -31,126 +34,179 @@
             android:id="@+id/guide_left"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            app:layout_constraintGuide_begin="24dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_right"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            app:layout_constraintGuide_end="24dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_select_shared"
-            android:layout_width="66dp"
-            android:layout_height="40dp"
-            android:text="@string/text_shared"
-            android:textSize="14sp"
+        <LinearLayout
+            android:id="@+id/ll_select_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:onClick="@{() -> vm.selectShared(true)}"
-            app:isSelected="@{vm.isShared}"
+            android:orientation="horizontal"
+            android:visibleIf="@{vm.isSharedTrip}"
             app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/tb_title"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_select_personal"
-            android:layout_width="66dp"
-            android:layout_height="40dp"
-            android:text="@string/text_personal"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:onClick="@{() -> vm.selectShared(false)}"
-            app:isSelected="@{!vm.isShared}"
-            app:layout_constraintStart_toEndOf="@id/tv_select_shared"
-            app:layout_constraintTop_toTopOf="@id/tv_select_shared"/>
+            app:layout_constraintTop_toBottomOf="@id/tb_title">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_select_shared"
+                android:layout_width="66dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:onClick="@{() -> vm.selectShared(true)}"
+                android:text="@string/text_shared"
+                android:textSize="14sp"
+                app:isSelected="@{vm.isShared}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_select_personal"
+                android:layout_width="66dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:onClick="@{() -> vm.selectShared(false)}"
+                android:text="@string/text_personal"
+                android:textSize="14sp"
+                app:isSelected="@{!vm.isShared}" />
+
+        </LinearLayout>
+
         <com.nexters.travelbudget.utils.widget.TripEditText
             android:id="@+id/et_spend_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="0"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:layout_marginTop="25dp"
             android:inputType="numberDecimal"
             android:maxLength="9"
-            android:layout_marginTop="25dp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/tv_select_shared"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/ll_select_type"
+            tools:text="0" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="@string/money_unit"
             android:textColor="@color/fill_grey_1"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintEnd_toEndOf="@id/et_spend_amount"
-            app:layout_constraintBottom_toBottomOf="@id/et_spend_amount"/>
+            app:layout_constraintBottom_toBottomOf="@id/et_spend_amount"
+            app:layout_constraintEnd_toEndOf="@id/et_spend_amount" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="39.5dp"
             android:orientation="horizontal"
-            android:layout_marginStart="16dp"
             app:addAll="@{vm.spendCategoryList}"
-            app:notifySelectSpendCategoryItem="@{vm.notifySelectedCategoryItem}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_spend_amount"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_spend_amount"
+            app:notifySelectSpendCategoryItem="@{vm.notifySelectedCategoryItem}" />
+
         <com.nexters.travelbudget.utils.widget.TripEditText
             android:id="@+id/et_spend_explain"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:hint="@string/spend_detail_hint"
             android:text="@={vm.spendExplain}"
             android:textSize="14sp"
-            android:hint="@string/spend_detail_hint"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/rv_category"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/rv_category" />
+
         <com.nexters.travelbudget.utils.widget.TripEditText
             android:id="@+id/et_spend_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:textSize="14sp"
-            tools:text="2020.7.26"
-            android:text="@{vm.selectedDate}"
             android:focusableInTouchMode="false"
             android:onClick="@{() -> vm.selectDate()}"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            android:text="@{vm.selectedDate}"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/et_spend_explain"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/et_spend_explain"
+            tools:text="2020.7.26" />
+
         <com.nexters.travelbudget.utils.widget.TripEditText
             android:id="@+id/et_spend_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:textSize="14sp"
-            tools:text="16:45"
-            android:text="@{vm.selectedTime}"
             android:focusableInTouchMode="false"
             android:onClick="@{() -> vm.selectTime()}"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            android:text="@{vm.selectedTime}"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/et_spend_date"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@id/et_spend_date"
+            tools:text="16:45" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_record_submit"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginBottom="31dp"
             android:background="@drawable/bg_button_round_gray"
+            android:goneIf="@{vm.isEditMode}"
+            android:onClick="@{() -> vm.recordSpend()}"
             android:text="@string/text_record_submit"
             android:textColor="@color/colorTextHint"
             android:textSize="16sp"
-            android:onClick="@{() -> vm.recordSpend()}"
             app:isActivated="@{vm.isActivated}"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="31dp"
+            android:visibleIf="@{vm.isEditMode}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintStart_toStartOf="@id/guide_left">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_record_remove"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_button_round_black"
+                android:onClick="@{() -> vm.removeSpend()}"
+                android:text="@string/text_record_delete"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/btn_record_modify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_record_modify"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_button_round_blue"
+                android:onClick="@{() -> vm.modifySpend()}"
+                android:text="@string/text_record_modify"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_record_remove"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

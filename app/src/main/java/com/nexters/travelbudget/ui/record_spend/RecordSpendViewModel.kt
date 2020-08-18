@@ -2,17 +2,30 @@ package com.nexters.travelbudget.ui.record_spend
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nexters.travelbudget.data.remote.model.request.RecordPaymentRequest
+import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
+import com.nexters.travelbudget.data.repository.RecordSpendRepository
 import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.model.enums.SpendCategoryEnum
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
+import com.nexters.travelbudget.utils.convertDateToMills
+import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
+import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
+import com.nexters.travelbudget.utils.observer.TripieCompletableObserver
+import com.nexters.travelbudget.utils.widget.piechart.PieData
+import io.reactivex.rxkotlin.addTo
+import org.json.JSONObject
+import retrofit2.HttpException
 import java.text.DecimalFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-class RecordSpendViewModel : BaseViewModel() {
+class RecordSpendViewModel(private val recordSpendRepository: RecordSpendRepository) :
+    BaseViewModel() {
     private val defaultSpendCategoryList = ArrayList<SpendCategoryModel>().apply {
         for (item in SpendCategoryEnum.values()) {
             add(SpendCategoryModel(item.defaultRes, item.titleKor, false))
@@ -52,11 +65,44 @@ class RecordSpendViewModel : BaseViewModel() {
     private val _isActivated = MutableLiveData(false)
     val isActivated: LiveData<Boolean> get() = _isActivated
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _isSharedTrip = MutableLiveData(true)
+    val isSharedTrip: LiveData<Boolean> get() = _isSharedTrip
+
+    private val _isEditMode = MutableLiveData(false)
+    val isEditMode: LiveData<Boolean> get() = _isEditMode
+
     val selectDateEvent = SingleLiveEvent<Unit>()
     val selectTimeEvent = SingleLiveEvent<Unit>()
 
+    val recordSpendFinishEvent = SingleLiveEvent<String>()
+
     private var latestClicked = 0
     private var selectedCategory: String? = null
+
+    private var sharedBudgetId = -1L
+    private var personalBudgetId = -1L
+
+    private var paymentId = -1L
+
+    fun setBudgetId(sharedBudgetId: Long, personalBudgetId: Long) {
+        this.sharedBudgetId = sharedBudgetId
+        this.personalBudgetId = personalBudgetId
+    }
+
+    fun setPaymentId(paymentId: Long) {
+        this.paymentId = paymentId
+    }
+
+    fun setRoomType(isSharedTrip: Boolean) {
+        this._isSharedTrip.value = isSharedTrip
+    }
+
+    fun setEditMode(isEditMode: Boolean) {
+        _isEditMode.value = isEditMode
+    }
 
     fun categoryItemClick(spendCategory: SpendCategoryModel) {
         selectedCategory = spendCategory.title
@@ -109,18 +155,97 @@ class RecordSpendViewModel : BaseViewModel() {
         val amount = spendAmount.value
         val explain = spendExplain.value
 
-        _isActivated.value = !amount.isNullOrEmpty() && !selectedCategory.isNullOrEmpty() && !explain.isNullOrEmpty()
+        _isActivated.value =
+            !amount.isNullOrEmpty() && !selectedCategory.isNullOrEmpty() && !explain.isNullOrEmpty()
     }
 
     fun recordSpend() {
         if (isActivated.value == true) {
-            val type = if (isShared.value == true) {
-                "공용"
-            } else {
-                "개인"
-            }
+            val isReady = getIsReady()
+            recordSpendRepository.recordPayments(
+                RecordPaymentRequest(
+                    translateCategory(selectedCategory ?: return),
+                    isReady,
+                    getPaymentDt(isReady),
+                    spendExplain.value ?: return,
+                    spendAmount.value?.replace(",", "")?.toInt() ?: return,
+                    getBudgetId()
+                )
+            ).applySchedulers()
+                .doOnSubscribe { _isLoading.value = true }
+                .doAfterTerminate { _isLoading.value = false }
+                .subscribeWith(object : TripieCompletableObserver() {
+                    override fun onComplete() {
+                        recordSpendFinishEvent.value = "지출 기록이 추가되었어요"
+                    }
+                }).addTo(compositeDisposable)
+        }
+    }
 
-            liveToastMessage.value = "$type, ${spendAmount.value}원, ${selectedCategory}, ${spendExplain.value}"
+    fun removeSpend() {
+        recordSpendRepository.removePayments(
+            paymentId
+        ).applySchedulers()
+            .doOnSubscribe { _isLoading.value = true }
+            .doAfterTerminate { _isLoading.value = false }
+            .subscribeWith(object : TripieCompletableObserver() {
+                override fun onComplete() {
+                    recordSpendFinishEvent.value = "지출 기록이 삭제되었어요"
+                }
+            }).addTo(compositeDisposable)
+    }
+
+    fun modifySpend() {
+        val isReady = getIsReady()
+        recordSpendRepository.modifyPayments(
+            paymentId,
+            RecordPaymentRequest(
+                translateCategory(selectedCategory ?: return),
+                isReady,
+                getPaymentDt(isReady),
+                spendExplain.value ?: return,
+                spendAmount.value?.replace(",", "")?.toInt() ?: return,
+                getBudgetId()
+            )
+        ).applySchedulers()
+            .doOnSubscribe { _isLoading.value = true }
+            .doAfterTerminate { _isLoading.value = false }
+            .subscribeWith(object : TripieCompletableObserver() {
+                override fun onComplete() {
+                    recordSpendFinishEvent.value = "지출 기록이 수정되었어요"
+                }
+            }).addTo(compositeDisposable)
+    }
+
+    private fun getBudgetId() = if (isShared.value == true) {
+        sharedBudgetId
+    } else {
+        personalBudgetId
+    }
+
+    private fun getIsReady() = if (selectedDate.value == "준비") {
+        "Y"
+    } else {
+        "N"
+    }
+
+    private fun getPaymentDt(isReady: String) = if (isReady == "Y") {
+        1596521640L
+    } else {
+        convertDateToMills(selectedDate.value ?: "0000-00-00", selectedTime.value ?: "00:00")
+    }
+
+    private fun translateCategory(category: String): String {
+        return when (category) {
+            "식비" -> "FOOD"
+            "문화" -> "CULTURE"
+            "교통" -> "TRAFFIC"
+            "쇼핑" -> "SHOPPING"
+            "숙박" -> "SLEEP"
+            "간식" -> "SNACK"
+            "기타" -> "ETC"
+
+            else -> ""
         }
     }
 }
