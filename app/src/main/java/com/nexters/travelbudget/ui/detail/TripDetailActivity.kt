@@ -21,6 +21,7 @@ class TripDetailActivity :
     BaseActivity<ActivityDetailBinding, TripDetailViewModel>(R.layout.activity_detail) {
     override val viewModel: TripDetailViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
+    private var date: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,6 @@ class TripDetailActivity :
 //                        4. 함께여행 / 개인여행 선택
 //                        5. 기록모드인지 수정모드인지
 //                        6. 수정모드일 땐 payment Id
-
                 val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
                 val sharedBudgetId = tripDetailResponse.shared.budgetId
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
@@ -72,6 +72,7 @@ class TripDetailActivity :
                     putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                     putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                     putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                    putExtra(Constant.EXTRA_CURRENT_DATE, date)
                     putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
                 })
             })
@@ -92,7 +93,8 @@ class TripDetailActivity :
                             ArrayList(detailDate.dates)
                         )
                         putExtra(Constant.EXTRA_ROOM_TYPE, TravelRoomType.SHARED)
-                    })
+                    }
+                )
             })
         }
     }
@@ -130,6 +132,10 @@ class TripDetailActivity :
             offscreenPageLimit = TAB_COUNT - 1
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
         }
+    }
+
+    fun setDate(d: String) {
+        this.date = d
     }
 
     companion object {

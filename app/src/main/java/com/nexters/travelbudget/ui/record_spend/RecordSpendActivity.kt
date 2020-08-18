@@ -42,6 +42,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1L)
         val paymentId = intent.getLongExtra(Constant.EXTRA_PAYMENT_ID, -1L)
+        val currentDate = intent.getStringExtra(Constant.EXTRA_CURRENT_DATE)
 
         intent.getStringArrayListExtra(Constant.EXTRA_PLAN_DATES)?.let {
             dateList = it
@@ -49,6 +50,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
         day = st.nextToken()
         time = st.nextToken()
+
+        currentDate?.let {
+            day = it
+        }
 
         viewModel.setDate(day)
         viewModel.setTime(time)

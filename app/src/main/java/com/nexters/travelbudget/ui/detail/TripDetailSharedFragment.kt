@@ -53,6 +53,7 @@ class TripDetailSharedFragment :
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
                 SelectDateBottomSheetDialog.newInstance(ArrayList(dateItems)) {
                     setSharedDate(it)
+                    (requireActivity() as? TripDetailActivity)?.setDate(it)
                     viewModel.getPaymentTravelData(budgetId, "N", it)
                 }.show(parentFragmentManager, "bottom_sheet")
             })

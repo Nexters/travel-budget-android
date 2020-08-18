@@ -37,6 +37,8 @@ interface Constant {
         const val EXTRA_BUDGET_ID = "EXTRA_BUDGET_ID"
         const val EXTRA_PAYMENT_ID = "EXTRA_PAYMENT_ID"
 
+        const val EXTRA_CURRENT_DATE = "EXTRA_CURRENT_DATE"
+
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
