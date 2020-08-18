@@ -29,8 +29,8 @@ interface TripieService {
     @GET("api/plans/{id}")
     fun getTripDetailInfo(@Path("id") id: Long): Single<TripDetailResponse>
 
-//    @GET("api/payments")
-//    fun abc(@Query("budget_id") budget_id: Long, @Query("is_ready") is_ready: String, @Query("payment_dt") payment_dt: String) : Single<>
+    @GET("api/payments")
+    fun getTripPaymentInfo(@Query("budget_id") budget_id: Long, @Query("is_ready") is_ready: String, @Query("payment_dt") payment_dt: String) : Single<List<TripPaymentResponse>>
 
     @GET("api/budgets/{id}/statics")
     fun getStatisticsInfo(@Path("id") id: Long): Single<StatisticsResponse>

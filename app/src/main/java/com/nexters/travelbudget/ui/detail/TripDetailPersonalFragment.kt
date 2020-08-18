@@ -1,6 +1,7 @@
 package com.nexters.travelbudget.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import com.nexters.travelbudget.R
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.FragmentDetailPersonalBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
+import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,8 +48,20 @@ class TripDetailPersonalFragment() :
     }
 
     private fun setupDetailPersonalRV() {
-        with(binding.rvDetailPersonalList) {
-            adapter = com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter()
+        binding.rvDetailPersonalList.run {
+            adapter = SharedDetailRVAdapter { tripPaymentResponse ->
+                Log.e("dain", tripPaymentResponse.paymentDt.toString())
+//                if (tripPaymentResponse.paymentDt == "Y") {
+//                    startActivity(TripDetailActivity.getIntent(context.applicationContext).apply {
+//                        putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+//                    })
+//                } else {
+//                    startActivity(
+//                        TripDetailAloneActivity.getIntent(context.applicationContext).apply {
+//                            putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+//                        })
+//                }
+            }
         }
     }
 
