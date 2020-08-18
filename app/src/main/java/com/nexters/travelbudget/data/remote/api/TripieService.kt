@@ -33,6 +33,12 @@ interface TripieService {
     @POST("api/payments")
     fun recordPayments(@Body request: RecordPaymentRequest): Completable
 
+    @PUT("api/payments/{paymentId}")
+    fun modifyPayments(@Path("paymentId") paymentId: Long, @Body request: RecordPaymentRequest): Completable
+
+    @DELETE("api/payments/{paymentId}")
+    fun removePayments(@Path("paymentId") paymentId: Long): Completable
+
     @GET("api/budgets/{id}/statics")
     fun getStatisticsInfo(@Path("id") id: Long): Single<StatisticsResponse>
 

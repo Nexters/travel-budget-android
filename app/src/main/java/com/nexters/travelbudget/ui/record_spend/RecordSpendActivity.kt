@@ -40,6 +40,8 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         viewModel.setTime(time)
         viewModel.setRoomType(intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) == TravelRoomType.SHARED)
         viewModel.setEditMode(intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE) == EditModeType.EDIT_MODE)
+        viewModel.setBudgetId(26L, -1)
+        viewModel.setPaymentId(22L)
 
         observeViewModel()
         setupSpendCategoryRV()

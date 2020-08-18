@@ -8,4 +8,12 @@ class RecordSpendRemoteDataSource(private val tripieService: TripieService) {
     fun recordPayments(recordPaymentRequest: RecordPaymentRequest): Completable {
         return tripieService.recordPayments(recordPaymentRequest)
     }
+
+    fun modifyPayments(paymentId: Long, recordPaymentRequest: RecordPaymentRequest): Completable {
+        return tripieService.modifyPayments(paymentId, recordPaymentRequest)
+    }
+
+    fun removePayments(paymentId: Long): Completable {
+        return tripieService.removePayments(paymentId)
+    }
 }
