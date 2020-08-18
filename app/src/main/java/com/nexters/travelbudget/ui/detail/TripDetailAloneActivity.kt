@@ -23,13 +23,12 @@ class TripDetailAloneActivity :
         super.onCreate(savedInstanceState)
         observeViewModel()
         setupDetailAloneRV()
-//        viewModel.setAloneBudgetData()
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-        viewModel.addData()
     }
 
     private fun observeViewModel() {
+
     }
 
     private fun setupDetailAloneRV() {

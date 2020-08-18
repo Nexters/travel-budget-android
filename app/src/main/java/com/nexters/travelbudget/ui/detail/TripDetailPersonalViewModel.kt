@@ -3,14 +3,20 @@ package com.nexters.travelbudget.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
+import com.nexters.travelbudget.data.remote.model.response.TripPaymentResponse
+import com.nexters.travelbudget.data.repository.DetailPaymentRepository
 import com.nexters.travelbudget.data.repository.DetailTripRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
+import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
+import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
+import io.reactivex.rxkotlin.addTo
+import java.util.concurrent.TimeUnit
 
-class TripDetailPersonalViewModel(private val detailTripRepository: DetailTripRepository) : BaseViewModel() {
+class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
 
     private val _newDetailPersonalList = MutableLiveData<ArrayList<DetailSharedData>>()
     val newDetailPersonalList: LiveData<ArrayList<DetailSharedData>> get() = _newDetailPersonalList
@@ -35,8 +41,17 @@ class TripDetailPersonalViewModel(private val detailTripRepository: DetailTripRe
     private val _suggestPersonalAmount = MutableLiveData<String>()
     val suggestPersonalAmount: LiveData<String> = _suggestPersonalAmount
 
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading = _isLoading
+
+    private val _isEmptyList = MutableLiveData<Boolean>(false)
+    val isEmptyList = _isEmptyList
+
     private val _isEmpty = MutableLiveData<Boolean>(false)
     val isEmpty: LiveData<Boolean> = _isEmpty
+
+    private val _tripPaymentPersonalList = MutableLiveData<List<TripPaymentResponse>>()
+    val tripPaymentPersonalList: LiveData<List<TripPaymentResponse>> = _tripPaymentPersonalList
 
     fun showPersonalDateDialog() {
         showPersonalDateDialogEvent.call()
@@ -44,11 +59,6 @@ class TripDetailPersonalViewModel(private val detailTripRepository: DetailTripRe
 
     fun setPersonalDate(date: String) {
         _detailPersonalDate.value = date
-    }
-
-    fun addData() {
-        val dataList = getData()
-        _newDetailPersonalList.value = dataList
     }
 
     fun setBudgetData(tripDetailData: TripDetailResponse.Data) {
@@ -60,17 +70,23 @@ class TripDetailPersonalViewModel(private val detailTripRepository: DetailTripRe
         }
     }
 
-    private fun getData(): ArrayList<DetailSharedData> {
-        return ArrayList<DetailSharedData>().apply {
-            add(DetailSharedData("식비", 1500000))
-            add(DetailSharedData("간식", 375000))
-            add(DetailSharedData("문화", 400000))
-            add(DetailSharedData("교통", 390000))
-            add(DetailSharedData("기타", 200000))
-            add(DetailSharedData("기타", 200000))
-            add(DetailSharedData("기타", 200000))
-            add(DetailSharedData("기타", 200000))
-        }
+    fun getPaymentPersonalTravelData(budgetId: Long, isReady: String, paymentDt: String) {
+        detailPaymentRepository.getTripPaymentInfo(budgetId, isReady, paymentDt)
+            .delay(500, TimeUnit.MILLISECONDS)
+            .applySchedulers()
+            .doOnSubscribe { _isLoading.value = true }
+            .doAfterTerminate { _isLoading.value = false }
+            .doOnSuccess {
+                _isEmptyList.value = it.isEmpty()
+            }
+            .subscribeWith(object : TripDisposableSingleObserver<List<TripPaymentResponse>>() {
+                override fun onSuccess(result: List<TripPaymentResponse>) {
+                    _tripPaymentPersonalList.value = result
+                }
+
+            }).addTo(compositeDisposable)
     }
+
+
 
 }

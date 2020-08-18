@@ -223,6 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="16dp"
+                        android:onClick="@{()->vm.showDateAloneDialog()}"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_shared_history">
 
@@ -239,7 +240,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:text="test"
+                            android:text="@{vm.detailAloneDate}"
                             android:textColor="@color/colorFillBlue"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -288,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:nestedScrollingEnabled="false"
-                        app:addAll="@{vm.newDetailSharedList}"
+                        app:submitList="@{vm.tripPaymentAloneList}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -37,7 +37,7 @@ class TripDetailSharedFragment :
         observeViewModel()
         setupDetailSharedRV()
 
-        viewModel.getPaymentTravelData(38, "N", "2020-08-04") // test 여기서 값을 어떻게 받아오니
+        viewModel.getPaymentTravelData(38, "Y", "2020-08-04") // test
 
         budgetData?.let {
             viewModel.setBudgetData(it)
@@ -49,6 +49,7 @@ class TripDetailSharedFragment :
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
                 SelectDateBottomSheetDialog(dateItems) {
                     setSharedDate(it)
+                    viewModel.getPaymentTravelData(43, "N", it) // test
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }

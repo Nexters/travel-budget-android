@@ -15,13 +15,13 @@ import kotlin.collections.ArrayList
 class RecordSpendViewModel : BaseViewModel() {
     private val defaultSpendCategoryList = ArrayList<SpendCategoryModel>().apply {
         for (item in SpendCategoryEnum.values()) {
-            add(SpendCategoryModel(item.defaultRes, item.title, false))
+            add(SpendCategoryModel(item.defaultRes, item.titleKor, false))
         }
     }
 
     private val selectedSpendCategoryList = ArrayList<SpendCategoryModel>().apply {
         for (item in SpendCategoryEnum.values()) {
-            add(SpendCategoryModel(item.selectedRes, item.title, true))
+            add(SpendCategoryModel(item.selectedRes, item.titleKor, true))
         }
     }
 
@@ -63,7 +63,7 @@ class RecordSpendViewModel : BaseViewModel() {
 
         val values = SpendCategoryEnum.values()
         for (i in values.indices) {
-            if (spendCategory.title == values[i].title) {
+            if (spendCategory.title == values[i].titleKor) {
                 _notifySelectedCategoryItem.value = Pair(
                     Pair(defaultSpendCategoryList[latestClicked], latestClicked),
                     Pair(selectedSpendCategoryList[i], i)

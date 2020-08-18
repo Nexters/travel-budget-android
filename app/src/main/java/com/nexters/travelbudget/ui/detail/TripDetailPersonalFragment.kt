@@ -30,7 +30,8 @@ class TripDetailPersonalFragment() :
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailPersonalRV()
-        viewModel.addData()
+
+        viewModel.getPaymentPersonalTravelData(35, "N", "2020-08-04") // test 여기서 값을 어떻게 받아오니
 
         budgetData?.let {
             viewModel.setBudgetData(it)

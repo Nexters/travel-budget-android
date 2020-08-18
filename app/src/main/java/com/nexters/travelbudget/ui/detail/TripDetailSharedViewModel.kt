@@ -19,7 +19,7 @@ import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
 
 
-class TripDetailSharedViewModel(private val detailTripRepository: DetailTripRepository, private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
+class TripDetailSharedViewModel(private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
     private val _newDetailSharedList = MutableLiveData<ArrayList<DetailSharedData>>()
     val newDetailSharedList: LiveData<ArrayList<DetailSharedData>> get() = _newDetailSharedList
 
@@ -54,12 +54,6 @@ class TripDetailSharedViewModel(private val detailTripRepository: DetailTripRepo
 
     private val _suggestAmount = MutableLiveData<String>()
     val suggestAmount: LiveData<String> = _suggestAmount
-
-
-//    fun addData() {
-//        val dataList = getData()
-//        _newDetailSharedList.value = dataList
-//    }
 
     fun showDateDialog() {
         showDateDialogEvent.call()

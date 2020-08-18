@@ -42,7 +42,7 @@ class PieChartRVAdapter : RecyclerView.Adapter<PieChartRVAdapter.PieChartViewHol
             val perc = (100f * pieData.value / getTotalValue()).toInt()
             var icon = 0
             for (category in SpendCategoryEnum.values()) {
-                if (category.title == pieData.tag) {
+                if (category.titleKor == pieData.tag) {
                     icon = category.selectedRes
                     break
                 }
