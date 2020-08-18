@@ -17,6 +17,7 @@ import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.MoneyStringTextWatcher
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.StringBuilder
@@ -30,8 +31,9 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.setDate("2020.8.4")
+        viewModel.setDate("2020-08-04")
         viewModel.setTime("15:14")
+        viewModel.setBudgetId(26L, -1L)
         observeViewModel()
         setupSpendCategoryRV()
         setupTextWatcher()
@@ -55,6 +57,11 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
             spendAmount.observe(this@RecordSpendActivity, Observer {
                 checkComplete()
+            })
+
+            recordSpendFinishEvent.observe(this@RecordSpendActivity, Observer {
+                showToastMessage(it)
+                finish()
             })
         }
     }

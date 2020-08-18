@@ -61,7 +61,7 @@ val viewModelModule = module {
     viewModel { TripDetailAloneViewModel() }
     viewModel { EditTripProfileViewModel() }
     viewModel { SelectDateViewModel() }
-    viewModel { RecordSpendViewModel() }
+    viewModel { RecordSpendViewModel(get()) }
     viewModel { (planId: Long, roomTitle: String) ->
         ManageMemberViewModel(planId, roomTitle, get())
     }

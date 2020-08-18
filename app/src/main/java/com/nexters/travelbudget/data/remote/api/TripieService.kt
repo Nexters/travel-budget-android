@@ -30,7 +30,7 @@ interface TripieService {
     @GET("api/plans/{id}")
     fun getTripDetailInfo(@Path("id") id: Long): Single<TripDetailResponse>
 
-    @GET("api/payments")
+    @POST("api/payments")
     fun recordPayments(@Body request: RecordPaymentRequest): Completable
 
     @GET("api/budgets/{id}/statics")
