@@ -68,7 +68,7 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _isSharedTrip = MutableLiveData(false)
+    private val _isSharedTrip = MutableLiveData(true)
     val isSharedTrip: LiveData<Boolean> get() = _isSharedTrip
 
     private val _isEditMode = MutableLiveData(false)
