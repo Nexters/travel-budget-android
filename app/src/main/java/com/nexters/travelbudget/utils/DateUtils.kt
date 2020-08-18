@@ -1,6 +1,7 @@
 package com.nexters.travelbudget.utils
 
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -11,3 +12,9 @@ import java.util.*
  */
 fun getViewDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
 fun getServerDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+fun convertDateToMills(date: String, time: String): Long {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    val d = sdf.parse("$date $time:00") ?: Date()
+
+    return d.time / 1000
+}

@@ -1,6 +1,7 @@
 package com.nexters.travelbudget.data.remote.api
 
 import com.nexters.travelbudget.data.remote.model.request.CreateRoomRequest
+import com.nexters.travelbudget.data.remote.model.request.RecordPaymentRequest
 import com.nexters.travelbudget.data.remote.model.response.*
 
 import io.reactivex.Completable
@@ -29,8 +30,8 @@ interface TripieService {
     @GET("api/plans/{id}")
     fun getTripDetailInfo(@Path("id") id: Long): Single<TripDetailResponse>
 
-//    @GET("api/payments")
-//    fun abc(@Query("budget_id") budget_id: Long, @Query("is_ready") is_ready: String, @Query("payment_dt") payment_dt: String) : Single<>
+    @POST("api/payments")
+    fun recordPayments(@Body request: RecordPaymentRequest): Completable
 
     @GET("api/budgets/{id}/statics")
     fun getStatisticsInfo(@Path("id") id: Long): Single<StatisticsResponse>
