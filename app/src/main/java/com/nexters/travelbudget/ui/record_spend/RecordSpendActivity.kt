@@ -3,13 +3,17 @@ package com.nexters.travelbudget.ui.record_spend
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.TypedValue
+import android.widget.EditText
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
+import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityRecordSpendBinding
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
+import com.nexters.travelbudget.ui.detail.TripDetailSharedFragment
 import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
@@ -36,6 +40,8 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1L)
 
+        val longExtra = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
+
         day = st.nextToken()
         time = st.nextToken()
 
@@ -44,7 +50,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         viewModel.setRoomType(intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) == TravelRoomType.SHARED)
         viewModel.setEditMode(intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE) == EditModeType.EDIT_MODE)
         viewModel.setBudgetId(27L, personalBudgetId)
-        viewModel.setPaymentId(28L)
+        viewModel.setPaymentId(22L)
 
         observeViewModel()
         setupSpendCategoryRV()
