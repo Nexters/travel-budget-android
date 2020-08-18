@@ -26,9 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class TripDetailActivity :
     BaseActivity<ActivityDetailBinding, TripDetailViewModel>(R.layout.activity_detail) {
-    override val viewModel: TripDetailViewModel by viewModel {
-        parametersOf(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-    }
+    override val viewModel: TripDetailViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +37,7 @@ class TripDetailActivity :
         setTabLayout()
         observeViewModel()
 
-        viewModel.getTripDetailData()
-//        intent.getBundleExtra()
+        viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
     }
 
     private fun observeViewModel() {
@@ -61,6 +58,23 @@ class TripDetailActivity :
                         roomTitle
                     )
                 )
+            })
+
+            goToPaymentScreen.observe(this@TripDetailActivity, Observer {
+//                1. 공용 예산 id
+//                2. 개인 예산 id
+//                3. 선택한 날짜
+//                        4. 함께여행 / 개인여행 선택
+//                        5. 기록모드인지 수정모드인지
+//                        6. 수정모드일 땐 payment Id
+
+                val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
+                val sharedBudgetId = tripDetailResponse.shared.budgetId
+                val personalBudgetId = tripDetailResponse.personal.budgetId
+//                val selectedDate
+                val isPublic = TravelRoomType.SHARED
+//                val isEditMode = -1
+
             })
             startRecordSpend.observe(this@TripDetailActivity, Observer {
 
@@ -106,7 +120,7 @@ class TripDetailActivity :
     private fun setupViewPager(
         dates: List<String>,
         sharedBudgetData: TripDetailResponse.Data,
-        personalBudgetData: TripDetailResponse.Data?
+        personalBudgetData: TripDetailResponse.Data
     ) {
         binding.vpDetailPager.run {
             adapter = DetailVPAdapter(
@@ -120,7 +134,6 @@ class TripDetailActivity :
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
         }
     }
-
 
     companion object {
         private const val TAB_COUNT = 2

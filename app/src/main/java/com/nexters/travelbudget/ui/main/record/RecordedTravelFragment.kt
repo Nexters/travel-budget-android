@@ -9,7 +9,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.FragmentRecordedTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
+import com.nexters.travelbudget.ui.detail.TripDetailActivity
+import com.nexters.travelbudget.ui.detail.TripDetailAloneActivity
 import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
+import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,8 +55,16 @@ class RecordedTravelFragment :
     private fun setRecordedTravelRV() {
         binding.rvRecordedTravel.run {
             adapter = TravelRecordRVAdapter { tripRecordResponse ->
-                // TODO 여행 상세 화면으로 연결 작업
-                context.showToastMessage("상세 화면 전환")
+                if (tripRecordResponse.isPublic == "Y") {
+                    startActivity(TripDetailActivity.getIntent(context.applicationContext).apply {
+                        putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+                    })
+                } else {
+                    startActivity(
+                        TripDetailAloneActivity.getIntent(context.applicationContext).apply {
+                            putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+                        })
+                }
             }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(

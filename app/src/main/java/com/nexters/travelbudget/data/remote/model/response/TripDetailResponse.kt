@@ -10,7 +10,7 @@ data class TripDetailResponse (
     @SerializedName("shared")
     val shared: Data,
     @SerializedName("personal")
-    val personal: Data?,
+    val personal: Data,
     @SerializedName("name")
     val name: String,
     @SerializedName("dates")

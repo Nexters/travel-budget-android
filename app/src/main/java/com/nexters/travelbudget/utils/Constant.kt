@@ -34,6 +34,7 @@ interface Constant {
         const val EXTRA_PLAN_DATES = "EXTRA_PLAN_DATES"
 
         const val EXTRA_EDIT_MODE = "EXTRA_EDIT_MODE"
+        const val EXTRA_BUDGET_ID = "EXTRA_BUDGET_ID"
 
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"

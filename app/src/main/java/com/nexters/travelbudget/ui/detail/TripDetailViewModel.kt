@@ -13,21 +13,13 @@ import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
 
-class TripDetailViewModel(
-    private val planId: Long,
-    private val detailTripRepository: DetailTripRepository
-) :
+class TripDetailViewModel(private val detailTripRepository: DetailTripRepository) :
     BaseViewModel() {
 
     private val _detailTitle = MutableLiveData<String>().apply {
         value = DEFAULT_TITLE
     }
     val detailTitle: LiveData<String> get() = _detailTitle
-
-    private val _planIdLiveData = MutableLiveData<Long>().apply {
-        value = planId
-    }
-    val planIdLiveData get() = _planIdLiveData
 
     private val _toShared = SingleLiveEvent<Unit>()
     val toShared = _toShared
@@ -44,6 +36,9 @@ class TripDetailViewModel(
     private val _startRecordSpend: SingleLiveEvent<Unit> = SingleLiveEvent()
     val startRecordSpend: SingleLiveEvent<Unit> = _startRecordSpend
 
+    private val _goToPaymentScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val goToPaymentScreen: SingleLiveEvent<Unit> = _goToPaymentScreen
+
 
     fun toShared() {
         _toShared.call()
@@ -59,8 +54,8 @@ class TripDetailViewModel(
         }
     }
 
-    fun getTripDetailData() {
-        detailTripRepository.getTripDetailInfo(_planIdLiveData.value!!)
+    fun getTripDetailData(planId: Long) {
+        detailTripRepository.getTripDetailInfo(planId)
             .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             //  .doOnSubscribe { _isLoading.value = true }
@@ -83,6 +78,10 @@ class TripDetailViewModel(
 
     fun goToShowRecordSpend() {
         _startRecordSpend.call()
+    }
+
+    fun goToPaymentScreen() {
+        _goToPaymentScreen.call()
     }
 
 
