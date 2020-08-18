@@ -76,6 +76,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_select_room_type_screen_title"
+                app:layout_constraintWidth_max="240dp"
                 app:layout_constraintWidth_percent="0.666" />
 
             <RadioGroup
