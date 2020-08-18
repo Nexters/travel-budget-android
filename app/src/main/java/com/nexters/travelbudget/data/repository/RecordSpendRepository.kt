@@ -8,4 +8,12 @@ class RecordSpendRepository(private val recordSpendRemoteDataSource: RecordSpend
     fun recordPayments(recordPaymentRequest: RecordPaymentRequest): Completable {
         return recordSpendRemoteDataSource.recordPayments(recordPaymentRequest)
     }
+
+    fun modifyPayments(paymentId: Long, recordPaymentRequest: RecordPaymentRequest): Completable {
+        return recordSpendRemoteDataSource.modifyPayments(paymentId, recordPaymentRequest)
+    }
+
+    fun removePayments(paymentId: Long): Completable {
+        return recordSpendRemoteDataSource.removePayments(paymentId)
+    }
 }
