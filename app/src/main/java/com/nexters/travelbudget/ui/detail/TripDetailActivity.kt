@@ -71,7 +71,10 @@ class TripDetailActivity :
                         RecordSpendActivity::class.java
                     ).apply {
 //                        putExtra(Constant.EXTRA_PLAN_ID, planIdLiveData.value)
-                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, detailDate.personal?.budgetId)
+                        putExtra(
+                            Constant.EXTRA_PERSONAL_BUDGET_ID,
+                            detailDate.personal?.budgetId ?: -1L
+                        )
                         putExtra(Constant.EXTRA_SHARED_BUDGET_ID, detailDate.shared.budgetId)
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
