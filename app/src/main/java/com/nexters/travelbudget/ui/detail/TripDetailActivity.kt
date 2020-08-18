@@ -26,9 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class TripDetailActivity :
     BaseActivity<ActivityDetailBinding, TripDetailViewModel>(R.layout.activity_detail) {
-    override val viewModel: TripDetailViewModel by viewModel {
-        parametersOf(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-    }
+    override val viewModel: TripDetailViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {

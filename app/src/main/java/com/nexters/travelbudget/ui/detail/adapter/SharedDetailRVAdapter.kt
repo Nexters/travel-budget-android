@@ -51,7 +51,6 @@ class SharedDetailRVAdapter(onItemClick: OnRecyclerViewItemClick<TripPaymentResp
         item: TripPaymentResponse
     ) {
         (binding as? ItemSharedDetailMoneyListBinding)?.run {
-            this.item = item
 
             var icon = 0
             for (category in SpendCategoryEnum.values()) {
@@ -62,6 +61,8 @@ class SharedDetailRVAdapter(onItemClick: OnRecyclerViewItemClick<TripPaymentResp
             }
 
             model = DetailItemModel(
+                item.title,
+                item.price.toInt().toMoneyString(),
                 icon
             )
         }
