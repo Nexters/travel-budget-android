@@ -55,6 +55,7 @@ class TripDetailSharedViewModel(private val detailTripRepository: DetailTripRepo
     private val _suggestAmount = MutableLiveData<String>()
     val suggestAmount: LiveData<String> = _suggestAmount
 
+
 //    fun addData() {
 //        val dataList = getData()
 //        _newDetailSharedList.value = dataList

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
+import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
@@ -22,6 +23,7 @@ class TripDetailAloneActivity :
         super.onCreate(savedInstanceState)
         observeViewModel()
         setupDetailAloneRV()
+//        viewModel.setAloneBudgetData()
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
         viewModel.addData()

@@ -43,7 +43,7 @@ class SharedDetailRVAdapter(onItemClick: OnRecyclerViewItemClick<TripPaymentResp
         viewHolder: BaseItemVH,
         item: TripPaymentResponse
     ) {
-        (binding as ItemSharedDetailMoneyListBinding)?.run {
+        (binding as? ItemSharedDetailMoneyListBinding)?.run {
             tvDetailSharedItemTitle.text = item.title
             tvDetailSharedItemMoney.text =
                 String.format(Locale.KOREA, "-%s원", item.price) // toMoneyString
