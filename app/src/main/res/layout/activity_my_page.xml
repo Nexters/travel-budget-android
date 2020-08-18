@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.nexters.travelbudget.BuildConfig" />
+
         <variable
             name="vm"
             type="com.nexters.travelbudget.ui.mypage.MyPageViewModel" />
@@ -237,6 +239,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/version_text_format, BuildConfig.VERSION_NAME)}"
                     android:textColor="@color/fill_grey_2"
                     android:textSize="@dimen/text_size_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"

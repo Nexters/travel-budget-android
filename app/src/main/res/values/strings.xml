@@ -76,6 +76,7 @@
     <string name="terms_of_use">이용약관</string>
     <string name="privacy_policy">개인정보처리방침</string>
     <string name="version_info">버전정보</string>
+    <string name="version_text_format">현재 %s</string>
     <string name="logout">로그아웃</string>
 
     <!-- modify profile -->
