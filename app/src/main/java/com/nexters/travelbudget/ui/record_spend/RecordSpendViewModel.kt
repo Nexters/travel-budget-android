@@ -68,6 +68,12 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    private val _isSharedTrip = MutableLiveData(false)
+    val isSharedTrip: LiveData<Boolean> get() = _isSharedTrip
+
+    private val _isEditMode = MutableLiveData(false)
+    val isEditMode: LiveData<Boolean> get() = _isEditMode
+
     val selectDateEvent = SingleLiveEvent<Unit>()
     val selectTimeEvent = SingleLiveEvent<Unit>()
 
@@ -82,6 +88,14 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     fun setBudgetId(sharedBudgetId: Long, personalBudgetId: Long) {
         this.sharedBudgetId = sharedBudgetId
         this.personalBudgetId = personalBudgetId
+    }
+
+    fun setRoomType(isSharedTrip: Boolean) {
+        this._isSharedTrip.value = isSharedTrip
+    }
+
+    fun setEditMode(isEditMode: Boolean) {
+        _isEditMode.value = isEditMode
     }
 
     fun categoryItemClick(spendCategory: SpendCategoryModel) {
@@ -177,6 +191,14 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
                 }).addTo(compositeDisposable)
 
         }
+    }
+
+    fun deleteSpend() {
+
+    }
+
+    fun modifySpend() {
+
     }
 
     private fun translateCategory(category: String): String {
