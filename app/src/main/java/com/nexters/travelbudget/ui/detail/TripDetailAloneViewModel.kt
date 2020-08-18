@@ -96,6 +96,10 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
     }
 
     fun getPaymentAloneTravelData(budgetId: Long, isReady: String, paymentDt: String) {
+        if (budgetId == -1L) {
+            return
+        }
+
         detailPaymentRepository.getTripPaymentInfo(budgetId, isReady, paymentDt)
             .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()

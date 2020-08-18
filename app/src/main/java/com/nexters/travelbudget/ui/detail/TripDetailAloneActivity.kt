@@ -36,10 +36,10 @@ class TripDetailAloneActivity :
         with(viewModel) {
             showDateAloneDialogEvent.observe(this@TripDetailAloneActivity, Observer {
                 val tripDetailResponse = tripDetailAlone.value ?: return@Observer
-                SelectDateBottomSheetDialog(tripDetailResponse.dates) {
-                    setAloneDate(it)
-                    viewModel.getPaymentAloneTravelData(tripDetailResponse.personal.budgetId, "N", it)
-                }.show(supportFragmentManager, "bottom_sheet")
+//                SelectDateBottomSheetDialog(tripDetailResponse.dates) {
+//                    setAloneDate(it)
+//                    viewModel.getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, "N", it)
+//                }.show(supportFragmentManager, "bottom_sheet")
             })
         }
     }

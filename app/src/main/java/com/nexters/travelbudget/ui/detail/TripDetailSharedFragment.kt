@@ -51,7 +51,7 @@ class TripDetailSharedFragment :
     private fun observeViewModel() {
         with(viewModel) {
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
-                SelectDateBottomSheetDialog(dateItems) {
+                SelectDateBottomSheetDialog.newInstance(ArrayList(dateItems)) {
                     setSharedDate(it)
                     viewModel.getPaymentTravelData(budgetId, "N", it)
                 }.show(parentFragmentManager, "bottom_sheet")
@@ -81,7 +81,6 @@ class TripDetailSharedFragment :
             })
         }
     }
-
 
     companion object {
         private const val BUDGET_DATA = "budget_data"
