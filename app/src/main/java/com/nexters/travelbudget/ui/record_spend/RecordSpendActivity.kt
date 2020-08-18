@@ -18,6 +18,7 @@ import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
 import com.nexters.travelbudget.utils.*
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,9 +37,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
         val st = StringTokenizer(date)
 
+        val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
+        val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1L)
 
         val longExtra = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
-
 
         day = st.nextToken()
         time = st.nextToken()
@@ -47,7 +49,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         viewModel.setTime(time)
         viewModel.setRoomType(intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) == TravelRoomType.SHARED)
         viewModel.setEditMode(intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE) == EditModeType.EDIT_MODE)
-        viewModel.setBudgetId(26L, -1)
+        viewModel.setBudgetId(27L, personalBudgetId)
         viewModel.setPaymentId(22L)
 
         observeViewModel()
