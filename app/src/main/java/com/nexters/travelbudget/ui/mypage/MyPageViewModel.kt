@@ -48,6 +48,10 @@ class MyPageViewModel(private val userInfoRepository: UserInfoRepository) : Base
         _startEditUserProfile.call()
     }
 
+    fun preparing() {
+        showToast("현재 준비중 입니다.")
+    }
+
     fun logout() {
         _logout.call()
     }

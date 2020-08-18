@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TravelBudget</string>
+    <string name="app_name">트립파이</string>
 
     <string name="kakao_app_key">76ee6d4e877a1ea575ed4d478cc671db</string>
 
@@ -76,6 +76,7 @@
     <string name="terms_of_use">이용약관</string>
     <string name="privacy_policy">개인정보처리방침</string>
     <string name="version_info">버전정보</string>
+    <string name="version_text_format">현재 %s</string>
     <string name="logout">로그아웃</string>
 
     <!-- modify profile -->
@@ -96,6 +97,10 @@
     <string name="spend_detail_hint">지출한 내용을 입력해주세요 (최대 10글자)</string>
     <string name="make_trip">여행 만들기</string>
     <string name="text_record_submit">기록하기</string>
+
+    <!-- time picker -->
+    <string name="time_picker_title">시간 선택</string>
+    <string name="text_complete">완료</string>
 
     <!-- statistics -->
     <string name="toolbar_statistics">지출 통계</string>

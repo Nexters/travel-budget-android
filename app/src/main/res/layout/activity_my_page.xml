@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.nexters.travelbudget.BuildConfig" />
+
         <variable
             name="vm"
             type="com.nexters.travelbudget.ui.mypage.MyPageViewModel" />
@@ -123,6 +125,7 @@
                 android:id="@+id/cl_customer_service_layout"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
+                android:onClick="@{() -> vm.preparing()}"
                 app:layout_constraintBottom_toTopOf="@+id/cl_terms_of_use_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -155,6 +158,7 @@
                 android:id="@+id/cl_terms_of_use_layout"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
+                android:onClick="@{() -> vm.preparing()}"
                 app:layout_constraintBottom_toTopOf="@+id/cl_privacy_policy_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -187,6 +191,7 @@
                 android:id="@+id/cl_privacy_policy_layout"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
+                android:onClick="@{() -> vm.preparing()}"
                 app:layout_constraintBottom_toTopOf="@+id/cl_app_version_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -237,6 +242,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/version_text_format, BuildConfig.VERSION_NAME)}"
                     android:textColor="@color/fill_grey_2"
                     android:textSize="@dimen/text_size_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
