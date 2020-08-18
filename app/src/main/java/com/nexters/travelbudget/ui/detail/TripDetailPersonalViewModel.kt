@@ -53,6 +53,9 @@ class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPay
     private val _tripPaymentPersonalList = MutableLiveData<List<TripPaymentResponse>>()
     val tripPaymentPersonalList: LiveData<List<TripPaymentResponse>> = _tripPaymentPersonalList
 
+    private val _sumPayment = MutableLiveData<String>()
+    val sumPayment: LiveData<String> = _sumPayment
+
     fun showPersonalDateDialog() {
         showPersonalDateDialogEvent.call()
     }
@@ -71,13 +74,15 @@ class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPay
     }
 
     fun getPaymentPersonalTravelData(budgetId: Long, isReady: String, paymentDt: String) {
+        if (budgetId == -1L) return
+
         detailPaymentRepository.getTripPaymentInfo(budgetId, isReady, paymentDt)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             .doOnSubscribe { _isLoading.value = true }
             .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
                 _isEmptyList.value = it.isEmpty()
+                _sumPayment.value = it.map(TripPaymentResponse::price).sum().toInt().toMoneyString()
             }
             .subscribeWith(object : TripDisposableSingleObserver<List<TripPaymentResponse>>() {
                 override fun onSuccess(result: List<TripPaymentResponse>) {

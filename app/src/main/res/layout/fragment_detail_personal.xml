@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -287,7 +288,8 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="26dp"
-                    android:text="0원"
+                    android:goneIf="@{vm.isEmptyList}"
+                    android:text="@{String.format(@string/money_unit2, vm.sumPayment)}"
                     android:textColor="@color/fill_grey_2"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
@@ -299,11 +301,38 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:nestedScrollingEnabled="false"
+                    android:goneIf="@{vm.isEmptyList}"
                     app:submitList="@{vm.tripPaymentPersonalList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_detail_personal_spend_money" />
+
+                <ImageView
+                    android:id="@+id/iv_detail_no_adapter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/ic_illust_receipt"
+                    android:visibleIf="@{vm.isEmptyList}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_personal_title" />
+
+                <TextView
+                    android:id="@+id/tv_detail_no_adapter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="165dp"
+                    android:text="지출 내역이 없습니다."
+                    android:textColor="@color/fill_grey_2"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:visibleIf="@{vm.isEmptyList}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_detail_no_adapter" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

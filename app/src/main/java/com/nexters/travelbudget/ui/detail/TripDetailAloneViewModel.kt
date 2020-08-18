@@ -57,30 +57,38 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
     private val _tripPaymentAloneList = MutableLiveData<List<TripPaymentResponse>>()
     val tripPaymentAloneList: LiveData<List<TripPaymentResponse>> = _tripPaymentAloneList
 
+    private val _emptyPersonalBudget = MutableLiveData<Boolean>(true)
+    val emptyPersonalBudget: LiveData<Boolean> = _emptyPersonalBudget
+
+    private val _sumPayment = MutableLiveData<String>()
+    val sumPayment: LiveData<String> = _sumPayment
+
     fun showDateAloneDialog() {
         showDateAloneDialogEvent.call()
     }
 
+    fun setAloneDate(date: String) {
+        _detailAloneDate.value = date
+    }
+
     fun getTripDetailAloneData(id: Long) {
         detailTripRepository.getTripDetailInfo(id)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             //  .doOnSubscribe { _isLoading.value = true }
             //  .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
-                //_isEmptyList.value = it.isEmpty()
+//                _isEmptyList.value = it.isEmpty()
             }
             .subscribeWith(object : TripDisposableSingleObserver<TripDetailResponse>() {
                 override fun onSuccess(result: TripDetailResponse) {
                     _tripDetailAlone.value = result
-                    // null 처리 수정 필요
-                    if (result != null) {
+                    _detailAloneTitle.value = result.name
+                    if(result.personal != null) {
                         _purposeAloneAmount.value = result.personal.purposeAmount.toMoneyString()
                         _remainAloneAmount.value = result.personal.remainAmount.toMoneyString()
                         _suggestAloneAmount.value = result.personal.suggestAmount.toMoneyString()
-                        getPaymentAloneTravelData(result.personal.budgetId, "N", "2020-08-04")
-                        _detailAloneTitle.value = result.name
                     }
+
                 }
 
             }).addTo(compositeDisposable)
@@ -95,6 +103,7 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
             .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
                 _isEmptyList.value = it.isEmpty()
+                _sumPayment.value = it.map(TripPaymentResponse::price).sum().toInt().toMoneyString()
             }
             .subscribeWith(object : TripDisposableSingleObserver<List<TripPaymentResponse>>() {
                 override fun onSuccess(result: List<TripPaymentResponse>) {

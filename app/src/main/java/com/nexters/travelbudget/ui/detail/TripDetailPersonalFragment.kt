@@ -1,16 +1,19 @@
 package com.nexters.travelbudget.ui.detail
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import com.nexters.travelbudget.R
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.FragmentDetailPersonalBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
+import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TripDetailPersonalFragment() :
@@ -26,12 +29,16 @@ class TripDetailPersonalFragment() :
         arguments?.getStringArrayList(DATE_ITEMS) ?: listOf<String>()
     }
 
+    private val budgetId by lazy {
+        budgetData?.budgetId ?: -1
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailPersonalRV()
 
-        viewModel.getPaymentPersonalTravelData(35, "N", "2020-08-04") // test 여기서 값을 어떻게 받아오니
+        viewModel.getPaymentPersonalTravelData(budgetId, "Y", "2020-08-04")
 
         budgetData?.let {
             viewModel.setBudgetData(it)
@@ -43,6 +50,7 @@ class TripDetailPersonalFragment() :
             showPersonalDateDialogEvent.observe(this@TripDetailPersonalFragment, Observer {
                 SelectDateBottomSheetDialog(dateItems) {
                     setPersonalDate(it)
+                    viewModel.getPaymentPersonalTravelData(budgetId, "N", it)
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }
@@ -51,18 +59,22 @@ class TripDetailPersonalFragment() :
     private fun setupDetailPersonalRV() {
         binding.rvDetailPersonalList.run {
             adapter = SharedDetailRVAdapter { tripPaymentResponse ->
-                Log.e("dain", tripPaymentResponse.paymentDt.toString())
-//                if (tripPaymentResponse.paymentDt == "Y") {
-//                    startActivity(TripDetailActivity.getIntent(context.applicationContext).apply {
-//                        putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
-//                    })
-//                } else {
-//                    startActivity(
-//                        TripDetailAloneActivity.getIntent(context.applicationContext).apply {
-//                            putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
-//                        })
-//                }
             }
+            addItemDecoration(object : CustomItemDecoration() {
+                override fun setSpacingForDirection(
+                    outRect: Rect,
+                    layoutManager: RecyclerView.LayoutManager?,
+                    position: Int,
+                    itemCount: Int
+                ) {
+                    outRect.top = resources.getDimensionPixelSize(R.dimen.spacing_size_12dp)
+                    outRect.bottom = if (position == itemCount - 1) {
+                        resources.getDimensionPixelSize(R.dimen.spacing_size_24dp)
+                    } else {
+                        0
+                    }
+                }
+            })
         }
     }
 
@@ -70,7 +82,10 @@ class TripDetailPersonalFragment() :
         private const val BUDGET_DATA = "budget_data"
         private const val DATE_ITEMS = "DATE_ITEMS"
 
-        fun newInstance(data: TripDetailResponse.Data?, items: List<String>): TripDetailPersonalFragment {
+        fun newInstance(
+            data: TripDetailResponse.Data?,
+            items: List<String>
+        ): TripDetailPersonalFragment {
             return TripDetailPersonalFragment().apply {
                 arguments = bundleOf(BUDGET_DATA to data, DATE_ITEMS to items)
             }

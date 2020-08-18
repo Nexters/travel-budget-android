@@ -19,7 +19,8 @@ import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
 
 
-class TripDetailSharedViewModel(private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
+class TripDetailSharedViewModel(private val detailPaymentRepository: DetailPaymentRepository) :
+    BaseViewModel() {
     private val _newDetailSharedList = MutableLiveData<ArrayList<DetailSharedData>>()
     val newDetailSharedList: LiveData<ArrayList<DetailSharedData>> get() = _newDetailSharedList
 
@@ -55,6 +56,9 @@ class TripDetailSharedViewModel(private val detailPaymentRepository: DetailPayme
     private val _suggestAmount = MutableLiveData<String>()
     val suggestAmount: LiveData<String> = _suggestAmount
 
+    private val _sumPayment = MutableLiveData<String>()
+    val sumPayment: LiveData<String> = _sumPayment
+
     fun showDateDialog() {
         showDateDialogEvent.call()
     }
@@ -73,17 +77,20 @@ class TripDetailSharedViewModel(private val detailPaymentRepository: DetailPayme
     }
 
     fun getPaymentTravelData(budgetId: Long, isReady: String, paymentDt: String) {
+        if (budgetId == -1L) return
+
         detailPaymentRepository.getTripPaymentInfo(budgetId, isReady, paymentDt)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             .doOnSubscribe { _isLoading.value = true }
             .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
                 _isEmptyList.value = it.isEmpty()
+                _sumPayment.value = it.map(TripPaymentResponse::price).sum().toInt().toMoneyString()
             }
             .subscribeWith(object : TripDisposableSingleObserver<List<TripPaymentResponse>>() {
                 override fun onSuccess(result: List<TripPaymentResponse>) {
                     _tripPaymentList.value = result
+
                 }
 
             }).addTo(compositeDisposable)

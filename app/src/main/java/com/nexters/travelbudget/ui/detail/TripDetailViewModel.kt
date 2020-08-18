@@ -33,6 +33,9 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
     private val _startManageMember: SingleLiveEvent<Unit> = SingleLiveEvent()
     val startManageMember: SingleLiveEvent<Unit> = _startManageMember
 
+    private val _goToPaymentScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val goToPaymentScreen: SingleLiveEvent<Unit> = _goToPaymentScreen
+
 
     fun toShared() {
         _toShared.call()
@@ -68,6 +71,10 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
     fun goToManageMemberScreen() {
         _startManageMember.call()
+    }
+
+    fun goToPaymentScreen() {
+        _goToPaymentScreen.call()
     }
 
 

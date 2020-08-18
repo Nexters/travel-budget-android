@@ -32,12 +32,16 @@ class TripDetailSharedFragment :
         arguments?.getStringArrayList(DATE_ITEMS) ?: listOf<String>()
     }
 
+    private val budgetId by lazy {
+        budgetData?.budgetId ?: -1
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailSharedRV()
 
-        viewModel.getPaymentTravelData(38, "Y", "2020-08-04") // test
+        viewModel.getPaymentTravelData(budgetId, "Y", "2020-08-04")
 
         budgetData?.let {
             viewModel.setBudgetData(it)
@@ -49,7 +53,7 @@ class TripDetailSharedFragment :
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
                 SelectDateBottomSheetDialog(dateItems) {
                     setSharedDate(it)
-                    viewModel.getPaymentTravelData(43, "N", it) // test
+                    viewModel.getPaymentTravelData(budgetId, "N", it)
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }
@@ -58,18 +62,23 @@ class TripDetailSharedFragment :
     private fun setupDetailSharedRV() {
         binding.rvDetailSharedList.run {
             adapter = SharedDetailRVAdapter { tripPaymentResponse ->
-                Log.e("dain", tripPaymentResponse.paymentDt.toString())
-//                if (tripPaymentResponse.paymentDt == "Y") {
-//                    startActivity(TripDetailActivity.getIntent(context.applicationContext).apply {
-//                        putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
-//                    })
-//                } else {
-//                    startActivity(
-//                        TripDetailAloneActivity.getIntent(context.applicationContext).apply {
-//                            putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
-//                        })
-//                }
+
             }
+            addItemDecoration(object : CustomItemDecoration() {
+                override fun setSpacingForDirection(
+                    outRect: Rect,
+                    layoutManager: RecyclerView.LayoutManager?,
+                    position: Int,
+                    itemCount: Int
+                ) {
+                    outRect.top = resources.getDimensionPixelSize(R.dimen.spacing_size_12dp)
+                    outRect.bottom = if (position == itemCount - 1) {
+                        resources.getDimensionPixelSize(R.dimen.spacing_size_24dp)
+                    } else {
+                        0
+                    }
+                }
+            })
         }
     }
 
@@ -78,7 +87,10 @@ class TripDetailSharedFragment :
         private const val BUDGET_DATA = "budget_data"
         private const val DATE_ITEMS = "DATE_ITEMS"
 
-        fun newInstance(data: TripDetailResponse.Data, items: List<String>): TripDetailSharedFragment {
+        fun newInstance(
+            data: TripDetailResponse.Data,
+            items: List<String>
+        ): TripDetailSharedFragment {
             return TripDetailSharedFragment().apply {
                 arguments = bundleOf(BUDGET_DATA to data, DATE_ITEMS to items)
             }
