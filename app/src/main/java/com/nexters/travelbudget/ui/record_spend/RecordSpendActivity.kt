@@ -6,14 +6,18 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.widget.EditText
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
+import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityRecordSpendBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
+import com.nexters.travelbudget.ui.detail.TripDetailSharedFragment
 import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
+import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.MoneyStringTextWatcher
@@ -35,8 +39,12 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val date = SimpleDateFormat("yyyy.M.d HH:mm", Locale.KOREA).format(Date())
+        val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
         val st = StringTokenizer(date)
+
+
+        val longExtra = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
+
 
         day = st.nextToken()
         time = st.nextToken()

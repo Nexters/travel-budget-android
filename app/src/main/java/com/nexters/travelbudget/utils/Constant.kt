@@ -31,6 +31,7 @@ interface Constant {
         const val EXTRA_IS_PUBLIC = "EXTRA_IS_PUBLIC"
         const val EXTRA_ROOM_TITLE = "EXTRA_ROOM_TITLE"
         const val EXTRA_ROOM_CODE = "EXTRA_ROOM_CODE"
+        const val EXTRA_PLAN_DATES = "EXTRA_PLAN_DATES"
 
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
