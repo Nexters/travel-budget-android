@@ -2,15 +2,19 @@ package com.nexters.travelbudget.ui.statistics
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.model.enums.TravelRoomType
+import com.nexters.travelbudget.ui.detail.TripDetailAloneViewModel
 import com.nexters.travelbudget.ui.statistics.adapter.StatisticsPageAdapter
 import com.nexters.travelbudget.utils.Constant
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StatisticsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)

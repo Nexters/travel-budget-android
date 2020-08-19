@@ -26,6 +26,7 @@
                 android:id="@+id/btn_detail_alone_go_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.backScreen()}"
                 android:src="@drawable/ic_back" />
 
             <LinearLayout
@@ -39,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:onClick="@{() -> vm.goToPieScreen()}"
                     android:src="@drawable/ic_pie" />
 
                 <androidx.appcompat.widget.AppCompatImageView

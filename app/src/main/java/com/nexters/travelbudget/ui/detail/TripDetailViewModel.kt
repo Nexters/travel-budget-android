@@ -39,6 +39,11 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
     private val _goToPaymentScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val goToPaymentScreen: SingleLiveEvent<Unit> = _goToPaymentScreen
 
+    private val _goToPieScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val goToPieScreen: SingleLiveEvent<Unit> = _goToPieScreen
+
+    private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val backScreen: SingleLiveEvent<Unit> = _backScreen
 
     fun toShared() {
         _toShared.call()
@@ -82,6 +87,14 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
     fun goToPaymentScreen() {
         _goToPaymentScreen.call()
+    }
+
+    fun goToPieScreen() {
+        _goToPieScreen.call()
+    }
+
+    fun backScreen() {
+        _backScreen.call()
     }
 
 

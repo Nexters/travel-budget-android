@@ -3,6 +3,7 @@ package com.nexters.travelbudget.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
@@ -14,6 +15,7 @@ import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
+import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -35,6 +37,10 @@ class TripDetailActivity :
         observeViewModel()
 
         viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     private fun observeViewModel() {
@@ -72,6 +78,7 @@ class TripDetailActivity :
                     putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
                 })
             })
+
             startRecordSpend.observe(this@TripDetailActivity, Observer {
                 val detailDate = tripDetail.value ?: return@Observer
                 startActivity(
@@ -91,6 +98,19 @@ class TripDetailActivity :
                         putExtra(Constant.EXTRA_ROOM_TYPE, TravelRoomType.SHARED)
                     }
                 )
+            })
+
+            goToPieScreen.observe(this@TripDetailActivity, Observer {
+                val detailBudgetId = tripDetail.value ?: return@Observer
+
+                val sharedBudgetId = detailBudgetId.shared?.budgetId ?: -1L
+                val personalBudgetId = detailBudgetId.personal?.budgetId ?: -1L
+                val roomType = TravelRoomType.SHARED
+                startActivity(Intent(this@TripDetailActivity, StatisticsActivity::class.java).apply {
+                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                })
             })
         }
     }

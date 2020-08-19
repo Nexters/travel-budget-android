@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
+import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
+import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,9 +34,11 @@ class TripDetailAloneActivity :
         setupDetailAloneRV()
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-
         viewModel.getPaymentAloneTravelData(intent.getLongExtra(Constant.EXTRA_BUDGET_ID, -1L), "Y", "2020-08-04")
 
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     private fun observeViewModel() {
@@ -51,6 +55,18 @@ class TripDetailAloneActivity :
 
                     getPaymentAloneTravelData(tripDetailResponse.personal.budgetId, isReady, it)
                 }.show(supportFragmentManager, "bottom_sheet")
+            })
+
+            goToPieScreen.observe(this@TripDetailAloneActivity, Observer {
+                val tripDetailResponse = viewModel.tripDetailAlone.value ?: return@Observer
+                val sharedBudgetId = tripDetailResponse.shared.budgetId ?: -1L
+                val personalBudgetId = tripDetailResponse.personal.budgetId ?: -1L
+                val roomType = TravelRoomType.SHARED
+                startActivity(Intent(this@TripDetailAloneActivity, StatisticsActivity::class.java).apply {
+                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                })
             })
         }
     }
