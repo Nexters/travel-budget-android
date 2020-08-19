@@ -177,7 +177,7 @@ class TripDetailActivity :
             Intent(
                 EditSharedTripProfileActivity.getIntent(
                     this@TripDetailActivity,
-                    planId, memberId
+                    planId, memberId, TravelRoomType.SHARED.name
                 )
             )
         )

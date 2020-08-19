@@ -21,8 +21,12 @@ import retrofit2.HttpException
 class EditSharedTripProfileViewModel(
     private val planId: Long,
     private val memberId: Long,
+    roomType: String,
     private val tripProfileRepository: TripProfileRepository
 ) : BaseViewModel() {
+
+    private val _roomType: MutableLiveData<String> = MutableLiveData(roomType)
+    val roomType: LiveData<String> = _roomType
 
     private val _isOwner: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOwner: LiveData<Boolean> = _isOwner
