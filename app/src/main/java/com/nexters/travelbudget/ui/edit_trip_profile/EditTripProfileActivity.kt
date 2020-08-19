@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityEditTripProfileBinding
+import com.nexters.travelbudget.model.enums.ActivityResultType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,17 +29,27 @@ class EditTripProfileActivity :
         viewModel.getTripProfileInfo()
 
         viewModel.successModificationTripProfile.observe(this, Observer {
-            // TODO 여행 상세 화면 갱신 (setResult)
+            // 여행 정보 수정 (멤버 or 방장)
+            val bundle =
+                bundleOf(Constant.EXTRA_ACTIVITY_RESULT_TYPE to ActivityResultType.SCREEN_REFRESH.name)
+            setResult(Constant.RESULT_OK, Intent().putExtras(bundle))
             finish()
         })
 
         viewModel.successExitTripRoom.observe(this, Observer {
-            // TODO 방 나가기 작업 (setResult)
+            // 방 나가기 (멤버)
+            val bundle =
+                bundleOf(Constant.EXTRA_ACTIVITY_RESULT_TYPE to ActivityResultType.SCREEN_FINISH.name)
+            setResult(Constant.RESULT_OK, Intent().putExtras(bundle))
             finish()
         })
 
         viewModel.successDeleteTripRoom.observe(this, Observer {
-            // TODO 여행 삭제 작업 (setResult)
+            // 여행 삭제 (방장)
+            val bundle =
+                bundleOf(Constant.EXTRA_ACTIVITY_RESULT_TYPE to ActivityResultType.SCREEN_FINISH.name)
+            setResult(Constant.RESULT_OK, Intent().putExtras(bundle))
+            finish()
             finish()
         })
 

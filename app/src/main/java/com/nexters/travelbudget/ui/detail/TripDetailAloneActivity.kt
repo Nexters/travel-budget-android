@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
+import com.nexters.travelbudget.model.enums.ActivityResultType
+import com.nexters.travelbudget.model.enums.ActivityResultType.*
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -29,6 +31,10 @@ class TripDetailAloneActivity :
     override val viewModel: TripDetailAloneViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
 
+    private val planId by lazy {
+        intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+    }
+
     private var day: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +43,7 @@ class TripDetailAloneActivity :
         setupDetailAloneRV()
 
 
-        viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+        viewModel.getTripDetailAloneData(planId)
 
 //        // 에러
 //        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -66,6 +72,25 @@ class TripDetailAloneActivity :
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Constant.RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_EDIT_TRIP_PROFILE) {
+                when (data?.getStringExtra(Constant.EXTRA_ACTIVITY_RESULT_TYPE) ?: "") {
+                    SCREEN_REFRESH.name -> {
+                        viewModel.getTripDetailAloneData(planId)
+                    }
+                    SCREEN_FINISH.name -> {
+                        finish()
+                    }
+                    else -> {
+                        return
+                    }
+                }
+            }
+        }
+    }
+
     private fun observeViewModel() {
         with(viewModel) {
             showDateAloneDialogEvent.observe(this@TripDetailAloneActivity, Observer {
@@ -82,7 +107,11 @@ class TripDetailAloneActivity :
                         viewModel.isEmptyList.value = true
                     }
 
-                    getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it)
+                    getPaymentAloneTravelData(
+                        tripDetailResponse.personal?.budgetId ?: -1L,
+                        isReady,
+                        it
+                    )
                 }.show(supportFragmentManager, "bottom_sheet")
             })
 
@@ -92,11 +121,15 @@ class TripDetailAloneActivity :
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
-                startActivity(Intent(this@TripDetailAloneActivity, StatisticsActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailAloneActivity,
+                        StatisticsActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                    })
             })
 
             goToPaymentScreen.observe(this@TripDetailAloneActivity, Observer {
@@ -105,26 +138,32 @@ class TripDetailAloneActivity :
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
                 val editMode = EditModeType.CREATE_MODE
-                startActivity(Intent(this@TripDetailAloneActivity, RecordSpendActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                    putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
-                    putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailAloneActivity,
+                        RecordSpendActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                        putStringArrayListExtra(
+                            Constant.EXTRA_PLAN_DATES,
+                            ArrayList(tripDetailResponse.dates)
+                        )
+                    })
             })
 
             startEditTripProfile.observe(this@TripDetailAloneActivity, Observer {
-                val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
                 val memberId = viewModel.tripDetailAlone.value?.memberId ?: -1L
-                startActivity(
+                startActivityForResult(
                     Intent(
                         EditTripProfileActivity.getIntent(
                             this@TripDetailAloneActivity,
                             planId, memberId, TravelRoomType.PERSONAL.name
                         )
-                    )
+                    ), Constant.REQUEST_CODE_EDIT_TRIP_PROFILE
                 )
             })
 
