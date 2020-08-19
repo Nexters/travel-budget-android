@@ -12,6 +12,7 @@ import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
+import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.utils.Constant
@@ -63,14 +64,21 @@ class TripDetailActivity :
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
-                startActivity(Intent(this@TripDetailActivity, RecordSpendActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                    putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
-                    putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailActivity,
+                        RecordSpendActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                        putStringArrayListExtra(
+                            Constant.EXTRA_PLAN_DATES,
+                            ArrayList(tripDetailResponse.dates)
+                        )
+                    })
             })
             startRecordSpend.observe(this@TripDetailActivity, Observer {
                 val detailDate = tripDetail.value ?: return@Observer
@@ -90,6 +98,17 @@ class TripDetailActivity :
                         )
                         putExtra(Constant.EXTRA_ROOM_TYPE, TravelRoomType.SHARED)
                     }
+                )
+            })
+            startEditTripProfile.observe(this@TripDetailActivity, Observer {
+                val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+                startActivity(
+                    Intent(
+                        EditTripProfileActivity.getIntent(
+                            this@TripDetailActivity,
+                            planId
+                        )
+                    )
                 )
             })
         }
