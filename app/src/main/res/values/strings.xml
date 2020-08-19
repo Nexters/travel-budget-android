@@ -31,7 +31,7 @@
     <!---->
 
     <!-- bottom_sheet_selected_date -->
-    <string name="date_record_title">지출 기록하기</string>
+    <string name="date_record_title">날짜 선택</string>
     <string name="date_ready">준비</string>
 
     <!-- main -->

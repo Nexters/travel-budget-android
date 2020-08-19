@@ -3,6 +3,7 @@ package com.nexters.travelbudget.ui.select_date.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ItemDateSelectBinding
 import com.nexters.travelbudget.ui.base.adapter.BaseItemVH
 import com.nexters.travelbudget.ui.base.adapter.BaseRVAdapter
