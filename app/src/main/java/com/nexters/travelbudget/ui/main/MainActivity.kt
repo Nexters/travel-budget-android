@@ -67,17 +67,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Constant.RESULT_OK) {
-            if (requestCode == Constant.REQUEST_CODE_EDIT_USER_NAME) {
+
+        when (requestCode) {
+            Constant.REQUEST_CODE_EDIT_USER_NAME -> if (resultCode == Constant.RESULT_OK) {
                 viewModel.getUserInfo()
-            } else {
-                binding.vpMainPager.currentItem = 0
-                for (fragment in supportFragmentManager.fragments) {
-                    if (fragment is RecordingTravelFragment && resultCode == Constant.RESULT_OK) {
+            }
+            Constant.REQUEST_CODE_TRIP_DETAIL, Constant.REQUEST_CODE_CREATE_ROOM, Constant.REQUEST_CODE_ENTER_ROOM ->
+                if (resultCode == Constant.RESULT_OK) {
+                    for (fragment in supportFragmentManager.fragments) {
                         fragment.onActivityResult(requestCode, resultCode, data)
                     }
                 }
-            }
         }
     }
 

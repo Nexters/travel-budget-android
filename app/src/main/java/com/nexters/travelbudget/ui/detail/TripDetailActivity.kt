@@ -3,7 +3,6 @@ package com.nexters.travelbudget.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
@@ -13,14 +12,13 @@ import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
+import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.ext.convertToServerDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class TripDetailActivity :
@@ -70,14 +68,21 @@ class TripDetailActivity :
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
-                startActivity(Intent(this@TripDetailActivity, RecordSpendActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                    putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
-                    putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailActivity,
+                        RecordSpendActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                        putStringArrayListExtra(
+                            Constant.EXTRA_PLAN_DATES,
+                            ArrayList(tripDetailResponse.dates)
+                        )
+                    })
             })
 
             startRecordSpend.observe(this@TripDetailActivity, Observer {
@@ -91,7 +96,10 @@ class TripDetailActivity :
                             Constant.EXTRA_PERSONAL_BUDGET_ID,
                             detailDate.personal?.budgetId ?: -1L
                         )
-                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, detailDate.shared?.budgetId ?: -1L)
+                        putExtra(
+                            Constant.EXTRA_SHARED_BUDGET_ID,
+                            detailDate.shared?.budgetId ?: -1L
+                        )
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(detailDate.dates)
@@ -100,6 +108,9 @@ class TripDetailActivity :
                     }
                 )
             })
+            startEditTripProfile.observe(this@TripDetailActivity, Observer {
+                goToEditTripProfileActivity()
+            })
 
             goToPieScreen.observe(this@TripDetailActivity, Observer {
                 val detailBudgetId = tripDetail.value ?: return@Observer
@@ -107,11 +118,15 @@ class TripDetailActivity :
                 val sharedBudgetId = detailBudgetId.shared?.budgetId ?: -1L
                 val personalBudgetId = detailBudgetId.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
-                startActivity(Intent(this@TripDetailActivity, StatisticsActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailActivity,
+                        StatisticsActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                    })
             })
         }
     }
@@ -153,6 +168,19 @@ class TripDetailActivity :
 
     fun setDay(d: String) {
         this.day = d
+    }
+
+    fun goToEditTripProfileActivity() {
+        val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+        val memberId = viewModel.tripDetail.value?.memberId ?: -1L
+        startActivity(
+            Intent(
+                EditTripProfileActivity.getIntent(
+                    this@TripDetailActivity,
+                    planId, memberId, TravelRoomType.SHARED.name
+                )
+            )
+        )
     }
 
     companion object {

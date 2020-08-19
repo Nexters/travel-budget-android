@@ -36,26 +36,17 @@ class RecordingTravelFragment :
 
     override val viewModel: RecordingTravelViewModel by viewModel()
 
-    private var isFirstExecution = true
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setSwipeRefreshLayout()
         setRecordingTravelRV()
+        viewModel.getRecordingTravelData()
 
         viewModel.startCreateRoom.observe(this, Observer {
             context?.run {
                 (activity as? MainActivity)?.goToSelectRoomTypeActivity()
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (isFirstExecution) {
-            isFirstExecution = false
-            viewModel.getRecordingTravelData()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -79,11 +70,12 @@ class RecordingTravelFragment :
                         putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
                     })
                 } else {
-                    startActivity(
+                    activity?.startActivityForResult(
                         TripDetailAloneActivity.getIntent(context.applicationContext).apply {
                             putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
                             putExtra(Constant.EXTRA_BUDGET_ID, tripRecordResponse.budgetId)
-                        })
+                        }, Constant.REQUEST_CODE_TRIP_DETAIL
+                    )
                 }
             }
             addItemDecoration(object : CustomItemDecoration() {

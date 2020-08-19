@@ -92,6 +92,10 @@ class TripDetailPersonalFragment() :
 
                 }.show(parentFragmentManager, "bottom_sheet")
             })
+
+            startEditTripProfile.observe(this@TripDetailPersonalFragment, Observer {
+                (activity as? TripDetailActivity)?.goToEditTripProfileActivity()
+            })
         }
     }
 

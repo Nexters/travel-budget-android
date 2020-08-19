@@ -28,6 +28,8 @@
     <string name="text_personal_budget">개인 예산</string>
     <string name="text_delete">삭제하기</string>
     <string name="text_edit">수정하기</string>
+    <string name="room_delete">여행 삭제하기</string>
+    <string name="room_out">여행 나가기</string>
     <!---->
 
     <!-- bottom_sheet_selected_date -->

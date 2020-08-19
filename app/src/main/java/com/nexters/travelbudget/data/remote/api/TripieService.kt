@@ -31,12 +31,20 @@ interface TripieService {
     fun getTripDetailInfo(@Path("id") id: Long): Single<TripDetailResponse>
 
     @GET("api/payments")
-    fun getTripPaymentInfo(@Query("budget_id") budget_id: Long, @Query("is_ready") is_ready: String, @Query("payment_dt") payment_dt: String) : Single<List<TripPaymentResponse>>
+    fun getTripPaymentInfo(
+        @Query("budget_id") budget_id: Long,
+        @Query("is_ready") is_ready: String,
+        @Query("payment_dt") payment_dt: String
+    ): Single<List<TripPaymentResponse>>
+
     @POST("api/payments")
     fun recordPayments(@Body request: RecordPaymentRequest): Completable
 
     @PUT("api/payments/{paymentId}")
-    fun modifyPayments(@Path("paymentId") paymentId: Long, @Body request: RecordPaymentRequest): Completable
+    fun modifyPayments(
+        @Path("paymentId") paymentId: Long,
+        @Body request: RecordPaymentRequest
+    ): Completable
 
     @DELETE("api/payments/{paymentId}")
     fun removePayments(@Path("paymentId") paymentId: Long): Completable
@@ -64,4 +72,13 @@ interface TripieService {
         @Path("planId") planId: Long,
         @Path("memberId") memberId: Long
     ): Completable
+
+    @GET("api/plans/{id}/profile")
+    fun getTripProfileInfo(@Path("id") planId: Long): Single<TripProfileResponse>
+
+    @PUT("api/plans/{id}/profile")
+    fun modifyTripProfile(@Path("id") planId: Long, @Body param: HashMap<String, Any>): Completable
+
+    @DELETE("api/plans/{id}")
+    fun deleteTripRoom(@Path("id") planId: Long): Completable
 }

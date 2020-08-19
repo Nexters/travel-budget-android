@@ -79,6 +79,9 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
     private val _goToPaymentScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val goToPaymentScreen: SingleLiveEvent<Unit> = _goToPaymentScreen
 
+    private val _startEditTripProfile: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val startEditTripProfile: SingleLiveEvent<Unit> = _startEditTripProfile
+
     fun showDateAloneDialog() {
         showDateAloneDialogEvent.call()
     }
@@ -162,6 +165,10 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
 
     fun goToPaymentScreen() {
         _goToPaymentScreen.call()
+    }
+
+    fun goToEditTripProfileScreen() {
+        _startEditTripProfile.call()
     }
 
     companion object {
