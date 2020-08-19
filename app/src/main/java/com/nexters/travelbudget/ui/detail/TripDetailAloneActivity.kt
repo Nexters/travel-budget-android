@@ -14,6 +14,7 @@ import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
+import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
@@ -112,6 +113,19 @@ class TripDetailAloneActivity :
                     putExtra(Constant.EXTRA_CURRENT_DATE, day)
                     putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
                 })
+            })
+
+            startEditTripProfile.observe(this@TripDetailAloneActivity, Observer {
+                val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+                val memberId = viewModel.tripDetailAlone.value?.memberId ?: -1L
+                startActivity(
+                    Intent(
+                        EditTripProfileActivity.getIntent(
+                            this@TripDetailAloneActivity,
+                            planId, memberId, TravelRoomType.PERSONAL.name
+                        )
+                    )
+                )
             })
 
         }

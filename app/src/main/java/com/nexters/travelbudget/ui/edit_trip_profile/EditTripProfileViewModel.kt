@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripProfileResponse
 import com.nexters.travelbudget.data.repository.TripProfileRepository
+import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.model.enums.TripMemberType
 import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.ext.applySchedulers
@@ -81,10 +82,16 @@ class EditTripProfileViewModel(
     fun modifyTripProfile() {
         if (planId == -1L) return
 
+        val sharedBudget = if (roomType.value!! == TravelRoomType.SHARED.name) {
+            _sharedBudget.value?.replace(",", "")?.toLongOrNull() ?: 0L
+        } else {
+            null
+        }
+
         tripProfileRepository.modifyTripProfile(
             planId,
             _tripTitle.value ?: "",
-            _sharedBudget.value?.replace(",", "")?.toLongOrNull() ?: 0L,
+            sharedBudget,
             _personalBudget.value?.replace(",", "")?.toLongOrNull() ?: 0L
         ).applySchedulers()
             .subscribeWith(object : TripieCompletableObserver() {
