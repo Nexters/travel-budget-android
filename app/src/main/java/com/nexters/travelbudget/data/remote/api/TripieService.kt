@@ -30,8 +30,16 @@ interface TripieService {
     @GET("api/plans/{id}")
     fun getTripDetailInfo(@Path("id") id: Long): Single<TripDetailResponse>
 
+    @GET("api/payments")
+    fun getTripPaymentInfo(@Query("budget_id") budget_id: Long, @Query("is_ready") is_ready: String, @Query("payment_dt") payment_dt: String) : Single<List<TripPaymentResponse>>
     @POST("api/payments")
     fun recordPayments(@Body request: RecordPaymentRequest): Completable
+
+    @PUT("api/payments/{paymentId}")
+    fun modifyPayments(@Path("paymentId") paymentId: Long, @Body request: RecordPaymentRequest): Completable
+
+    @DELETE("api/payments/{paymentId}")
+    fun removePayments(@Path("paymentId") paymentId: Long): Completable
 
     @GET("api/budgets/{id}/statics")
     fun getStatisticsInfo(@Path("id") id: Long): Single<StatisticsResponse>

@@ -82,6 +82,7 @@ class RecordingTravelFragment :
                     startActivity(
                         TripDetailAloneActivity.getIntent(context.applicationContext).apply {
                             putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+                            putExtra(Constant.EXTRA_BUDGET_ID, tripRecordResponse.budgetId)
                         })
                 }
             }

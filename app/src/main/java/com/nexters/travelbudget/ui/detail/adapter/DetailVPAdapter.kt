@@ -18,7 +18,7 @@ class DetailVPAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> TripDetailSharedFragment.newInstance(sharedBudgetData, dates)
-            else -> TripDetailPersonalFragment.newInstance()
+            else -> TripDetailPersonalFragment.newInstance(personalBudgetData, dates)
         }
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -51,25 +52,33 @@
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/tv_detail_alone_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="28dp"
+            android:text="@{vm.detailAloneTitle}"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_detail_alone" />
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nv_detail_alone_shared"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:descendantFocusability="blocksDescendants"
             android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tb_detail_alone">
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:goneIf="@{vm.tripDetailAlone.personal == null}"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_title"
+            app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_detail_alone_main"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="match_parent">
 
                     <View
                         android:id="@+id/v_detail_alone_required_money"
@@ -103,7 +112,6 @@
                         app:layout_constraintBottom_toBottomOf="@id/v_detail_alone_required_money"
                         app:layout_constraintRight_toRightOf="@id/v_detail_alone_required_money"
                         app:layout_constraintTop_toTopOf="@id/v_detail_alone_required_money"
-
                         />
 
                     <TextView
@@ -197,13 +205,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_remain_alone_info" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/cl_detail_alone_main">
-
                     <TextView
                         android:id="@+id/tv_detail_alone_shared_history"
                         android:layout_width="wrap_content"
@@ -215,7 +216,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/v_divide_alone_section"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_detail_alone_shared_history"
@@ -223,6 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="16dp"
+                        android:onClick="@{()->vm.showDateAloneDialog()}"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_shared_history">
 
@@ -239,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:text="test"
+                            android:text="@{vm.detailAloneDate}"
                             android:textColor="@color/colorFillBlue"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -276,7 +278,8 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="26dp"
-                        android:text="0원"
+                        android:goneIf="@{vm.isEmptyList}"
+                        android:text="@{String.format(@string/money_unit2, vm.sumPayment)}"
                         android:textColor="@color/fill_grey_2"
                         android:textStyle="bold"
                         app:layout_constraintRight_toRightOf="parent"
@@ -284,19 +287,106 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_detail_alone_shared_list"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:nestedScrollingEnabled="false"
-                        app:addAll="@{vm.newDetailSharedList}"
+                        app:submitList="@{vm.tripPaymentAloneList}"
+                        android:goneIf="@{vm.isEmptyList}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_shared_total_money" />
 
+                    <ImageView
+                        android:id="@+id/iv_detail_no_adapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:src="@drawable/ic_illust_receipt"
+                        android:visibleIf="@{vm.isEmptyList}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_detail_alone_shared_title" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_no_adapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="165dp"
+                        android:text="지출 내역이 없습니다."
+                        android:textColor="@color/fill_grey_2"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibleIf="@{vm.isEmptyList}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_detail_no_adapter" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibleIf="@{vm.tripDetailAlone.personal == null}"
+            app:layout_constraintTop_toTopOf="@id/tv_detail_alone_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_detail_personal_illust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_illust"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tv_detail_personal_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="개인 예산을 설정해주세요!"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_detail_personal_illust" />
+
+            <TextView
+                android:id="@+id/tv_detail_personal_info2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="공용 외 개인적으로 사용할 예산을\n입력해주시면 함께 관리해드려요."
+                android:textColor="@color/fill_grey_2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_personal_info" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/iv_add_personal_budget"
+                android:layout_width="120dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ic_rectangle_button"
+                android:text="예산 입력하기"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_personal_info2" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

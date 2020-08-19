@@ -33,6 +33,12 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
     private val _startManageMember: SingleLiveEvent<Unit> = SingleLiveEvent()
     val startManageMember: SingleLiveEvent<Unit> = _startManageMember
 
+    private val _startRecordSpend: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val startRecordSpend: SingleLiveEvent<Unit> = _startRecordSpend
+
+    private val _goToPaymentScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val goToPaymentScreen: SingleLiveEvent<Unit> = _goToPaymentScreen
+
 
     fun toShared() {
         _toShared.call()
@@ -48,8 +54,8 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
         }
     }
 
-    fun getTripDetailData(id: Long) {
-        detailTripRepository.getTripDetailInfo(id)
+    fun getTripDetailData(planId: Long) {
+        detailTripRepository.getTripDetailInfo(planId)
             .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             //  .doOnSubscribe { _isLoading.value = true }
@@ -68,6 +74,14 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
     fun goToManageMemberScreen() {
         _startManageMember.call()
+    }
+
+    fun goToShowRecordSpend() {
+        _startRecordSpend.call()
+    }
+
+    fun goToPaymentScreen() {
+        _goToPaymentScreen.call()
     }
 
 

@@ -3,26 +3,28 @@ package com.nexters.travelbudget.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailBinding
+import com.nexters.travelbudget.model.enums.EditModeType
+import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
+import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.utils.Constant
-import com.nexters.travelbudget.utils.ext.applySchedulers
-import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
-import io.reactivex.rxkotlin.addTo
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TripDetailActivity :
     BaseActivity<ActivityDetailBinding, TripDetailViewModel>(R.layout.activity_detail) {
     override val viewModel: TripDetailViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
+    private var day: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,6 @@ class TripDetailActivity :
         observeViewModel()
 
         viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-//        intent.getBundleExtra()
     }
 
     private fun observeViewModel() {
@@ -53,6 +54,42 @@ class TripDetailActivity :
                         planId,
                         roomTitle
                     )
+                )
+            })
+
+            goToPaymentScreen.observe(this@TripDetailActivity, Observer {
+                val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
+                val sharedBudgetId = tripDetailResponse.shared.budgetId
+                val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
+                val roomType = TravelRoomType.SHARED
+                val editMode = EditModeType.CREATE_MODE
+                startActivity(Intent(this@TripDetailActivity, RecordSpendActivity::class.java).apply {
+                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                    putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                    putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
+                })
+            })
+            startRecordSpend.observe(this@TripDetailActivity, Observer {
+                val detailDate = tripDetail.value ?: return@Observer
+                startActivity(
+                    Intent(
+                        this@TripDetailActivity,
+                        RecordSpendActivity::class.java
+                    ).apply {
+                        putExtra(
+                            Constant.EXTRA_PERSONAL_BUDGET_ID,
+                            detailDate.personal?.budgetId ?: -1L
+                        )
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, detailDate.shared.budgetId)
+                        putStringArrayListExtra(
+                            Constant.EXTRA_PLAN_DATES,
+                            ArrayList(detailDate.dates)
+                        )
+                        putExtra(Constant.EXTRA_ROOM_TYPE, TravelRoomType.SHARED)
+                    }
                 )
             })
         }
@@ -78,7 +115,7 @@ class TripDetailActivity :
     private fun setupViewPager(
         dates: List<String>,
         sharedBudgetData: TripDetailResponse.Data,
-        personalBudgetData: TripDetailResponse.Data
+        personalBudgetData: TripDetailResponse.Data?
     ) {
         binding.vpDetailPager.run {
             adapter = DetailVPAdapter(
@@ -91,6 +128,10 @@ class TripDetailActivity :
             offscreenPageLimit = TAB_COUNT - 1
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
         }
+    }
+
+    fun setDay(d: String) {
+        this.day = d
     }
 
     companion object {
