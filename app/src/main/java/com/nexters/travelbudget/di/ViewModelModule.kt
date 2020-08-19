@@ -59,7 +59,9 @@ val viewModelModule = module {
     viewModel { TripDetailSharedViewModel(get()) }
     viewModel { TripDetailPersonalViewModel() }
     viewModel { TripDetailAloneViewModel() }
-    viewModel { EditTripProfileViewModel() }
+    viewModel { (planId: Long) ->
+        EditTripProfileViewModel(planId)
+    }
     viewModel { SelectDateViewModel() }
     viewModel { RecordSpendViewModel(get()) }
     viewModel { (planId: Long, roomTitle: String) ->
