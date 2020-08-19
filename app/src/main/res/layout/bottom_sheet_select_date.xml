@@ -47,6 +47,7 @@
                 android:textColor="@color/fill_grey_2"
                 android:textSize="@dimen/text_size_14sp"
                 android:text="준비"
+                android:onClick="@{() -> vm.setReady()}"
                 app:layout_constraintStart_toStartOf="@id/tv_date_record_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_date_record_title"/>
 

@@ -13,6 +13,9 @@ class SelectDateViewModel : BaseViewModel() {
     private val _tripDetailList = MutableLiveData<TripDetailResponse>()
     val tripDetailList: LiveData<TripDetailResponse> = _tripDetailList
 
+    private val _isReady = MutableLiveData<Boolean>(false)
+    val isReady: LiveData<Boolean> = _isReady
+
     val dismissEvent = SingleLiveEvent<Unit>()
 
     fun dismiss() {
@@ -21,5 +24,9 @@ class SelectDateViewModel : BaseViewModel() {
 
     fun addDateData(dates: List<String>) {
         _dateList.value = dates
+    }
+
+    fun setReady() {
+        _isReady.value = true
     }
 }
