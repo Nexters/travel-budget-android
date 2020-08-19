@@ -29,4 +29,5 @@ val remoteModule = module {
     single { TripMemberRemoteDataSource(get()) }
     single { DetailPaymentRemoteDataSource(get()) }
     single { RecordSpendRemoteDataSource(get()) }
+    single { TripProfileRemoteDataSource(get()) }
 }

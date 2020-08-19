@@ -1,9 +1,10 @@
-package com.nexters.travelbudget.ui.edit_trip_profile
+package com.nexters.travelbudget.ui.edit_trip_profile.shared
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityEditSharedTripProfileBinding
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -20,6 +21,11 @@ class EditSharedTripProfileActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getTripProfileInfo()
+
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     companion object {

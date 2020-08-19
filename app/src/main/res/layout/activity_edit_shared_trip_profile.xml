@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.nexters.travelbudget.ui.edit_trip_profile.EditSharedTripProfileViewModel" />
+            type="com.nexters.travelbudget.ui.edit_trip_profile.shared.EditSharedTripProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
             android:text="@string/text_title"
             android:textColor="@color/fill_grey_1"
             android:textSize="@dimen/text_size_14sp"
@@ -93,6 +94,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
+            android:focusableInTouchMode="@{vm.isOwner()}"
+            android:text="@={vm.tripTitle}"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintStart_toStartOf="@id/guide_left"
@@ -103,6 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:alpha="0.3"
             android:text="@string/text_date"
             android:textColor="@color/fill_grey_1"
             android:textSize="@dimen/text_size_14sp"
@@ -115,7 +120,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:alpha="0.3"
             android:focusableInTouchMode="false"
+            android:onClick="@{() -> vm.preparingToEditDate()}"
+            android:text="@{String.format(@string/start_end_date_format, vm.startDate, vm.endDate)}"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintStart_toStartOf="@id/guide_left"
@@ -126,6 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
             android:text="@string/text_shared_budget"
             android:textColor="@color/fill_grey_1"
             android:textSize="@dimen/text_size_14sp"
@@ -138,10 +147,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
+            android:focusableInTouchMode="@{vm.isOwner()}"
+            android:inputType="numberDecimal"
+            android:maxLength="9"
+            android:text="@{vm.sharedBudget}"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/tv_trip_shared_budget" />
+            app:layout_constraintTop_toBottomOf="@id/tv_trip_shared_budget"
+            bind:moneyStringTextWatcher="@{vm.sharedBudgetChanged}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -170,10 +185,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:inputType="numberDecimal"
+            android:maxLength="9"
+            android:text="@{vm.personalBudget}"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/tv_trip_personal_budget" />
+            app:layout_constraintTop_toBottomOf="@id/tv_trip_personal_budget"
+            bind:moneyStringTextWatcher="@{vm.personalBudgetChanged}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -192,7 +211,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="28dp"
             android:background="@drawable/bg_button_round_black"
-            android:text="@string/text_delete"
+            android:text="@{vm.isOwner() ? @string/room_delete : @string/room_out}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
