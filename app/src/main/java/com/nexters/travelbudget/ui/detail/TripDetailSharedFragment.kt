@@ -55,6 +55,10 @@ class TripDetailSharedFragment :
             "N"
         }
 
+        if (date == "준비") {
+            viewModel.isEmptyList.value = true
+        }
+
         viewModel.getPaymentTravelData(budgetId, isReady, date)
 
         budgetData?.let {
@@ -72,6 +76,10 @@ class TripDetailSharedFragment :
                         "Y"
                     } else {
                         "N"
+                    }
+
+                    if (it == "준비") {
+                        viewModel.isEmptyList.value = true
                     }
 
                     getPaymentTravelData(budgetId, isReady, it)
@@ -108,7 +116,7 @@ class TripDetailSharedFragment :
         private const val DATE_ITEMS = "DATE_ITEMS"
 
         fun newInstance(
-            data: TripDetailResponse.Data,
+            data: TripDetailResponse.Data?,
             items: List<String>
         ): TripDetailSharedFragment {
             return TripDetailSharedFragment().apply {

@@ -11,7 +11,7 @@ class DetailVPAdapter(
     fragmentManager: FragmentManager,
     private val tabCount: Int,
     private val dates : List<String>,
-    private val sharedBudgetData: TripDetailResponse.Data,
+    private val sharedBudgetData: TripDetailResponse.Data?,
     private val personalBudgetData: TripDetailResponse.Data?
 ) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

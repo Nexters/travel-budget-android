@@ -3,6 +3,7 @@ package com.nexters.travelbudget.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
@@ -15,6 +16,7 @@ import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
 import com.nexters.travelbudget.ui.edit_trip_profile.shared.EditSharedTripProfileActivity
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
+import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.collections.ArrayList
@@ -34,6 +36,10 @@ class TripDetailActivity :
         observeViewModel()
 
         viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+
+        viewModel.backScreen.observe(this, Observer {
+            onBackPressed()
+        })
     }
 
     private fun observeViewModel() {
@@ -58,7 +64,7 @@ class TripDetailActivity :
 
             goToPaymentScreen.observe(this@TripDetailActivity, Observer {
                 val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
-                val sharedBudgetId = tripDetailResponse.shared.budgetId
+                val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
@@ -78,6 +84,7 @@ class TripDetailActivity :
                         )
                     })
             })
+
             startRecordSpend.observe(this@TripDetailActivity, Observer {
                 val detailDate = tripDetail.value ?: return@Observer
                 startActivity(
@@ -89,7 +96,10 @@ class TripDetailActivity :
                             Constant.EXTRA_PERSONAL_BUDGET_ID,
                             detailDate.personal?.budgetId ?: -1L
                         )
-                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, detailDate.shared.budgetId)
+                        putExtra(
+                            Constant.EXTRA_SHARED_BUDGET_ID,
+                            detailDate.shared?.budgetId ?: -1L
+                        )
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(detailDate.dates)
@@ -108,6 +118,23 @@ class TripDetailActivity :
                         )
                     )
                 )
+            })
+
+            goToPieScreen.observe(this@TripDetailActivity, Observer {
+                val detailBudgetId = tripDetail.value ?: return@Observer
+
+                val sharedBudgetId = detailBudgetId.shared?.budgetId ?: -1L
+                val personalBudgetId = detailBudgetId.personal?.budgetId ?: -1L
+                val roomType = TravelRoomType.SHARED
+                startActivity(
+                    Intent(
+                        this@TripDetailActivity,
+                        StatisticsActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                    })
             })
         }
     }
@@ -131,7 +158,7 @@ class TripDetailActivity :
 
     private fun setupViewPager(
         dates: List<String>,
-        sharedBudgetData: TripDetailResponse.Data,
+        sharedBudgetData: TripDetailResponse.Data?,
         personalBudgetData: TripDetailResponse.Data?
     ) {
         binding.vpDetailPager.run {

@@ -9,6 +9,7 @@ import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.toMoneyString
+import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import com.nexters.travelbudget.utils.widget.piechart.PieData
 import io.reactivex.rxkotlin.addTo
@@ -29,6 +30,9 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val backScreen: SingleLiveEvent<Unit> = _backScreen
 
     fun setData(budgetId: Long) {
         if (budgetId == -1L) {
@@ -66,5 +70,9 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
             DLog.d("")
             add(data)
         }
+    }
+
+    fun backScreen() {
+        _backScreen.call()
     }
 }

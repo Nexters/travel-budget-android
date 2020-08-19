@@ -1,11 +1,14 @@
 package com.nexters.travelbudget.ui.select_date
 
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.BottomSheetSelectDateBinding
 import com.nexters.travelbudget.ui.base.BaseBottomSheetDialogFragment
 import com.nexters.travelbudget.ui.select_date.adapter.SelectDateRVAdapter
+import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
@@ -41,6 +44,7 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
                 listener(it)
                 dismiss()
             }
+
         }
     }
 

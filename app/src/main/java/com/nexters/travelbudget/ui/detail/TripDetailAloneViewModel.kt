@@ -63,6 +63,15 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
     private val _sumPayment = MutableLiveData<String>()
     val sumPayment: LiveData<String> = _sumPayment
 
+    private val _goToPieScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val goToPieScreen: SingleLiveEvent<Unit> = _goToPieScreen
+
+    private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val backScreen: SingleLiveEvent<Unit> = _backScreen
+
+    private val _goToPaymentScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val goToPaymentScreen: SingleLiveEvent<Unit> = _goToPaymentScreen
+
     fun showDateAloneDialog() {
         showDateAloneDialogEvent.call()
     }
@@ -115,6 +124,18 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
                 }
 
             }).addTo(compositeDisposable)
+    }
+
+    fun goToPieScreen() {
+        _goToPieScreen.call()
+    }
+
+    fun backScreen() {
+        _backScreen.call()
+    }
+
+    fun goToPaymentScreen() {
+        _goToPaymentScreen.call()
     }
 
     companion object {

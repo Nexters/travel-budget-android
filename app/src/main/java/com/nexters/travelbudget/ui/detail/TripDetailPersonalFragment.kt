@@ -15,6 +15,9 @@ import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TripDetailPersonalFragment() :
     BaseFragment<FragmentDetailPersonalBinding, TripDetailPersonalViewModel>(R.layout.fragment_detail_personal) {
@@ -38,6 +41,25 @@ class TripDetailPersonalFragment() :
         observeViewModel()
         setupDetailPersonalRV()
 
+        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        date = if (dateItems.contains(date)) {
+            date
+        } else {
+            "준비"
+        }
+        viewModel.setPersonalDate(date)
+        (requireActivity() as? TripDetailActivity)?.setDay(viewModel.detailPersonalDate.value ?: "")
+
+        val isReady = if (date == "준비") {
+            "Y"
+        } else {
+            "N"
+        }
+
+        if (date == "준비") {
+            viewModel.isEmptyList.value = true
+        }
+
         viewModel.getPaymentPersonalTravelData(budgetId, "Y", "2020-08-04")
 
         budgetData?.let {
@@ -48,10 +70,21 @@ class TripDetailPersonalFragment() :
     private fun observeViewModel() {
         with(viewModel) {
             showPersonalDateDialogEvent.observe(this@TripDetailPersonalFragment, Observer {
-//                SelectDateBottomSheetDialog(dateItems) {
-//                    setPersonalDate(it)
-//                    viewModel.getPaymentPersonalTravelData(budgetId, "N", it)
-//                }.show(parentFragmentManager, "bottom_sheet")
+                SelectDateBottomSheetDialog.newInstance(ArrayList(dateItems)) {
+                    setPersonalDate(it)
+                    (requireActivity() as? TripDetailActivity)?.setDay(it)
+                    val isReady = if (it == "준비") {
+                        "Y"
+                    } else {
+                        "N"
+                    }
+
+                    if (it == "준비") {
+                        viewModel.isEmptyList.value = true
+                    }
+
+                    getPaymentPersonalTravelData(budgetId, isReady, it)
+                }.show(parentFragmentManager, "bottom_sheet")
             })
         }
     }
@@ -90,10 +123,6 @@ class TripDetailPersonalFragment() :
                 arguments = bundleOf(BUDGET_DATA to data, DATE_ITEMS to items)
             }
         }
-
-//        fun newInstance(): TripDetailPersonalFragment {
-//            return TripDetailPersonalFragment()
-//        }
     }
 
 

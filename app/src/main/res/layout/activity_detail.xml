@@ -30,6 +30,7 @@
                 android:id="@+id/btn_detail_go_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.backScreen()}"
                 android:src="@drawable/ic_back" />
 
             <LinearLayout
@@ -43,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackgroundBorderless"
-                    android:onClick="@{() -> vm.goToShowRecordSpend()}"
+                    android:onClick="@{() -> vm.goToManageMemberScreen()}"
                     android:src="@drawable/ic_invite" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -51,6 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:onClick="@{() -> vm.goToPieScreen()}"
                     android:src="@drawable/ic_pie" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -112,25 +114,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tl_detail">
-
-            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-                android:id="@+id/custom_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="28dp"
-                android:background="@drawable/ic_rectangle_button"
-                android:goneIf="@{isPersonal}"
-                android:text="지출기록"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-                app:fabColor="@color/colorFillBlue"
-                app:fabSizes="mini"
-                app:fabType="roundedSquare"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintCircleRadius="21.5dp"
-                app:layout_constraintLeft_toRightOf="parent"
-                app:layout_constraintRight_toLeftOf="parent" />
 
         </androidx.viewpager.widget.ViewPager>
 

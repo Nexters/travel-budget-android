@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">트립파이</string>
+    <string name="app_name">트리파이</string>
 
     <string name="kakao_app_key">76ee6d4e877a1ea575ed4d478cc671db</string>
 
@@ -33,7 +33,7 @@
     <!---->
 
     <!-- bottom_sheet_selected_date -->
-    <string name="date_record_title">지출 기록하기</string>
+    <string name="date_record_title">날짜 선택</string>
     <string name="date_ready">준비</string>
 
     <!-- main -->
