@@ -2,7 +2,6 @@ package com.nexters.travelbudget.ui.detail
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import com.nexters.travelbudget.R
@@ -38,32 +37,29 @@ class TripDetailPersonalFragment() :
         budgetData?.budgetId ?: -1
     }
 
+    private var day = ""
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailPersonalRV()
+        setDay()
 
-        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        date = if (dateItems.contains(date)) {
-            date.convertToViewDate()
-        } else {
-            "준비"
-        }
-        viewModel.setPersonalDate(date)
+        viewModel.setPersonalDate(day)
         (requireActivity() as? TripDetailActivity)?.setDay(viewModel.detailPersonalDate.value ?: "")
 
-        val isReady = if (date == "준비") {
+        val isReady = if (day == "준비") {
             "Y"
         } else {
             "N"
         }
 
-        if (date == "준비") {
+        if (day == "준비") {
             viewModel.isEmptyList.value = true
             viewModel.getPaymentPersonalTravelData(budgetId, isReady, dateItems[0])
         }
         else {
-            viewModel.getPaymentPersonalTravelData(budgetId, isReady, date.convertToServerDate())
+            viewModel.getPaymentPersonalTravelData(budgetId, isReady, day.convertToServerDate())
         }
         budgetData?.let {
             viewModel.setBudgetData(it)
@@ -73,7 +69,7 @@ class TripDetailPersonalFragment() :
     private fun observeViewModel() {
         with(viewModel) {
             showPersonalDateDialogEvent.observe(this@TripDetailPersonalFragment, Observer {
-                SelectDateBottomSheetDialog.newInstance(ArrayList(dateItems)) {
+                SelectDateBottomSheetDialog.newInstance(day, ArrayList(dateItems)) {
                     setPersonalDate(it)
                     (requireActivity() as? TripDetailActivity)?.setDay(it)
                     val isReady = if (it == "준비") {
@@ -115,6 +111,16 @@ class TripDetailPersonalFragment() :
                 }
             })
         }
+    }
+
+    private fun setDay() {
+        var d = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        d = if (dateItems.contains(d)) {
+            d.convertToViewDate()
+        } else {
+            "준비"
+        }
+        day = d
     }
 
     companion object {

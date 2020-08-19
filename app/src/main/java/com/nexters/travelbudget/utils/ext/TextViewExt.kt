@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.utils.ext
 
+import android.graphics.Typeface
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import java.text.DecimalFormat
@@ -30,4 +31,15 @@ fun TextView.isSelected(b: Boolean) {
         setTextColor(resources.getColor(R.color.fill_grey_1, null))
         background = null
     }
+}
+
+@BindingAdapter("bind:isBold")
+fun TextView.isBold(b: Boolean) {
+    setTypeface(
+        typeface, if (b) {
+            Typeface.BOLD
+        } else {
+            Typeface.NORMAL
+        }
+    )
 }

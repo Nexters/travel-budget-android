@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
-import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
@@ -20,6 +18,7 @@ import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import com.nexters.travelbudget.utils.ext.convertToServerDate
+import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,11 +34,12 @@ class TripDetailAloneActivity :
         super.onCreate(savedInstanceState)
         observeViewModel()
         setupDetailAloneRV()
+        setDay()
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
 
-        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        setDay(date)
+//        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+//        setDay(date)
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
@@ -50,7 +50,7 @@ class TripDetailAloneActivity :
         with(viewModel) {
             showDateAloneDialogEvent.observe(this@TripDetailAloneActivity, Observer {
                 val tripDetailResponse = tripDetailAlone.value ?: return@Observer
-                SelectDateBottomSheetDialog.newInstance(ArrayList(tripDetailResponse.dates)) {
+                SelectDateBottomSheetDialog.newInstance(day, ArrayList(tripDetailResponse.dates)) {
                     setAloneDate(it)
                     val isReady = if (it == "준비") {
                         "Y"
@@ -141,6 +141,17 @@ class TripDetailAloneActivity :
     }
 
     fun setDay(d: String) {
+        this.day = d
+    }
+
+    fun setDay() {
+        var d = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        d = if (viewModel.tripDetailAlone.value?.dates?.contains(d) == true) {
+            d.convertToViewDate()
+        } else {
+            "준비"
+        }
+
         this.day = d
     }
 

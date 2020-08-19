@@ -37,32 +37,29 @@ class TripDetailSharedFragment :
         budgetData?.budgetId ?: -1
     }
 
+    private var day = ""
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailSharedRV()
+        setDay()
 
-        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        date = if (dateItems.contains(date)) {
-            date.convertToViewDate()
-        } else {
-            "준비"
-        }
-        viewModel.setSharedDate(date)
+        viewModel.setSharedDate(day)
         (requireActivity() as? TripDetailActivity)?.setDay(viewModel.detailSharedDate.value ?: "")
 
-        val isReady = if (date == "준비") {
+        val isReady = if (day == "준비") {
             "Y"
         } else {
             "N"
         }
 
-        if (date == "준비") {
+        if (day == "준비") {
             viewModel.isEmptyList.value = true
-            viewModel.getPaymentTravelData(budgetId, isReady, date)
+            viewModel.getPaymentTravelData(budgetId, isReady, day)
         }
         else {
-            viewModel.getPaymentTravelData(budgetId, isReady, date.convertToServerDate())
+            viewModel.getPaymentTravelData(budgetId, isReady, day.convertToServerDate())
         }
 
         budgetData?.let {
@@ -73,7 +70,7 @@ class TripDetailSharedFragment :
     private fun observeViewModel() {
         with(viewModel) {
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
-                SelectDateBottomSheetDialog.newInstance(ArrayList(dateItems)) {
+                SelectDateBottomSheetDialog.newInstance(day, ArrayList(dateItems)) {
                     setSharedDate(it)
                     (requireActivity() as? TripDetailActivity)?.setDay(it)
                     val isReady = if (it == "준비") {
@@ -115,6 +112,17 @@ class TripDetailSharedFragment :
                 }
             })
         }
+    }
+
+    private fun setDay() {
+        var d = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        d = if (dateItems.contains(d)) {
+            d.convertToViewDate()
+        } else {
+            "준비"
+        }
+
+        day = d
     }
 
     companion object {

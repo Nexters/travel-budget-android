@@ -37,7 +37,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
+        val date = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(Date())
         val st = StringTokenizer(date)
 
         val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
@@ -71,7 +71,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
     private fun observeViewModel() {
         with(viewModel) {
             selectDateEvent.observe(this@RecordSpendActivity, Observer {
-                SelectDateBottomSheetDialog.newInstance(dateList) {
+                SelectDateBottomSheetDialog.newInstance(selectedDate.value ?: "준비", dateList) {
                     setDate(it)
                 }.show(supportFragmentManager, "")
             })
