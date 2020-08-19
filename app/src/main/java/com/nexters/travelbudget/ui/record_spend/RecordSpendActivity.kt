@@ -18,6 +18,7 @@ import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
 import com.nexters.travelbudget.utils.*
+import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat

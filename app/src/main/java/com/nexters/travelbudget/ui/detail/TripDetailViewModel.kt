@@ -61,7 +61,6 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
     fun getTripDetailData(planId: Long) {
         detailTripRepository.getTripDetailInfo(planId)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             //  .doOnSubscribe { _isLoading.value = true }
             //  .doAfterTerminate { _isLoading.value = false }

@@ -10,6 +10,7 @@ import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
 import com.nexters.travelbudget.utils.ext.applySchedulers
+import com.nexters.travelbudget.utils.ext.convertToViewDate
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver

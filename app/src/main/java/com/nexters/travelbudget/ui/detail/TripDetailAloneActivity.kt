@@ -19,6 +19,7 @@ import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.convertToServerDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,30 +36,10 @@ class TripDetailAloneActivity :
         observeViewModel()
         setupDetailAloneRV()
 
-
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
 
-//        // 에러
-//        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-//        date = if (viewModel.tripDetailAlone.value?.dates?.contains(date) ?: false) {
-//            date
-//        } else {
-//            "준비"
-//        }
-//        viewModel.setAloneDate(date)
-//
-//        val isReady = if (date == "준비") {
-//            "Y"
-//        } else {
-//            "N"
-//        }
-//
-//        if (date == "준비") {
-//            viewModel.isEmptyList.value = true
-//        }
-////        val isReady = "Y" // 테스트용
-//
-//        viewModel.getPaymentAloneTravelData(intent.getLongExtra(Constant.EXTRA_BUDGET_ID, -1L), isReady, date)
+        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        setDay(date)
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
@@ -79,9 +60,11 @@ class TripDetailAloneActivity :
 
                     if (it == "준비") {
                         viewModel.isEmptyList.value = true
+                        getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it)
                     }
-
-                    getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it)
+                    else {
+                        getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it.convertToServerDate())
+                    }
                 }.show(supportFragmentManager, "bottom_sheet")
             })
 
@@ -109,7 +92,7 @@ class TripDetailAloneActivity :
                     putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                     putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                     putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                    putExtra(Constant.EXTRA_CURRENT_DATE, detailAloneDate.value)
                     putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
                 })
             })
@@ -139,6 +122,9 @@ class TripDetailAloneActivity :
         }
     }
 
+    fun setDay(d: String) {
+        this.day = d
+    }
 
     companion object {
 

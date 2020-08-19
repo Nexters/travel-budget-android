@@ -14,6 +14,8 @@ import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.convertToServerDate
+import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,7 +45,7 @@ class TripDetailPersonalFragment() :
 
         var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         date = if (dateItems.contains(date)) {
-            date
+            date.convertToViewDate()
         } else {
             "준비"
         }
@@ -58,10 +60,11 @@ class TripDetailPersonalFragment() :
 
         if (date == "준비") {
             viewModel.isEmptyList.value = true
+            viewModel.getPaymentPersonalTravelData(budgetId, isReady, date)
         }
-
-        viewModel.getPaymentPersonalTravelData(budgetId, "Y", "2020-08-04")
-
+        else {
+            viewModel.getPaymentPersonalTravelData(budgetId, isReady, date.convertToServerDate())
+        }
         budgetData?.let {
             viewModel.setBudgetData(it)
         }
@@ -81,9 +84,12 @@ class TripDetailPersonalFragment() :
 
                     if (it == "준비") {
                         viewModel.isEmptyList.value = true
+                        getPaymentPersonalTravelData(budgetId, isReady, it)
+                    }
+                    else {
+                        getPaymentPersonalTravelData(budgetId, isReady, it.convertToServerDate())
                     }
 
-                    getPaymentPersonalTravelData(budgetId, isReady, it)
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }

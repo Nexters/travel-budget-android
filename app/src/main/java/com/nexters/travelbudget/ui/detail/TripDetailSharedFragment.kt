@@ -44,7 +44,7 @@ class TripDetailSharedFragment :
 
         var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         date = if (dateItems.contains(date)) {
-            date
+            date.convertToViewDate()
         } else {
             "준비"
         }
@@ -59,9 +59,11 @@ class TripDetailSharedFragment :
 
         if (date == "준비") {
             viewModel.isEmptyList.value = true
+            viewModel.getPaymentTravelData(budgetId, isReady, date)
         }
-
-        viewModel.getPaymentTravelData(budgetId, isReady, date)
+        else {
+            viewModel.getPaymentTravelData(budgetId, isReady, date.convertToServerDate())
+        }
 
         budgetData?.let {
             viewModel.setBudgetData(it)
@@ -82,9 +84,11 @@ class TripDetailSharedFragment :
 
                     if (it == "준비") {
                         viewModel.isEmptyList.value = true
+                        getPaymentTravelData(budgetId, isReady, it)
                     }
-
-                    getPaymentTravelData(budgetId, isReady, it.convertToServerDate())
+                    else {
+                        getPaymentTravelData(budgetId, isReady, it.convertToServerDate())
+                    }
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }

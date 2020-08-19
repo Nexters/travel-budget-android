@@ -9,6 +9,7 @@ import com.nexters.travelbudget.databinding.BottomSheetSelectDateBinding
 import com.nexters.travelbudget.ui.base.BaseBottomSheetDialogFragment
 import com.nexters.travelbudget.ui.select_date.adapter.SelectDateRVAdapter
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
@@ -28,8 +29,6 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
         observeViewModel()
         setupRecyclerView()
 
-//        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-
         arguments?.let {
             val dateItems = it.getStringArrayList(BUNDLE_DATE_LIST)?.map { date ->
                 date.convertToViewDate()
@@ -38,11 +37,6 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
             listener = it.getSerializable(BUNDLE_CLICK_LISTENER) as (String) -> Unit
         }
 
-
-//        arguments?.let {
-//            viewModel.addDateData(it.getStringArrayList(BUNDLE_DATE_LIST) ?: ArrayList())
-//            listener = it.getSerializable(BUNDLE_CLICK_LISTENER) as (String) -> Unit
-//        }
     }
 
     private fun observeViewModel() {

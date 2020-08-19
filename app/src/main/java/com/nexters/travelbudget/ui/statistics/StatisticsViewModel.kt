@@ -41,7 +41,6 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
         }
 
         statisticsRepo.getStatisticsInfo(budgetId)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             .doOnSubscribe { _isLoading.postValue(true) }
             .doAfterTerminate { _isLoading.postValue(false) }

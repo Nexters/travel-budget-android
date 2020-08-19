@@ -11,6 +11,7 @@ import com.nexters.travelbudget.ui.base.BaseViewModel
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.convertDateToMills
 import com.nexters.travelbudget.utils.ext.applySchedulers
+import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
@@ -232,7 +233,7 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     private fun getPaymentDt(isReady: String) = if (isReady == "Y") {
         1596521640L
     } else {
-        convertDateToMills(selectedDate.value ?: "0000-00-00", selectedTime.value ?: "00:00")
+        convertDateToMills(selectedDate.value?.convertToServerDate() ?: "0000-00-00", selectedTime.value ?: "00:00")
     }
 
     private fun translateCategory(category: String): String {
