@@ -11,6 +11,7 @@ import com.nexters.travelbudget.utils.ext.convertToViewDate
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
+import com.nexters.travelbudget.utils.observer.TripieCompletableObserver
 import io.reactivex.observables.ConnectableObservable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
@@ -21,7 +22,7 @@ class EditSharedTripProfileViewModel(
     private val tripProfileRepository: TripProfileRepository
 ) : BaseViewModel() {
 
-    private val _isOwner: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isOwner: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOwner: LiveData<Boolean> = _isOwner
 
     private val _tripTitle: MutableLiveData<String> = MutableLiveData()
@@ -42,8 +43,11 @@ class EditSharedTripProfileViewModel(
     private val _personalBudget: MutableLiveData<String> = MutableLiveData()
     val personalBudget: LiveData<String> = _personalBudget
     val personalBudgetChanged = fun(value: String) {
-        _personalBudget.value = value.replace(",", "")
+        _personalBudget.value = value
     }
+
+    private val _successModificationTripProfile: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val successModificationTripProfile: SingleLiveEvent<Unit> = _successModificationTripProfile
 
     private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val backScreen: SingleLiveEvent<Unit> = _backScreen
@@ -63,6 +67,26 @@ class EditSharedTripProfileViewModel(
                     _endDate.value = result.endDate.convertToViewDate()
                 }
 
+            }).addTo(compositeDisposable)
+    }
+
+    fun modifyTripProfile() {
+        if (planId == -1L) return
+
+        tripProfileRepository.modifyTripProfile(
+            planId,
+            _tripTitle.value ?: "",
+            _sharedBudget.value?.replace(",", "")?.toLongOrNull() ?: 0L,
+            _personalBudget.value?.replace(",", "")?.toLongOrNull() ?: 0L
+        ).applySchedulers()
+            .subscribeWith(object : TripieCompletableObserver() {
+                override fun onComplete() {
+                    _successModificationTripProfile.call()
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                }
             }).addTo(compositeDisposable)
     }
 

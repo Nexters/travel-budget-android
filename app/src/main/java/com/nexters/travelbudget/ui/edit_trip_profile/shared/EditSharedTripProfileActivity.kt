@@ -26,6 +26,11 @@ class EditSharedTripProfileActivity :
         super.onCreate(savedInstanceState)
         viewModel.getTripProfileInfo()
 
+        viewModel.successModificationTripProfile.observe(this, Observer {
+            // TODO 여행 상세 화면 갱신 (setResult)
+            finish()
+        })
+
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })

@@ -75,4 +75,7 @@ interface TripieService {
 
     @GET("api/plans/{id}/profile")
     fun getTripProfileInfo(@Path("id") planId: Long): Single<TripProfileResponse>
+
+    @PUT("api/plans/{id}/profile")
+    fun modifyTripProfile(@Path("id") planId: Long, @Body param: HashMap<String, Any>): Completable
 }

@@ -205,7 +205,7 @@
             app:layout_constraintEnd_toEndOf="@id/et_trip_personal_budget" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_delete_or_out"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginEnd="16dp"
@@ -216,21 +216,23 @@
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_submit"
-            app:layout_constraintStart_toStartOf="@id/guide_left" />
+            app:layout_constraintEnd_toStartOf="@id/btn_modify_trip_profile"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            tools:text="@string/room_delete" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_modify_trip_profile"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:background="@drawable/bg_button_round_blue"
+            android:onClick="@{() -> vm.modifyTripProfile()}"
             android:text="@string/text_edit"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/btn_cancel"
+            app:layout_constraintBottom_toBottomOf="@id/btn_delete_or_out"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintStart_toEndOf="@id/btn_cancel" />
+            app:layout_constraintStart_toEndOf="@id/btn_delete_or_out" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

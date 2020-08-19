@@ -2,6 +2,7 @@ package com.nexters.travelbudget.data.remote.source
 
 import com.nexters.travelbudget.data.remote.api.TripieService
 import com.nexters.travelbudget.data.remote.model.response.TripProfileResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -14,5 +15,21 @@ class TripProfileRemoteDataSource(private val tripieService: TripieService) {
 
     fun getTripProfileInfo(planId: Long): Single<TripProfileResponse> {
         return tripieService.getTripProfileInfo(planId)
+    }
+
+    fun modifyTripProfile(
+        planId: Long,
+        name: String,
+        sharedAmount: Long?,
+        personalAmount: Long
+    ): Completable {
+        val param = hashMapOf<String, Any>().apply {
+            put("name", name)
+            put("personal_amount", personalAmount)
+            if (sharedAmount != null) {
+                put("shared_amount", sharedAmount)
+            }
+        }
+        return tripieService.modifyTripProfile(planId, param)
     }
 }
