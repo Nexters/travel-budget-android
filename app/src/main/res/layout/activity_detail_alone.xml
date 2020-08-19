@@ -390,6 +390,21 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_detail_alone_payment_add"
+            android:layout_width="112dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/ic_rectangle_blue_21"
+            android:onClick="@{()->vm.goToPaymentScreen()}"
+            android:text="+ 지출기록"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

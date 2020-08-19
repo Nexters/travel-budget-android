@@ -115,25 +115,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tl_detail">
 
-            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-                android:id="@+id/custom_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="28dp"
-                android:background="@drawable/ic_rectangle_button"
-                android:goneIf="@{isPersonal}"
-                android:text="지출기록"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-                app:fabColor="@color/colorFillBlue"
-                app:fabSizes="mini"
-                app:fabType="roundedSquare"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintCircleRadius="21.5dp"
-                app:layout_constraintLeft_toRightOf="parent"
-                app:layout_constraintRight_toLeftOf="parent" />
-
         </androidx.viewpager.widget.ViewPager>
 
         <androidx.appcompat.widget.AppCompatButton

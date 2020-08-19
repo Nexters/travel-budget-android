@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
+import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
+import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
@@ -95,6 +97,23 @@ class TripDetailAloneActivity :
                     putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                 })
             })
+
+            goToPaymentScreen.observe(this@TripDetailAloneActivity, Observer {
+                val tripDetailResponse = viewModel.tripDetailAlone.value ?: return@Observer
+                val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
+                val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
+                val roomType = TravelRoomType.PERSONAL
+                val editMode = EditModeType.CREATE_MODE
+                startActivity(Intent(this@TripDetailAloneActivity, RecordSpendActivity::class.java).apply {
+                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                    putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                    putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
+                })
+            })
+
         }
     }
 
