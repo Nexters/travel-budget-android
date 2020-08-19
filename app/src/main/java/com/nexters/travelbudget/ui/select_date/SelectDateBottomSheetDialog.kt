@@ -1,9 +1,7 @@
 package com.nexters.travelbudget.ui.select_date
 
-import android.graphics.Rect
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.BottomSheetSelectDateBinding
 import com.nexters.travelbudget.ui.base.BaseBottomSheetDialogFragment
@@ -13,8 +11,6 @@ import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSelectDateBinding, SelectDateViewModel>(
@@ -36,13 +32,17 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
             viewModel.addDateData(dateItems)
             listener = it.getSerializable(BUNDLE_CLICK_LISTENER) as (String) -> Unit
         }
-
     }
 
     private fun observeViewModel() {
         with(viewModel) {
             dismissEvent.observe(this@SelectDateBottomSheetDialog, Observer {
-                this@SelectDateBottomSheetDialog.dismiss()
+                dismiss()
+            })
+
+            selectReadyEvent.observe(this@SelectDateBottomSheetDialog, Observer {
+                listener("준비")
+                dismiss()
             })
         }
     }
@@ -50,7 +50,7 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
     private fun setupRecyclerView() {
         with(binding.rvDateList) {
             adapter = SelectDateRVAdapter {
-                listener(it)
+                listener(it.convertToServerDate())
                 dismiss()
             }
 

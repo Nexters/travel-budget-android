@@ -13,12 +13,11 @@ class SelectDateViewModel : BaseViewModel() {
     private val _tripDetailList = MutableLiveData<TripDetailResponse>()
     val tripDetailList: LiveData<TripDetailResponse> = _tripDetailList
 
-    private val _isReady = MutableLiveData<Boolean>(false)
-    val isReady: LiveData<Boolean> = _isReady
+    val selectReadyEvent = SingleLiveEvent<Unit>()
 
     val dismissEvent = SingleLiveEvent<Unit>()
 
-    fun dismiss() {
+    fun closeDialog() {
         dismissEvent.call()
     }
 
@@ -26,7 +25,7 @@ class SelectDateViewModel : BaseViewModel() {
         _dateList.value = dates
     }
 
-    fun setReady() {
-        _isReady.value = true
+    fun selectReady() {
+        selectReadyEvent.call()
     }
 }
