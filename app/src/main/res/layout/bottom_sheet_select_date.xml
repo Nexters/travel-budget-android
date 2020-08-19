@@ -15,42 +15,64 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="400dp">
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_date_record_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date_record_title"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-            <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="#454545"
+
+            <ImageView
+                android:src="@drawable/ic_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:onClick="@{() -> vm.dismiss()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_date_ready"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/fill_grey_2"
+                android:textSize="@dimen/text_size_14sp"
                 android:text="준비"
                 app:layout_constraintStart_toStartOf="@id/tv_date_record_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_date_record_title"/>
+
+            <View
+                android:id="@+id/v_date_divide"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/ic_rectangle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_ready"
+                android:layout_marginLeft="@dimen/margin_24dp"
+                android:layout_marginRight="@dimen/margin_24dp"
+                android:layout_marginTop="@dimen/spacing_size_20dp"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_date_list"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:addAll="@{vm.dateList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_date_ready"
+                app:layout_constraintTop_toBottomOf="@id/v_date_divide"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

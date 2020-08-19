@@ -32,6 +32,8 @@ class StatisticsFragment : BaseFragment<FragmentStatisticsBinding, StatisticsVie
                     binding.pcStatistics.addData(pie)
                 }
             })
+
+            
         }
     }
 
