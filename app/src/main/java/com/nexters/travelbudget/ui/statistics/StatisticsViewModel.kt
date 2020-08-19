@@ -31,9 +31,6 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val backScreen: SingleLiveEvent<Unit> = _backScreen
-
     fun setData(budgetId: Long) {
         if (budgetId == -1L) {
             _isEmptyData.value = true
@@ -58,6 +55,8 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
                         addIfNotZero(PieData("숙박", category.sleep))
                         addIfNotZero(PieData("간식", category.snack))
                         addIfNotZero(PieData("기타", category.etc))
+                    }.apply {
+                        sort()
                     }
                     _isEmptyData.value = newPieDataList.value.isNullOrEmpty()
                 }
@@ -69,9 +68,5 @@ class StatisticsViewModel(private val statisticsRepo: StatisticsRepository) : Ba
             DLog.d("")
             add(data)
         }
-    }
-
-    fun backScreen() {
-        _backScreen.call()
     }
 }
