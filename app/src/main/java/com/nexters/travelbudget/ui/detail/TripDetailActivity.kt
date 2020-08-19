@@ -16,12 +16,15 @@ import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TripDetailActivity :
     BaseActivity<ActivityDetailBinding, TripDetailViewModel>(R.layout.activity_detail) {
     override val viewModel: TripDetailViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
-    private var date: String = ""
+    private var day: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,16 +58,9 @@ class TripDetailActivity :
             })
 
             goToPaymentScreen.observe(this@TripDetailActivity, Observer {
-//                1. 공용 예산 id
-//                2. 개인 예산 id
-//                3. 선택한 날짜
-//                        4. 함께여행 / 개인여행 선택
-//                        5. 기록모드인지 수정모드인지
-//                        6. 수정모드일 땐 payment Id
                 val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
                 val sharedBudgetId = tripDetailResponse.shared.budgetId
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
-//                val selectedDate
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
                 startActivity(Intent(this@TripDetailActivity, RecordSpendActivity::class.java).apply {
@@ -72,7 +68,7 @@ class TripDetailActivity :
                     putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                     putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                     putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                    putExtra(Constant.EXTRA_CURRENT_DATE, date)
+                    putExtra(Constant.EXTRA_CURRENT_DATE, day)
                     putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
                 })
             })
@@ -134,8 +130,8 @@ class TripDetailActivity :
         }
     }
 
-    fun setDate(d: String) {
-        this.date = d
+    fun setDay(d: String) {
+        this.day = d
     }
 
     companion object {

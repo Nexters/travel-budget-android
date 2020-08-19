@@ -2,7 +2,6 @@ package com.nexters.travelbudget.ui.detail
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
@@ -12,12 +11,12 @@ import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.FragmentDetailSharedBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
-import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
-import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
-import com.nexters.travelbudget.utils.DLog
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TripDetailSharedFragment :
     BaseFragment<FragmentDetailSharedBinding, TripDetailSharedViewModel>(R.layout.fragment_detail_shared) {
@@ -41,7 +40,22 @@ class TripDetailSharedFragment :
         observeViewModel()
         setupDetailSharedRV()
 
-        viewModel.getPaymentTravelData(budgetId, "Y", "2020-08-04")
+        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        date = if (dateItems.contains(date)) {
+            date
+        } else {
+            "준비"
+        }
+        viewModel.setSharedDate(date)
+        (requireActivity() as? TripDetailActivity)?.setDay(viewModel.detailSharedDate.value ?: "")
+
+        val isReady = if (date == "준비") {
+            "Y"
+        } else {
+            "N"
+        }
+
+        viewModel.getPaymentTravelData(budgetId, isReady, date)
 
         budgetData?.let {
             viewModel.setBudgetData(it)
@@ -53,8 +67,14 @@ class TripDetailSharedFragment :
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
                 SelectDateBottomSheetDialog.newInstance(ArrayList(dateItems)) {
                     setSharedDate(it)
-                    (requireActivity() as? TripDetailActivity)?.setDate(it)
-                    viewModel.getPaymentTravelData(budgetId, "N", it)
+                    (requireActivity() as? TripDetailActivity)?.setDay(it)
+                    val isReady = if (it == "준비") {
+                        "Y"
+                    } else {
+                        "N"
+                    }
+
+                    getPaymentTravelData(budgetId, isReady, it)
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }
