@@ -7,6 +7,7 @@ import com.nexters.travelbudget.data.remote.model.response.TripPaymentResponse
 import com.nexters.travelbudget.data.repository.DetailPaymentRepository
 import com.nexters.travelbudget.data.repository.DetailTripRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
+import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
 import com.nexters.travelbudget.utils.ext.applySchedulers
@@ -14,7 +15,10 @@ import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepository, private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
     private val _newDetailAloneList = MutableLiveData<ArrayList<DetailSharedData>>()
@@ -87,6 +91,25 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
             //  .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
 //                _isEmptyList.value = it.isEmpty()
+                var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                date = if (it.dates.contains(date) ?: false) {
+                    date
+                } else {
+                    "준비"
+                }
+                setAloneDate(date)
+
+                val isReady = if (date == "준비") {
+                    "Y"
+                } else {
+                    "N"
+                }
+
+                if (date == "준비") {
+                    isEmptyList.value = true
+                }
+
+                getPaymentAloneTravelData(it.personal?.budgetId ?: -1L, isReady, date)
             }
             .subscribeWith(object : TripDisposableSingleObserver<TripDetailResponse>() {
                 override fun onSuccess(result: TripDetailResponse) {

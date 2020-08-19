@@ -38,9 +38,9 @@ class TripDetailAloneActivity :
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
 
-        // 에러
-        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-//        date = if (viewModel.tripDetailAlone.value!!.dates.contains(date)) {
+//        // 에러
+//        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+//        date = if (viewModel.tripDetailAlone.value?.dates?.contains(date) ?: false) {
 //            date
 //        } else {
 //            "준비"
@@ -56,9 +56,9 @@ class TripDetailAloneActivity :
 //        if (date == "준비") {
 //            viewModel.isEmptyList.value = true
 //        }
-        val isReady = "Y" // 테스트용
-
-        viewModel.getPaymentAloneTravelData(intent.getLongExtra(Constant.EXTRA_BUDGET_ID, -1L), isReady, date)
+////        val isReady = "Y" // 테스트용
+//
+//        viewModel.getPaymentAloneTravelData(intent.getLongExtra(Constant.EXTRA_BUDGET_ID, -1L), isReady, date)
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
