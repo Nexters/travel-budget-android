@@ -30,4 +30,8 @@ class TripProfileRepository(private val tripProfileRemoteDataSource: TripProfile
             personalAmount
         )
     }
+
+    fun exitTripRoom(planId: Long, memberId: Long): Completable {
+        return tripProfileRemoteDataSource.exitTripRoom(planId, memberId)
+    }
 }

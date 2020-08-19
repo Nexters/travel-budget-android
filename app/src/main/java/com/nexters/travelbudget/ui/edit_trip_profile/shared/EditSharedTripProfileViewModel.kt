@@ -49,6 +49,9 @@ class EditSharedTripProfileViewModel(
     private val _successModificationTripProfile: SingleLiveEvent<Unit> = SingleLiveEvent()
     val successModificationTripProfile: SingleLiveEvent<Unit> = _successModificationTripProfile
 
+    private val _successExitTripRoom: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val successExitTripRoom: SingleLiveEvent<Unit> = _successExitTripRoom
+
     private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val backScreen: SingleLiveEvent<Unit> = _backScreen
 
@@ -88,6 +91,20 @@ class EditSharedTripProfileViewModel(
                     super.onError(e)
                 }
             }).addTo(compositeDisposable)
+    }
+
+    fun exitOrDeleteTripRoom() {
+        if (_isOwner.value!!) { // 사용자가 방장일 경우
+            // TODO 방 삭제
+        } else { // 사용자가 멤버일 경우
+            tripProfileRepository.exitTripRoom(planId, memberId)
+                .applySchedulers()
+                .subscribeWith(object : TripieCompletableObserver() {
+                    override fun onComplete() {
+                        _successExitTripRoom.call()
+                    }
+                }).addTo(compositeDisposable)
+        }
     }
 
     fun backScreen() {

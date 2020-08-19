@@ -31,6 +31,11 @@ class EditSharedTripProfileActivity :
             finish()
         })
 
+        viewModel.successExitTripRoom.observe(this, Observer {
+            // TODO 방 나가기 작업 (setResult)
+            finish()
+        })
+
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })

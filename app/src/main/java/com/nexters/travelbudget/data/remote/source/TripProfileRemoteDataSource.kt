@@ -32,4 +32,8 @@ class TripProfileRemoteDataSource(private val tripieService: TripieService) {
         }
         return tripieService.modifyTripProfile(planId, param)
     }
+
+    fun exitTripRoom(planId: Long, memberId: Long): Completable {
+        return tripieService.deleteTripMember(planId, memberId)
+    }
 }

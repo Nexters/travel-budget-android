@@ -211,6 +211,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="28dp"
             android:background="@drawable/bg_button_round_black"
+            android:onClick="@{() -> vm.exitOrDeleteTripRoom()}"
             android:text="@{vm.isOwner() ? @string/room_delete : @string/room_out}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_16sp"
