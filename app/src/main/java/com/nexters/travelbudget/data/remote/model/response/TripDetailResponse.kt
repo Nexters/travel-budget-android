@@ -8,9 +8,9 @@ data class TripDetailResponse (
     @SerializedName("member_id")
     val memberId: Long,
     @SerializedName("shared")
-    val shared: Data,
+    val shared: Data?,
     @SerializedName("personal")
-    val personal: Data,
+    val personal: Data?,
     @SerializedName("name")
     val name: String,
     @SerializedName("dates")
