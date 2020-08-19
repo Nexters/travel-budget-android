@@ -50,6 +50,7 @@ interface Constant {
         const val REQUEST_CODE_ENTER_ROOM = 30
         const val REQUEST_CODE_EDIT_USER_NAME = 40
         const val REQUEST_CODE_EDIT_TRIP_PROFILE = 50
+        const val REQUEST_CODE_TRIP_DETAIL = 60
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1

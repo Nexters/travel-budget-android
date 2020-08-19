@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.ui.main.record
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -29,20 +30,16 @@ class RecordedTravelFragment :
 
     override val viewModel: RecordedTravelViewModel by viewModel()
 
-    private var isFirstExecution = true
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setSwipeRefreshLayout()
         setRecordedTravelRV()
+        viewModel.getTripRecordedData()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (isFirstExecution) {
-            isFirstExecution = false
-            viewModel.getTripRecordedData()
-        }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.getTripRecordedData()
     }
 
     private fun setSwipeRefreshLayout() {
@@ -60,10 +57,10 @@ class RecordedTravelFragment :
                         putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
                     })
                 } else {
-                    startActivity(
+                    activity?.startActivityForResult(
                         TripDetailAloneActivity.getIntent(context.applicationContext).apply {
                             putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
-                        })
+                        }, Constant.REQUEST_CODE_TRIP_DETAIL)
                 }
             }
             addItemDecoration(object : CustomItemDecoration() {

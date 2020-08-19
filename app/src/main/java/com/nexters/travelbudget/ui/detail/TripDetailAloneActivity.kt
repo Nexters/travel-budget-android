@@ -37,6 +37,8 @@ class TripDetailAloneActivity :
 
     private var day: String = ""
 
+    private var modifiesTripRoomInfo = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeViewModel()
@@ -76,6 +78,7 @@ class TripDetailAloneActivity :
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Constant.RESULT_OK) {
             if (requestCode == Constant.REQUEST_CODE_EDIT_TRIP_PROFILE) {
+                modifiesTripRoomInfo = true
                 when (data?.getStringExtra(Constant.EXTRA_ACTIVITY_RESULT_TYPE) ?: "") {
                     SCREEN_REFRESH.name -> {
                         viewModel.getTripDetailAloneData(planId)
@@ -89,6 +92,13 @@ class TripDetailAloneActivity :
                 }
             }
         }
+    }
+
+    override fun finish() {
+        if (modifiesTripRoomInfo) {
+            setResult(Constant.RESULT_OK)
+        }
+        super.finish()
     }
 
     private fun observeViewModel() {
