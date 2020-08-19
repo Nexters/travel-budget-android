@@ -108,7 +108,7 @@ class TripDetailSharedFragment :
         private const val DATE_ITEMS = "DATE_ITEMS"
 
         fun newInstance(
-            data: TripDetailResponse.Data,
+            data: TripDetailResponse.Data?,
             items: List<String>
         ): TripDetailSharedFragment {
             return TripDetailSharedFragment().apply {

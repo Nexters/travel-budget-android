@@ -65,7 +65,7 @@ class TripDetailActivity :
 
             goToPaymentScreen.observe(this@TripDetailActivity, Observer {
                 val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
-                val sharedBudgetId = tripDetailResponse.shared.budgetId
+                val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
@@ -90,7 +90,7 @@ class TripDetailActivity :
                             Constant.EXTRA_PERSONAL_BUDGET_ID,
                             detailDate.personal?.budgetId ?: -1L
                         )
-                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, detailDate.shared.budgetId)
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, detailDate.shared?.budgetId ?: -1L)
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(detailDate.dates)
@@ -134,7 +134,7 @@ class TripDetailActivity :
 
     private fun setupViewPager(
         dates: List<String>,
-        sharedBudgetData: TripDetailResponse.Data,
+        sharedBudgetData: TripDetailResponse.Data?,
         personalBudgetData: TripDetailResponse.Data?
     ) {
         binding.vpDetailPager.run {

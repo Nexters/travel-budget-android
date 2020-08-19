@@ -53,14 +53,15 @@ class TripDetailAloneActivity :
                         "N"
                     }
 
-                    getPaymentAloneTravelData(tripDetailResponse.personal.budgetId, isReady, it)
+                    getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it)
                 }.show(supportFragmentManager, "bottom_sheet")
             })
 
             goToPieScreen.observe(this@TripDetailAloneActivity, Observer {
-                val tripDetailResponse = viewModel.tripDetailAlone.value ?: return@Observer
-                val sharedBudgetId = tripDetailResponse.shared.budgetId ?: -1L
-                val personalBudgetId = tripDetailResponse.personal.budgetId ?: -1L
+                val tripDetailResponse = tripDetailAlone.value ?: return@Observer
+
+                val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
+                val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
                 startActivity(Intent(this@TripDetailAloneActivity, StatisticsActivity::class.java).apply {
                     putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
