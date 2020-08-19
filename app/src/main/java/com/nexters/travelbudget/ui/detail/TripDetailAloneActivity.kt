@@ -8,10 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
+import com.nexters.travelbudget.model.enums.ActivityResultType
+import com.nexters.travelbudget.model.enums.ActivityResultType.*
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
+import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
@@ -28,7 +31,13 @@ class TripDetailAloneActivity :
     override val viewModel: TripDetailAloneViewModel by viewModel()
     private val fragmentManager = supportFragmentManager
 
+    private val planId by lazy {
+        intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+    }
+
     private var day: String = ""
+
+    private var modifiesTripRoomInfo = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +46,38 @@ class TripDetailAloneActivity :
         setDay()
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+        viewModel.getTripDetailAloneData(planId)
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Constant.RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_EDIT_TRIP_PROFILE) {
+                modifiesTripRoomInfo = true
+                when (data?.getStringExtra(Constant.EXTRA_ACTIVITY_RESULT_TYPE) ?: "") {
+                    SCREEN_REFRESH.name -> {
+                        viewModel.getTripDetailAloneData(planId)
+                    }
+                    SCREEN_FINISH.name -> {
+                        finish()
+                    }
+                    else -> {
+                        return
+                    }
+                }
+            }
+        }
+    }
+
+    override fun finish() {
+        if (modifiesTripRoomInfo) {
+            setResult(Constant.RESULT_OK)
+        }
+        super.finish()
     }
 
     private fun observeViewModel() {
@@ -69,6 +106,11 @@ class TripDetailAloneActivity :
                             it.convertToServerDate()
                         )
                     }
+                    getPaymentAloneTravelData(
+                        tripDetailResponse.personal?.budgetId ?: -1L,
+                        isReady,
+                        it
+                    )
                 }.show(supportFragmentManager, "bottom_sheet")
             })
 
@@ -105,11 +147,24 @@ class TripDetailAloneActivity :
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                         putExtra(Constant.EXTRA_EDIT_MODE, editMode)
                         putExtra(Constant.EXTRA_CURRENT_DATE, detailAloneDate.value)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, day)
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(tripDetailResponse.dates)
                         )
                     })
+            })
+
+            startEditTripProfile.observe(this@TripDetailAloneActivity, Observer {
+                val memberId = viewModel.tripDetailAlone.value?.memberId ?: -1L
+                startActivityForResult(
+                    Intent(
+                        EditTripProfileActivity.getIntent(
+                            this@TripDetailAloneActivity,
+                            planId, memberId, TravelRoomType.PERSONAL.name
+                        )
+                    ), Constant.REQUEST_CODE_EDIT_TRIP_PROFILE
+                )
             })
 
         }

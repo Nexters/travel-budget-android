@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.nexters.travelbudget.model.enums.TravelRoomType" />
+
         <variable
             name="vm"
             type="com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel" />
@@ -10,20 +15,39 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_title"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="@dimen/toolbar_height"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/toolbar_edit_trip_profile"
-                android:textColor="#000"
-                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:onClick="@{() -> vm.backScreen()}"
+                    android:src="@drawable/btn_back" />
+
+                <TextView
+                    style="@style/ToolbarTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/toolbar_edit_trip_profile"
+                    tools:text="여행 프로필 편집" />
+
+            </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -31,129 +55,239 @@
             android:id="@+id/guide_left"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            app:layout_constraintGuide_begin="24dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_right"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            app:layout_constraintGuide_end="24dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_edit_notice"
             android:layout_width="0dp"
             android:layout_height="44dp"
-            android:text="@string/text_edit_notice"
-            android:textSize="12sp"
-            android:textColor="@color/colorTextOrange"
+            android:layout_marginTop="28dp"
             android:background="@color/colorBackgroundOrange"
             android:gravity="center"
-            android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@id/tb_title"
+            android:text="@string/text_edit_notice"
+            android:textColor="@color/colorTextOrange"
+            android:textSize="12sp"
+            android:visibleIf="@{vm.roomType.equals(TravelRoomType.SHARED.name())}"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
             app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintEnd_toEndOf="@id/guide_right"/>
+            app:layout_constraintTop_toBottomOf="@id/tb_title" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_trip_title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trip_profile_title_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/text_title"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="14sp"
             android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/tv_edit_notice"/>
-        <com.nexters.travelbudget.utils.widget.TripEditText
-            android:id="@+id/et_trip_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/tv_trip_title"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_edit_notice">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_trip_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_date"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="14sp"
-            android:layout_marginTop="40dp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/et_trip_title"/>
-        <com.nexters.travelbudget.utils.widget.TripEditText
-            android:id="@+id/et_trip_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/tv_trip_date"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_trip_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
+                android:text="@string/text_title"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_trip_shared_budget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_shared_budget"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="14sp"
-            android:layout_marginTop="40dp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/et_trip_date"/>
-        <com.nexters.travelbudget.utils.widget.TripEditText
-            android:id="@+id/et_trip_shared_budget"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/tv_trip_shared_budget"/>
+            <com.nexters.travelbudget.utils.widget.TripEditText
+                android:id="@+id/et_trip_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
+                android:focusableInTouchMode="@{vm.isOwner()}"
+                android:text="@={vm.tripTitle}"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_trip_title" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_trip_personal_budget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_personal_budget"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="14sp"
-            android:layout_marginTop="40dp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintTop_toBottomOf="@id/et_trip_shared_budget"/>
-        <com.nexters.travelbudget.utils.widget.TripEditText
-            android:id="@+id/et_trip_personal_budget"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trip_profile_date_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/guide_left"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintTop_toBottomOf="@id/tv_trip_personal_budget"/>
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@+id/cl_trip_profile_title_layout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_trip_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.3"
+                android:text="@string/text_date"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.nexters.travelbudget.utils.widget.TripEditText
+                android:id="@+id/et_trip_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:alpha="0.3"
+                android:focusableInTouchMode="false"
+                android:onClick="@{() -> vm.preparingToEditDate()}"
+                android:text="@{String.format(@string/start_end_date_format, vm.startDate, vm.endDate)}"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_trip_date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trip_profile_shared_budget_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:visibleIf="@{vm.roomType.equals(TravelRoomType.SHARED.name())}"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@+id/cl_trip_profile_date_layout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_trip_shared_budget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
+                android:text="@string/text_shared_budget"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.nexters.travelbudget.utils.widget.TripEditText
+                android:id="@+id/et_trip_shared_budget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:alpha="@{vm.isOwner() ? 1.0f : 0.3f}"
+                android:focusableInTouchMode="@{vm.isOwner()}"
+                android:inputType="numberDecimal"
+                android:maxLength="9"
+                android:text="@{vm.sharedBudget}"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_trip_shared_budget"
+                bind:moneyStringTextWatcher="@{vm.sharedBudgetChanged}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/money_unit"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/et_trip_shared_budget"
+                app:layout_constraintEnd_toEndOf="@id/et_trip_shared_budget" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trip_profile_personal_budget_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/guide_right"
+            app:layout_constraintStart_toStartOf="@id/guide_left"
+            app:layout_constraintTop_toBottomOf="@+id/cl_trip_profile_shared_budget_layout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_trip_personal_budget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/text_personal_budget"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="@dimen/text_size_14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.nexters.travelbudget.utils.widget.TripEditText
+                android:id="@+id/et_trip_personal_budget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:inputType="numberDecimal"
+                android:maxLength="9"
+                android:text="@{vm.personalBudget}"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_trip_personal_budget"
+                bind:moneyStringTextWatcher="@{vm.personalBudgetChanged}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/money_unit"
+                android:textColor="@color/fill_grey_1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/et_trip_personal_budget"
+                app:layout_constraintEnd_toEndOf="@id/et_trip_personal_budget" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_delete_or_out"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:text="@string/text_delete"
-            android:textSize="16sp"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/bg_button_round_black"
-            android:layout_marginBottom="31dp"
+            android:layout_gravity="bottom"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/bg_button_round_black"
+            android:onClick="@{() -> vm.exitOrDeleteTripRoom()}"
+            android:text="@{vm.isOwner() ? @string/room_delete : @string/room_out}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_modify_trip_profile"
             app:layout_constraintStart_toStartOf="@id/guide_left"
-            app:layout_constraintEnd_toStartOf="@id/btn_submit"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            tools:text="@string/room_delete" />
+
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_modify_trip_profile"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:text="@string/text_edit"
-            android:textSize="16sp"
-            android:textColor="@color/colorWhite"
             android:background="@drawable/bg_button_round_blue"
-            app:layout_constraintStart_toEndOf="@id/btn_cancel"
+            android:onClick="@{() -> vm.modifyTripProfile()}"
+            android:text="@string/text_edit"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btn_delete_or_out"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
-            app:layout_constraintBottom_toBottomOf="@id/btn_cancel" />
+            app:layout_constraintStart_toEndOf="@id/btn_delete_or_out" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

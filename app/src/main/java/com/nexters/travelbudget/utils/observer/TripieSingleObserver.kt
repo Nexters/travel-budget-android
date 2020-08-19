@@ -6,6 +6,7 @@ import com.nexters.travelbudget.ui.base.TravelApplication
 import com.nexters.travelbudget.utils.ext.isNetworkConnected
 import com.nexters.travelbudget.utils.ext.showToastMessage
 import io.reactivex.observers.DisposableSingleObserver
+import org.json.JSONObject
 import retrofit2.HttpException
 
 /**
@@ -22,6 +23,11 @@ abstract class TripDisposableSingleObserver<T> :
         with(TravelApplication.instance) {
             if ((e as? HttpException)?.code() == 401) {
                 logout()
+            } else if ((e as? HttpException)?.code() == 400) {
+                val errorResult = e.response()?.errorBody()?.string() ?: return
+                val jsonObjError = JSONObject(errorResult)
+                val message = jsonObjError.getString("message")
+                showToastMessage(message)
             } else {
                 if (!isNetworkConnected()) {
                     showToastMessage(getString(R.string.network_disconnected_notice))

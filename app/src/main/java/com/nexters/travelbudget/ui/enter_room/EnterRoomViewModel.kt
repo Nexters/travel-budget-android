@@ -31,9 +31,6 @@ class EnterRoomViewModel(roomCode: String, private val enterRoomRepository: Ente
     private val _requestSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
     val requestSuccess: SingleLiveEvent<Unit> = _requestSuccess
 
-    private val _requestFailed: SingleLiveEvent<String> = SingleLiveEvent()
-    val requestFailed: SingleLiveEvent<String> = _requestFailed
-
     fun backScreen() {
         _backScreen.call()
     }
@@ -46,16 +43,6 @@ class EnterRoomViewModel(roomCode: String, private val enterRoomRepository: Ente
             .subscribeWith(object : TripieCompletableObserver() {
                 override fun onComplete() {
                     _requestSuccess.call()
-                }
-
-                override fun onError(e: Throwable) {
-                    super.onError(e)
-                    if ((e as? HttpException)?.code() == 400) {
-                        val errorResult = e.response()?.errorBody()?.string() ?: return
-                        val jsonObjError = JSONObject(errorResult)
-                        val message = jsonObjError.getString("message")
-                        _requestFailed.value = message
-                    }
                 }
             }).addTo(compositeDisposable)
 

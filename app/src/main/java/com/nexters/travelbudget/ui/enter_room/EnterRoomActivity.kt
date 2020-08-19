@@ -38,12 +38,6 @@ class EnterRoomActivity :
             setResult(Constant.RESULT_OK)
             finish()
         })
-
-        viewModel.requestFailed.observe(this, Observer { message ->
-            if (message.isNotEmpty()) {
-                showToastMessage(message)
-            }
-        })
     }
 
     companion object {

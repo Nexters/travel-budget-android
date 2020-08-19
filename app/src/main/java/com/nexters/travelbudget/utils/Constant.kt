@@ -39,6 +39,8 @@ interface Constant {
 
         const val EXTRA_CURRENT_DATE = "EXTRA_CURRENT_DATE"
 
+        const val EXTRA_ACTIVITY_RESULT_TYPE= "EXTRA_ACTIVITY_RESULT_TYPE"
+
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
@@ -47,6 +49,8 @@ interface Constant {
         const val REQUEST_CODE_CREATE_ROOM = 20
         const val REQUEST_CODE_ENTER_ROOM = 30
         const val REQUEST_CODE_EDIT_USER_NAME = 40
+        const val REQUEST_CODE_EDIT_TRIP_PROFILE = 50
+        const val REQUEST_CODE_TRIP_DETAIL = 60
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1
