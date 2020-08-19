@@ -36,6 +36,11 @@ class EditSharedTripProfileActivity :
             finish()
         })
 
+        viewModel.successDeleteTripRoom.observe(this, Observer {
+            // TODO 여행 삭제 작업 (setResult)
+            finish()
+        })
+
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })

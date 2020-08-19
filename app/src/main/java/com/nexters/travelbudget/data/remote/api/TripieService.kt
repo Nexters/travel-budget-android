@@ -78,4 +78,7 @@ interface TripieService {
 
     @PUT("api/plans/{id}/profile")
     fun modifyTripProfile(@Path("id") planId: Long, @Body param: HashMap<String, Any>): Completable
+
+    @DELETE("api/plans/{id}")
+    fun deleteTripRoom(@Path("id") planId: Long): Completable
 }

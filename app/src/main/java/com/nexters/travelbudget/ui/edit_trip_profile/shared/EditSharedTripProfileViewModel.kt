@@ -15,6 +15,8 @@ import com.nexters.travelbudget.utils.observer.TripieCompletableObserver
 import io.reactivex.observables.ConnectableObservable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
+import org.json.JSONObject
+import retrofit2.HttpException
 
 class EditSharedTripProfileViewModel(
     private val planId: Long,
@@ -52,6 +54,9 @@ class EditSharedTripProfileViewModel(
     private val _successExitTripRoom: SingleLiveEvent<Unit> = SingleLiveEvent()
     val successExitTripRoom: SingleLiveEvent<Unit> = _successExitTripRoom
 
+    private val _successDeleteTripRoom: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val successDeleteTripRoom: SingleLiveEvent<Unit> = _successDeleteTripRoom
+
     private val _backScreen: SingleLiveEvent<Unit> = SingleLiveEvent()
     val backScreen: SingleLiveEvent<Unit> = _backScreen
 
@@ -86,16 +91,18 @@ class EditSharedTripProfileViewModel(
                 override fun onComplete() {
                     _successModificationTripProfile.call()
                 }
-
-                override fun onError(e: Throwable) {
-                    super.onError(e)
-                }
             }).addTo(compositeDisposable)
     }
 
     fun exitOrDeleteTripRoom() {
         if (_isOwner.value!!) { // 사용자가 방장일 경우
-            // TODO 방 삭제
+            tripProfileRepository.deleteTripRoom(planId)
+                .applySchedulers()
+                .subscribeWith(object : TripieCompletableObserver() {
+                    override fun onComplete() {
+                        _successDeleteTripRoom.call()
+                    }
+                }).addTo(compositeDisposable)
         } else { // 사용자가 멤버일 경우
             tripProfileRepository.exitTripRoom(planId, memberId)
                 .applySchedulers()
