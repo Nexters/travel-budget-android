@@ -109,16 +109,7 @@ class TripDetailActivity :
                 )
             })
             startEditTripProfile.observe(this@TripDetailActivity, Observer {
-                val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
-                val memberId = viewModel.tripDetail.value?.memberId ?: -1L
-                startActivity(
-                    Intent(
-                        EditSharedTripProfileActivity.getIntent(
-                            this@TripDetailActivity,
-                            planId, memberId
-                        )
-                    )
-                )
+                goToEditTripProfileActivity()
             })
 
             goToPieScreen.observe(this@TripDetailActivity, Observer {
@@ -177,6 +168,19 @@ class TripDetailActivity :
 
     fun setDay(d: String) {
         this.day = d
+    }
+
+    fun goToEditTripProfileActivity() {
+        val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+        val memberId = viewModel.tripDetail.value?.memberId ?: -1L
+        startActivity(
+            Intent(
+                EditSharedTripProfileActivity.getIntent(
+                    this@TripDetailActivity,
+                    planId, memberId
+                )
+            )
+        )
     }
 
     companion object {

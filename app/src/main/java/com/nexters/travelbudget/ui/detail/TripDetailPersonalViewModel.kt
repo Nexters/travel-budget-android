@@ -16,7 +16,8 @@ import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
 
-class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
+class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPaymentRepository) :
+    BaseViewModel() {
 
     private val _newDetailPersonalList = MutableLiveData<ArrayList<DetailSharedData>>()
     val newDetailPersonalList: LiveData<ArrayList<DetailSharedData>> get() = _newDetailPersonalList
@@ -52,6 +53,9 @@ class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPay
 
     private val _tripPaymentPersonalList = MutableLiveData<List<TripPaymentResponse>>()
     val tripPaymentPersonalList: LiveData<List<TripPaymentResponse>> = _tripPaymentPersonalList
+
+    private val _startEditTripProfile: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val startEditTripProfile: SingleLiveEvent<Unit> = _startEditTripProfile
 
     private val _sumPayment = MutableLiveData<String>()
     val sumPayment: LiveData<String> = _sumPayment
@@ -92,6 +96,8 @@ class TripDetailPersonalViewModel(private val detailPaymentRepository: DetailPay
             }).addTo(compositeDisposable)
     }
 
-
+    fun startEditTripProfile() {
+        _startEditTripProfile.call()
+    }
 
 }

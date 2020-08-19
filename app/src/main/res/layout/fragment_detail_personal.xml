@@ -64,6 +64,7 @@
                 android:layout_height="44dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/ic_rectangle_button"
+                android:onClick="@{() -> vm.startEditTripProfile()}"
                 android:text="예산 입력하기"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
@@ -226,7 +227,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/v_divide_personal_section"/>
+                    app:layout_constraintTop_toBottomOf="@id/v_divide_personal_section" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_detail_personal_history"
@@ -300,13 +301,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:nestedScrollingEnabled="false"
                     android:goneIf="@{vm.isEmptyList}"
-                    app:submitList="@{vm.tripPaymentPersonalList}"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_detail_personal_spend_money" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_personal_spend_money"
+                    app:submitList="@{vm.tripPaymentPersonalList}" />
 
                 <ImageView
                     android:id="@+id/iv_detail_no_adapter"
@@ -339,8 +340,6 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </layout>
