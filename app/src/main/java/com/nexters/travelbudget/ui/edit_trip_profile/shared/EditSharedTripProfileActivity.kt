@@ -16,7 +16,10 @@ class EditSharedTripProfileActivity :
     BaseActivity<ActivityEditSharedTripProfileBinding, EditSharedTripProfileViewModel>(R.layout.activity_edit_shared_trip_profile) {
 
     override val viewModel: EditSharedTripProfileViewModel by viewModel {
-        parametersOf(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1))
+        parametersOf(
+            intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1),
+            intent.getLongExtra(Constant.EXTRA_MEMBER_ID, -1)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +32,14 @@ class EditSharedTripProfileActivity :
     }
 
     companion object {
-        fun getIntent(context: Context, planId: Long): Intent {
+        fun getIntent(context: Context, planId: Long, memberId: Long): Intent {
             return Intent(context, EditSharedTripProfileActivity::class.java).apply {
-                putExtras(bundleOf(Constant.EXTRA_PLAN_ID to planId))
+                putExtras(
+                    bundleOf(
+                        Constant.EXTRA_PLAN_ID to planId,
+                        Constant.EXTRA_MEMBER_ID to memberId
+                    )
+                )
             }
         }
     }

@@ -17,6 +17,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 class EditSharedTripProfileViewModel(
     private val planId: Long,
+    private val memberId: Long,
     private val tripProfileRepository: TripProfileRepository
 ) : BaseViewModel() {
 

@@ -110,11 +110,12 @@ class TripDetailActivity :
             })
             startEditTripProfile.observe(this@TripDetailActivity, Observer {
                 val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
+                val memberId = viewModel.tripDetail.value?.memberId ?: -1L
                 startActivity(
                     Intent(
                         EditSharedTripProfileActivity.getIntent(
                             this@TripDetailActivity,
-                            planId
+                            planId, memberId
                         )
                     )
                 )
