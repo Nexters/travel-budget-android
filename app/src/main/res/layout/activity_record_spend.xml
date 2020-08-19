@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -22,11 +23,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/ToolbarTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/record_spend_title" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_close"
+                android:onClick="@{() -> vm.close()}"
+                android:layout_gravity="end"/>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -62,7 +69,8 @@
                 android:onClick="@{() -> vm.selectShared(true)}"
                 android:text="@string/text_shared"
                 android:textSize="14sp"
-                app:isSelected="@{vm.isShared}" />
+                app:isSelected="@{vm.isShared}"
+                bind:isBold="@{vm.isShared}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_select_personal"
@@ -72,7 +80,8 @@
                 android:onClick="@{() -> vm.selectShared(false)}"
                 android:text="@string/text_personal"
                 android:textSize="14sp"
-                app:isSelected="@{!vm.isShared}" />
+                app:isSelected="@{!vm.isShared}"
+                bind:isBold="@{!vm.isShared}" />
 
         </LinearLayout>
 
@@ -166,6 +175,7 @@
             android:text="@string/text_record_submit"
             android:textColor="@color/colorTextHint"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:isActivated="@{vm.isActivated}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guide_right"
@@ -190,6 +200,7 @@
                 android:text="@string/text_record_delete"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/btn_record_modify"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -203,6 +214,7 @@
                 android:text="@string/text_record_modify"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_record_remove"
                 app:layout_constraintTop_toTopOf="parent" />

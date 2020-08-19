@@ -92,6 +92,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                 showToastMessage(it)
                 finish()
             })
+
+            closeEvent.observe(this@RecordSpendActivity, Observer {
+                finish()
+            })
         }
     }
 

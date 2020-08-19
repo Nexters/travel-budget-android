@@ -36,7 +36,7 @@ fun TextView.isSelected(b: Boolean) {
 @BindingAdapter("bind:isBold")
 fun TextView.isBold(b: Boolean) {
     setTypeface(
-        typeface, if (b) {
+        null, if (b) {
             Typeface.BOLD
         } else {
             Typeface.NORMAL
