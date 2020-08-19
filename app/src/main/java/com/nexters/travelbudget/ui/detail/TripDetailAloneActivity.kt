@@ -33,8 +33,30 @@ class TripDetailAloneActivity :
         observeViewModel()
         setupDetailAloneRV()
 
+
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
-        viewModel.getPaymentAloneTravelData(intent.getLongExtra(Constant.EXTRA_BUDGET_ID, -1L), "Y", "2020-08-04")
+
+        // 에러
+        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+//        date = if (viewModel.tripDetailAlone.value!!.dates.contains(date)) {
+//            date
+//        } else {
+//            "준비"
+//        }
+//        viewModel.setAloneDate(date)
+//
+//        val isReady = if (date == "준비") {
+//            "Y"
+//        } else {
+//            "N"
+//        }
+//
+//        if (date == "준비") {
+//            viewModel.isEmptyList.value = true
+//        }
+        val isReady = "Y" // 테스트용
+
+        viewModel.getPaymentAloneTravelData(intent.getLongExtra(Constant.EXTRA_BUDGET_ID, -1L), isReady, date)
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
@@ -53,6 +75,10 @@ class TripDetailAloneActivity :
                         "N"
                     }
 
+                    if (it == "준비") {
+                        viewModel.isEmptyList.value = true
+                    }
+
                     getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it)
                 }.show(supportFragmentManager, "bottom_sheet")
             })
@@ -62,7 +88,7 @@ class TripDetailAloneActivity :
 
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
-                val roomType = TravelRoomType.SHARED
+                val roomType = TravelRoomType.PERSONAL
                 startActivity(Intent(this@TripDetailAloneActivity, StatisticsActivity::class.java).apply {
                     putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
                     putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)

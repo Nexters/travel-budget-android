@@ -56,6 +56,10 @@ class TripDetailPersonalFragment() :
             "N"
         }
 
+        if (date == "준비") {
+            viewModel.isEmptyList.value = true
+        }
+
         viewModel.getPaymentPersonalTravelData(budgetId, "Y", "2020-08-04")
 
         budgetData?.let {
@@ -73,6 +77,10 @@ class TripDetailPersonalFragment() :
                         "Y"
                     } else {
                         "N"
+                    }
+
+                    if (it == "준비") {
+                        viewModel.isEmptyList.value = true
                     }
 
                     getPaymentPersonalTravelData(budgetId, isReady, it)

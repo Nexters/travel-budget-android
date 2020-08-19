@@ -44,6 +44,7 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
                 listener(it)
                 dismiss()
             }
+
         }
     }
 
