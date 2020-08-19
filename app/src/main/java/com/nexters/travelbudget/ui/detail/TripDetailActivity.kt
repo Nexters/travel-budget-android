@@ -12,13 +12,11 @@ import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
-import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
+import com.nexters.travelbudget.ui.edit_trip_profile.EditSharedTripProfileActivity
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class TripDetailActivity :
@@ -104,7 +102,7 @@ class TripDetailActivity :
                 val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
                 startActivity(
                     Intent(
-                        EditTripProfileActivity.getIntent(
+                        EditSharedTripProfileActivity.getIntent(
                             this@TripDetailActivity,
                             planId
                         )

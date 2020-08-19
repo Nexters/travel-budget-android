@@ -10,7 +10,7 @@ import com.nexters.travelbudget.ui.splash.SplashViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailViewModel
-import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel
+import com.nexters.travelbudget.ui.edit_trip_profile.EditSharedTripProfileViewModel
 import com.nexters.travelbudget.ui.enter_room.EnterRoomViewModel
 import com.nexters.travelbudget.ui.main.record.RecordedTravelViewModel
 import com.nexters.travelbudget.ui.main.record.RecordingTravelViewModel
@@ -59,7 +59,7 @@ val viewModelModule = module {
     }
     viewModel { TripDetailSharedViewModel(get()) }
     viewModel { (planId: Long) ->
-        EditTripProfileViewModel(planId)
+        EditSharedTripProfileViewModel(planId)
     }
     viewModel { TripDetailPersonalViewModel(get()) }
     viewModel { TripDetailAloneViewModel(get(), get()) }
