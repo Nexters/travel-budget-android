@@ -48,10 +48,10 @@ class TripDetailPersonalFragment() :
     private fun observeViewModel() {
         with(viewModel) {
             showPersonalDateDialogEvent.observe(this@TripDetailPersonalFragment, Observer {
-                SelectDateBottomSheetDialog(dateItems) {
-                    setPersonalDate(it)
-                    viewModel.getPaymentPersonalTravelData(budgetId, "N", it)
-                }.show(parentFragmentManager, "bottom_sheet")
+//                SelectDateBottomSheetDialog(dateItems) {
+//                    setPersonalDate(it)
+//                    viewModel.getPaymentPersonalTravelData(budgetId, "N", it)
+//                }.show(parentFragmentManager, "bottom_sheet")
             })
         }
     }

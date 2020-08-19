@@ -22,12 +22,14 @@ import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.round
 
 class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpendViewModel>(
     R.layout.activity_record_spend
 ) {
     override val viewModel: RecordSpendViewModel by viewModel()
+    private lateinit var dateList: ArrayList<String>
 
     private var day = ""
     private var time = ""
@@ -39,18 +41,26 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
         val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1L)
+        val paymentId = intent.getLongExtra(Constant.EXTRA_PAYMENT_ID, -1L)
+        val currentDate = intent.getStringExtra(Constant.EXTRA_CURRENT_DATE)
 
-        val longExtra = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
+        intent.getStringArrayListExtra(Constant.EXTRA_PLAN_DATES)?.let {
+            dateList = it
+        }
 
         day = st.nextToken()
         time = st.nextToken()
+
+        currentDate?.let {
+            day = it
+        }
 
         viewModel.setDate(day)
         viewModel.setTime(time)
         viewModel.setRoomType(intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) == TravelRoomType.SHARED)
         viewModel.setEditMode(intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE) == EditModeType.EDIT_MODE)
-        viewModel.setBudgetId(27L, personalBudgetId)
-        viewModel.setPaymentId(22L)
+        viewModel.setBudgetId(sharedBudgetId, personalBudgetId)
+        viewModel.setPaymentId(paymentId)
 
         observeViewModel()
         setupSpendCategoryRV()
@@ -60,7 +70,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
     private fun observeViewModel() {
         with(viewModel) {
             selectDateEvent.observe(this@RecordSpendActivity, Observer {
-                SelectDateBottomSheetDialog(listOf()) {
+                SelectDateBottomSheetDialog.newInstance(dateList) {
                     setDate(it)
                 }.show(supportFragmentManager, "")
             })
