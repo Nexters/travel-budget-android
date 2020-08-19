@@ -60,7 +60,7 @@ class TripDetailPersonalFragment() :
 
         if (date == "준비") {
             viewModel.isEmptyList.value = true
-            viewModel.getPaymentPersonalTravelData(budgetId, isReady, date)
+            viewModel.getPaymentPersonalTravelData(budgetId, isReady, dateItems[0])
         }
         else {
             viewModel.getPaymentPersonalTravelData(budgetId, isReady, date.convertToServerDate())

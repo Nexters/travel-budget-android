@@ -60,10 +60,17 @@ class TripDetailAloneActivity :
 
                     if (it == "준비") {
                         viewModel.isEmptyList.value = true
-                        getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it)
-                    }
-                    else {
-                        getPaymentAloneTravelData(tripDetailResponse.personal?.budgetId ?: -1L, isReady, it.convertToServerDate())
+                        getPaymentAloneTravelData(
+                            tripDetailResponse.personal?.budgetId ?: -1L,
+                            isReady,
+                            viewModel.tripDetailAlone.value?.dates?.get(0) ?: "0000-00-00"
+                        )
+                    } else {
+                        getPaymentAloneTravelData(
+                            tripDetailResponse.personal?.budgetId ?: -1L,
+                            isReady,
+                            it.convertToServerDate()
+                        )
                     }
                 }.show(supportFragmentManager, "bottom_sheet")
             })
@@ -74,11 +81,15 @@ class TripDetailAloneActivity :
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
-                startActivity(Intent(this@TripDetailAloneActivity, StatisticsActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailAloneActivity,
+                        StatisticsActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                    })
             })
 
             goToPaymentScreen.observe(this@TripDetailAloneActivity, Observer {
@@ -87,14 +98,21 @@ class TripDetailAloneActivity :
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
                 val editMode = EditModeType.CREATE_MODE
-                startActivity(Intent(this@TripDetailAloneActivity, RecordSpendActivity::class.java).apply {
-                    putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
-                    putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
-                    putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
-                    putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                    putExtra(Constant.EXTRA_CURRENT_DATE, detailAloneDate.value)
-                    putStringArrayListExtra(Constant.EXTRA_PLAN_DATES, ArrayList(tripDetailResponse.dates))
-                })
+                startActivity(
+                    Intent(
+                        this@TripDetailAloneActivity,
+                        RecordSpendActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, detailAloneDate.value)
+                        putStringArrayListExtra(
+                            Constant.EXTRA_PLAN_DATES,
+                            ArrayList(tripDetailResponse.dates)
+                        )
+                    })
             })
 
         }

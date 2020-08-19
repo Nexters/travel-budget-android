@@ -50,7 +50,7 @@ class SelectDateBottomSheetDialog : BaseBottomSheetDialogFragment<BottomSheetSel
     private fun setupRecyclerView() {
         with(binding.rvDateList) {
             adapter = SelectDateRVAdapter {
-                listener(it.convertToServerDate())
+                listener(it)
                 dismiss()
             }
 
