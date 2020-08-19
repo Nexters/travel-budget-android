@@ -3,7 +3,6 @@ package com.nexters.travelbudget.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
@@ -13,7 +12,7 @@ import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
-import com.nexters.travelbudget.ui.edit_trip_profile.shared.EditSharedTripProfileActivity
+import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
@@ -175,7 +174,7 @@ class TripDetailActivity :
         val memberId = viewModel.tripDetail.value?.memberId ?: -1L
         startActivity(
             Intent(
-                EditSharedTripProfileActivity.getIntent(
+                EditTripProfileActivity.getIntent(
                     this@TripDetailActivity,
                     planId, memberId, TravelRoomType.SHARED.name
                 )

@@ -10,7 +10,7 @@
 
         <variable
             name="vm"
-            type="com.nexters.travelbudget.ui.edit_trip_profile.shared.EditSharedTripProfileViewModel" />
+            type="com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

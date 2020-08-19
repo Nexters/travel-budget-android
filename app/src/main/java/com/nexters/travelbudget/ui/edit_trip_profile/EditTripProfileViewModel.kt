@@ -1,4 +1,4 @@
-package com.nexters.travelbudget.ui.edit_trip_profile.shared
+package com.nexters.travelbudget.ui.edit_trip_profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,13 +12,9 @@ import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import com.nexters.travelbudget.utils.observer.TripieCompletableObserver
-import io.reactivex.observables.ConnectableObservable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.subjects.BehaviorSubject
-import org.json.JSONObject
-import retrofit2.HttpException
 
-class EditSharedTripProfileViewModel(
+class EditTripProfileViewModel(
     private val planId: Long,
     private val memberId: Long,
     roomType: String,

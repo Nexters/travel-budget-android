@@ -76,7 +76,7 @@
             android:name=".ui.detail.TripDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.edit_trip_profile.shared.EditSharedTripProfileActivity"
+            android:name=".ui.edit_trip_profile.EditTripProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.record_spend.RecordSpendActivity"
