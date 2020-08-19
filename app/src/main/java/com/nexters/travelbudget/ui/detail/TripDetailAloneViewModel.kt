@@ -1,5 +1,6 @@
 package com.nexters.travelbudget.ui.detail
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
@@ -11,6 +12,8 @@ import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
 import com.nexters.travelbudget.utils.ext.applySchedulers
+import com.nexters.travelbudget.utils.ext.convertToServerDate
+import com.nexters.travelbudget.utils.ext.convertToViewDate
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
@@ -93,12 +96,11 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
 //                _isEmptyList.value = it.isEmpty()
                 var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
                 date = if (it.dates.contains(date) ?: false) {
-                    date
+                    date.convertToViewDate()
                 } else {
                     "준비"
                 }
                 setAloneDate(date)
-
                 val isReady = if (date == "준비") {
                     "Y"
                 } else {
@@ -107,9 +109,11 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
 
                 if (date == "준비") {
                     isEmptyList.value = true
+                    getPaymentAloneTravelData(it.personal?.budgetId ?: -1L, isReady, date)
                 }
-
-                getPaymentAloneTravelData(it.personal?.budgetId ?: -1L, isReady, date)
+                else {
+                    getPaymentAloneTravelData(it.personal?.budgetId ?: -1L, isReady, date.convertToServerDate())
+                }
             }
             .subscribeWith(object : TripDisposableSingleObserver<TripDetailResponse>() {
                 override fun onSuccess(result: TripDetailResponse) {
@@ -133,7 +137,6 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
         }
 
         detailPaymentRepository.getTripPaymentInfo(budgetId, isReady, paymentDt)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             .doOnSubscribe { _isLoading.value = true }
             .doAfterTerminate { _isLoading.value = false }

@@ -30,7 +30,6 @@ class RecordedTravelViewModel(private val mainTripRecordRepository: MainTripReco
 
     fun getTripRecordedData() {
         mainTripRecordRepository.getTripRecordInfo(false)
-            .delay(500, TimeUnit.MILLISECONDS)
             .applySchedulers()
             .doOnSubscribe { _isLoading.value = true }
             .doAfterTerminate { _isLoading.value = false }
