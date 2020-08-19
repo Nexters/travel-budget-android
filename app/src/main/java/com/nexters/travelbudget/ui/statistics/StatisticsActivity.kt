@@ -2,6 +2,7 @@ package com.nexters.travelbudget.ui.statistics
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -50,6 +51,10 @@ class StatisticsActivity : AppCompatActivity() {
         } else {
             divider.visibility = View.INVISIBLE
             tl.visibility = View.GONE
+        }
+
+        findViewById<ImageView>(R.id.btn_go_back).setOnClickListener {
+            finish()
         }
     }
 }

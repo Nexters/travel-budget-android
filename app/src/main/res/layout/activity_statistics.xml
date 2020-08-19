@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="vm"
-            type="com.nexters.travelbudget.ui.statistics.StatisticsViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,11 +17,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_detail_go_back"
+                android:id="@+id/btn_go_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> vm.backScreen()}"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_back" />
 
             <androidx.appcompat.widget.AppCompatTextView

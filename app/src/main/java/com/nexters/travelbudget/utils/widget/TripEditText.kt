@@ -6,6 +6,7 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.updatePadding
 import com.nexters.travelbudget.R
@@ -29,6 +30,10 @@ class TripEditText @JvmOverloads constructor(
         setBackgroundResource(R.drawable.bg_edit_text_underground_default)
         setHintTextColor(resources.getColor(R.color.colorTextHint, null))
         setTextColor(resources.getColor(R.color.colorTextBlack, null))
+        val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+        field.isAccessible = true
+        field.set(this, R.drawable.cursor_trip_edit_text)
+
         onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             with(v as EditText) {
                 if (hasFocus) {

@@ -80,6 +80,8 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
 
     val recordSpendFinishEvent = SingleLiveEvent<String>()
 
+    val closeEvent = SingleLiveEvent<Unit>()
+
     private var latestClicked = 0
     private var selectedCategory: String? = null
 
@@ -87,6 +89,10 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     private var personalBudgetId = -1L
 
     private var paymentId = -1L
+
+    fun close() {
+        closeEvent.call()
+    }
 
     fun setBudgetId(sharedBudgetId: Long, personalBudgetId: Long) {
         this.sharedBudgetId = sharedBudgetId

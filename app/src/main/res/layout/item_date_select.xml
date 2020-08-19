@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.nexters.travelbudget.model.BottomSheetDateItemModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
@@ -13,10 +22,12 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="2020.7.26"
+            android:layout_marginStart="24dp"
+            android:text="@{model.text}"
+            android:textColor="@{model.isBold ? @color/fill_grey_1 : @color/fill_grey_2}"
             android:textSize="14sp"
-            android:textColor="@color/fill_grey_2"
-            android:layout_marginStart="24dp" />
+            bind:isBold="@{model.isBold}"
+            tools:text="2020.7.26" />
 
     </LinearLayout>
 </layout>

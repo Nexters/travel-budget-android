@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -48,11 +49,12 @@
                 android:layout_marginTop="40dp"
                 android:onClick="@{() -> vm.selectReady()}"
                 android:text="@string/date_ready"
-                android:textColor="@color/fill_grey_2"
+                android:textColor="@{vm.isReadySelected ? @color/fill_grey_1 : @color/fill_grey_2}"
                 android:textSize="@dimen/text_size_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tv_date_record_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_date_record_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_date_record_title"
+                bind:isBold="@{vm.isReadySelected}" />
 
             <View
                 android:id="@+id/v_date_divide"

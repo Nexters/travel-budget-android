@@ -10,8 +10,8 @@ class SelectDateViewModel : BaseViewModel() {
     private val _dateList = MutableLiveData<List<String>>()
     val dateList: LiveData<List<String>> get() = _dateList
 
-    private val _tripDetailList = MutableLiveData<TripDetailResponse>()
-    val tripDetailList: LiveData<TripDetailResponse> = _tripDetailList
+    private val _isReadySelected = MutableLiveData<Boolean>()
+    val isReadySelected: LiveData<Boolean> get() = _isReadySelected
 
     val selectReadyEvent = SingleLiveEvent<Unit>()
 
@@ -27,5 +27,9 @@ class SelectDateViewModel : BaseViewModel() {
 
     fun selectReady() {
         selectReadyEvent.call()
+    }
+
+    fun setReadySelected(b: Boolean) {
+        _isReadySelected.value = b
     }
 }
