@@ -70,7 +70,7 @@ class TripDetailSharedFragment :
     private fun observeViewModel() {
         with(viewModel) {
             showDateDialogEvent.observe(this@TripDetailSharedFragment, Observer {
-                SelectDateBottomSheetDialog.newInstance(day, ArrayList(dateItems)) {
+                SelectDateBottomSheetDialog.newInstance(detailSharedDate.value ?: "준비", ArrayList(dateItems)) {
                     setSharedDate(it)
                     (requireActivity() as? TripDetailActivity)?.setDay(it)
                     val isReady = if (it == "준비") {

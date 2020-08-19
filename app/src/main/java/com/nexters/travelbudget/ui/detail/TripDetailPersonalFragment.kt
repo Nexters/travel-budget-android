@@ -69,7 +69,7 @@ class TripDetailPersonalFragment() :
     private fun observeViewModel() {
         with(viewModel) {
             showPersonalDateDialogEvent.observe(this@TripDetailPersonalFragment, Observer {
-                SelectDateBottomSheetDialog.newInstance(day, ArrayList(dateItems)) {
+                SelectDateBottomSheetDialog.newInstance(detailPersonalDate.value ?: "준비", ArrayList(dateItems)) {
                     setPersonalDate(it)
                     (requireActivity() as? TripDetailActivity)?.setDay(it)
                     val isReady = if (it == "준비") {

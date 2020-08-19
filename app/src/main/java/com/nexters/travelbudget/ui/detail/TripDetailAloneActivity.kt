@@ -38,9 +38,6 @@ class TripDetailAloneActivity :
 
         viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
 
-//        var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-//        setDay(date)
-
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })
@@ -50,7 +47,7 @@ class TripDetailAloneActivity :
         with(viewModel) {
             showDateAloneDialogEvent.observe(this@TripDetailAloneActivity, Observer {
                 val tripDetailResponse = tripDetailAlone.value ?: return@Observer
-                SelectDateBottomSheetDialog.newInstance(day, ArrayList(tripDetailResponse.dates)) {
+                SelectDateBottomSheetDialog.newInstance(detailAloneDate.value ?: "준비", ArrayList(tripDetailResponse.dates)) {
                     setAloneDate(it)
                     val isReady = if (it == "준비") {
                         "Y"
@@ -140,11 +137,7 @@ class TripDetailAloneActivity :
         }
     }
 
-    fun setDay(d: String) {
-        this.day = d
-    }
-
-    fun setDay() {
+    private fun setDay() {
         var d = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         d = if (viewModel.tripDetailAlone.value?.dates?.contains(d) == true) {
             d.convertToViewDate()
