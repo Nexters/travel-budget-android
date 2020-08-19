@@ -9,10 +9,13 @@ import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityMainBinding
+import com.nexters.travelbudget.model.enums.EditModeType
+import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
 import com.nexters.travelbudget.ui.enter_room.EnterRoomActivity
 import com.nexters.travelbudget.ui.main.record.RecordingTravelFragment
 import com.nexters.travelbudget.ui.mypage.MyPageActivity
+import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,6 +30,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         setTabLayout()
         viewModel.getUserInfo()
         checkDeepLink()
+//        startActivity(Intent(this, RecordSpendActivity::class.java).apply {
+//            putExtra(Constant.EXTRA_ROOM_TYPE, TravelRoomType.PERSONAL)
+//            putExtra(Constant.EXTRA_EDIT_MODE, EditModeType.EDIT_MODE)
+//        })
 
         viewModel.startCreateRoom.observe(this, Observer {
             goToSelectRoomTypeActivity()
