@@ -13,6 +13,8 @@ import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.ext.convertToServerDate
+import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -82,7 +84,7 @@ class TripDetailSharedFragment :
                         viewModel.isEmptyList.value = true
                     }
 
-                    getPaymentTravelData(budgetId, isReady, it)
+                    getPaymentTravelData(budgetId, isReady, it.convertToServerDate())
                 }.show(parentFragmentManager, "bottom_sheet")
             })
         }
