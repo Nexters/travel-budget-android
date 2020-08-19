@@ -84,7 +84,7 @@ class TripDetailSharedFragment :
 
                     if (it == "준비") {
                         viewModel.isEmptyList.value = true
-                        getPaymentTravelData(budgetId, isReady, it)
+                        getPaymentTravelData(budgetId, isReady, dateItems[0])
                     }
                     else {
                         getPaymentTravelData(budgetId, isReady, it.convertToServerDate())
