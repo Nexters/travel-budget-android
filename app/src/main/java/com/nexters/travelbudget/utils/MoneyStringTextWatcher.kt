@@ -34,6 +34,7 @@ class MoneyStringTextWatcher(
         }
         beforeValue = number
 
+
         var bfComma = 0
         var currComma = 0
 
@@ -50,6 +51,7 @@ class MoneyStringTextWatcher(
         val gap = currComma - bfComma
 
         val currentPosition = et.selectionStart
+
         et.setText(number)
         onReplaced(number)
         val pos = if (currentPosition + gap < 0) {
@@ -57,7 +59,11 @@ class MoneyStringTextWatcher(
         } else {
             currentPosition + gap
         }
-        et.setSelection(pos)
+        try {
+            et.setSelection(pos)
+        } catch (e: IndexOutOfBoundsException) {
+            et.setSelection(pos - 1)
+        }
     }
 }
 
