@@ -58,10 +58,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
         viewModel.setDate(day)
         viewModel.setTime(time)
+        viewModel.setBudgetId(sharedBudgetId, personalBudgetId)
         viewModel.setRoomType(roomType == TravelRoomType.SHARED)
         viewModel.setEditMode(editMode == EditModeType.EDIT_MODE)
         viewModel.selectShared(focusType == BudgetType.SHARED)
-        viewModel.setBudgetId(sharedBudgetId, personalBudgetId)
 
         observeViewModel()
         setupSpendCategoryRV()

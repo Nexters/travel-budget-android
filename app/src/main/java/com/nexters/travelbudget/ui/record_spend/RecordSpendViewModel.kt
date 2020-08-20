@@ -167,6 +167,11 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     }
 
     fun selectShared(b: Boolean) {
+        if (!b && personalBudgetId == -1L) {
+            liveToastMessage.value = "개인 예산을 먼저 입력해주세요."
+            return
+        }
+
         _isShared.value = b
     }
 
@@ -257,7 +262,10 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     private fun getPaymentDt(isReady: String) = if (isReady == "Y") {
         1596521640L
     } else {
-        convertDateToMills(selectedDate.value?.convertToServerDate() ?: "0000-00-00", selectedTime.value ?: "00:00")
+        convertDateToMills(
+            selectedDate.value?.convertToServerDate() ?: "0000-00-00",
+            selectedTime.value ?: "00:00"
+        )
     }
 
     private fun translateCategory(category: String): String {
