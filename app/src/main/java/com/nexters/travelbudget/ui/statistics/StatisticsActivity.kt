@@ -13,7 +13,6 @@ import com.nexters.travelbudget.ui.statistics.adapter.StatisticsPageAdapter
 import com.nexters.travelbudget.utils.Constant
 
 class StatisticsActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
@@ -22,12 +21,19 @@ class StatisticsActivity : AppCompatActivity() {
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1)
         val focusType = intent.getSerializableExtra(Constant.EXTRA_FOCUS_TYPE) as BudgetType
 
-
         val list = ArrayList<Long>().apply {
-            add(sharedBudgetId)
-            add(personalBudgetId)
-        }.toLongArray()
+            sharedBudgetId.also {
+                if (it != -1L) {
+                    add(it)
+                }
+            }
 
+            personalBudgetId.also {
+                if (it != -1L) {
+                    add(it)
+                }
+            }
+        }.toLongArray()
 
         val roomType = intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) as TravelRoomType
         val tl = findViewById<TabLayout>(R.id.tl_spend_statistics)
@@ -47,9 +53,9 @@ class StatisticsActivity : AppCompatActivity() {
         })
 
         if (focusType == BudgetType.SHARED) {
-            tl.getTabAt(0)!!.select()
+            tl.getTabAt(0)?.select()
         } else {
-            tl.getTabAt(1)!!.select()
+            tl.getTabAt(1)?.select()
         }
         vp.currentItem = tl.selectedTabPosition
 

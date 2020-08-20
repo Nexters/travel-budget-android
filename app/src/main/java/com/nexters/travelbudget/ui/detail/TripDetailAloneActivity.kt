@@ -118,6 +118,7 @@ class TripDetailAloneActivity :
 
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
+                val focusType = BudgetType.PERSONAL
                 startActivity(
                     Intent(
                         this@TripDetailAloneActivity,
@@ -125,6 +126,7 @@ class TripDetailAloneActivity :
                     ).apply {
                         putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
                     })
             })
 
