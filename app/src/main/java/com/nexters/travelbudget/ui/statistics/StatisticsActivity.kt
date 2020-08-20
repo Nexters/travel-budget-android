@@ -27,12 +27,7 @@ class StatisticsActivity : AppCompatActivity() {
                     add(it)
                 }
             }
-
-            personalBudgetId.also {
-                if (it != -1L) {
-                    add(it)
-                }
-            }
+            add(personalBudgetId)
         }.toLongArray()
 
         val roomType = intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) as TravelRoomType
