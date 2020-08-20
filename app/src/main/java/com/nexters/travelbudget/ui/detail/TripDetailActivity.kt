@@ -136,12 +136,30 @@ class TripDetailActivity :
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     binding.vpDetailPager.currentItem = tab.position
+                    if (tab.position == 0) {
+                        binding.isPersonal = true
+                    }
+                    if (tab.position == 1) {
+                        binding.isPersonal = viewModel.tripDetail.value?.personal?.budgetId != null
+                    }
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
+                    if (tab.position == 0) {
+                        binding.isPersonal = true
+                    }
+                    if (tab.position == 1) {
+                        binding.isPersonal = viewModel.tripDetail.value?.personal?.budgetId != null
+                    }
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
+                    if (tab.position == 0) {
+                        binding.isPersonal = true
+                    }
+                    if (tab.position == 1) {
+                        binding.isPersonal = viewModel.tripDetail.value?.personal?.budgetId != null
+                    }
                 }
 
             })
