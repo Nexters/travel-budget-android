@@ -192,6 +192,6 @@ class TripDetailAloneViewModel(
     }
 
     companion object {
-        private const val DEFAULT_TITLE = "아직 계획이 없습니다"
+        private const val DEFAULT_TITLE = ""
     }
 }
