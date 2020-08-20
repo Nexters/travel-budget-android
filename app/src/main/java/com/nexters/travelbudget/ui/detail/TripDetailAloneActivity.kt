@@ -117,7 +117,6 @@ class TripDetailAloneActivity :
             goToPieScreen.observe(this@TripDetailAloneActivity, Observer {
                 val tripDetailResponse = tripDetailAlone.value ?: return@Observer
 
-                val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
                 startActivity(
@@ -125,7 +124,6 @@ class TripDetailAloneActivity :
                         this@TripDetailAloneActivity,
                         StatisticsActivity::class.java
                     ).apply {
-                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
                         putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                     })
