@@ -43,7 +43,8 @@ fun getViewDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy.MM.dd", Local
 fun getServerDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 fun convertDateToMills(date: String, time: String): Long {
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    val d = sdf.parse("$date $time:00") ?: Date()
+    val sec = SimpleDateFormat("ss", Locale.getDefault()).format(Date())
+    val d = sdf.parse("$date $time:$sec") ?: Date()
 
     return d.time / 1000
 }
