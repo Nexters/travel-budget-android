@@ -3,9 +3,7 @@ package com.nexters.travelbudget.ui.main.record
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,14 +12,10 @@ import com.nexters.travelbudget.databinding.FragmentRecordingTravelBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.TripDetailActivity
 import com.nexters.travelbudget.ui.detail.TripDetailAloneActivity
-import com.nexters.travelbudget.ui.enter_room.EnterRoomActivity
 import com.nexters.travelbudget.ui.main.MainActivity
 import com.nexters.travelbudget.ui.main.record.adapter.TravelRecordRVAdapter
-import com.nexters.travelbudget.ui.mypage.EditUserProfileActivity
-import com.nexters.travelbudget.ui.select_room_type.SelectRoomTypeActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
-import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -69,12 +63,16 @@ class RecordingTravelFragment :
                     activity?.startActivityForResult(
                         TripDetailActivity.getIntent(context.applicationContext).apply {
                             putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+                            putExtra(Constant.EXTRA_PLAN_START_DATE, tripRecordResponse.startDate)
+                            putExtra(Constant.EXTRA_PLAN_END_DATE, tripRecordResponse.endDate)
                         }, Constant.REQUEST_CODE_TRIP_DETAIL
                     )
                 } else {
                     activity?.startActivityForResult(
                         TripDetailAloneActivity.getIntent(context.applicationContext).apply {
                             putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+                            putExtra(Constant.EXTRA_PLAN_START_DATE, tripRecordResponse.startDate)
+                            putExtra(Constant.EXTRA_PLAN_END_DATE, tripRecordResponse.endDate)
                             putExtra(Constant.EXTRA_BUDGET_ID, tripRecordResponse.budgetId)
                         }, Constant.REQUEST_CODE_TRIP_DETAIL
                     )

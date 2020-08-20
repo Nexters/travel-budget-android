@@ -18,6 +18,9 @@ import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.ext.convertToViewDate
+import com.nexters.travelbudget.utils.getNowDate
+import com.nexters.travelbudget.utils.isBetweenDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TripDetailActivity :
@@ -25,7 +28,6 @@ class TripDetailActivity :
     override val viewModel: TripDetailViewModel by viewModel()
 
     private val fragmentManager = supportFragmentManager
-    private var day: String = "준비"
 
     private var modifiesTripRoomInfo = false
 
@@ -39,6 +41,13 @@ class TripDetailActivity :
 
         viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
 
+        val startDate = intent.getStringExtra(Constant.EXTRA_PLAN_START_DATE)!!
+        val endDate = intent.getStringExtra(Constant.EXTRA_PLAN_END_DATE)!!
+
+
+        if (getNowDate().isBetweenDate(startDate, endDate)) {
+            viewModel.setFocusDate(getNowDate().convertToViewDate())
+        }
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
@@ -101,11 +110,10 @@ class TripDetailActivity :
 
             showDateDialogEvent.observe(this@TripDetailActivity, Observer {
                 SelectDateBottomSheetDialog.newInstance(
-                    day,
+                    focusDate.value!!,
                     ArrayList(tripInfoData.value!!.dates)
                 ) {
                     setFocusDate(it)
-                    setDay(it)
 
                 }.show(fragmentManager, "bottom_sheet")
             })
@@ -127,6 +135,7 @@ class TripDetailActivity :
                 val tripDetailResponse = viewModel.tripInfoData.value ?: return@Observer
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
+                val focusDate = viewModel.focusDate.value!!
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
                 val focusType = tabFocus.value!!
@@ -139,7 +148,7 @@ class TripDetailActivity :
                         putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                         putExtra(Constant.EXTRA_EDIT_MODE, editMode)
-                        putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, focusDate)
                         putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
@@ -227,9 +236,7 @@ class TripDetailActivity :
         }
     }
 
-    fun setDay(d: String) {
-        this.day = d
-    }
+
 
     fun goToEditTripProfileActivity() {
         val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
