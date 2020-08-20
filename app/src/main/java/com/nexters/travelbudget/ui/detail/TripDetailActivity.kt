@@ -217,6 +217,11 @@ class TripDetailActivity :
                     })
             })
 
+            errorTripDetailInfo.observe(this@TripDetailActivity, Observer {
+                modifiesTripRoomInfo = true
+                finish()
+            })
+
         }
     }
 

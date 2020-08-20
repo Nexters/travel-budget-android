@@ -14,6 +14,7 @@ import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
+import retrofit2.HttpException
 
 class TripDetailViewModel(private val detailTripRepository: DetailTripRepository) :
     BaseViewModel() {
@@ -84,6 +85,9 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
     private val _tripPaymentList = MutableLiveData<List<TripPaymentResponse>>()
     val tripPaymentList: LiveData<List<TripPaymentResponse>> = _tripPaymentList
 
+    private val _errorTripDetailInfo: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val errorTripDetailInfo: SingleLiveEvent<Unit> = _errorTripDetailInfo
+
 
     fun showDateDialog() {
         showDateDialogEvent.call()
@@ -144,6 +148,12 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
                     _tripInfoData.value = result
                 }
 
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    if ((e as? HttpException)?.code() == 400) {
+                        _errorTripDetailInfo.call()
+                    }
+                }
             }).addTo(compositeDisposable)
     }
 
