@@ -18,7 +18,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_size_12dp">
 
         <View
             android:id="@+id/v_detail_shared_view"
@@ -46,22 +47,22 @@
                 android:id="@+id/iv_detail_shared_icon"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                bind:imgRes="@{model.icon}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_snack"/>
+                bind:imgRes="@{model.icon}"
+                tools:src="@drawable/ic_snack" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_detail_shared_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:text="@{model.title}"
                 android:textColor="@color/colorBlack"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/iv_detail_shared_icon"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@{model.title}"
                 tools:text="식비" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -69,13 +70,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
+                android:text="@{String.format(@string/money_unit2, model.money)}"
                 android:textColor="@color/colorBlack"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@{String.format(@string/money_unit2, model.money)}"
                 tools:text="525,100원" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
