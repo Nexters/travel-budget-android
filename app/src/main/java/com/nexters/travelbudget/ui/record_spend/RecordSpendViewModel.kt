@@ -3,7 +3,6 @@ package com.nexters.travelbudget.ui.record_spend
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.request.RecordPaymentRequest
-import com.nexters.travelbudget.data.remote.model.response.StatisticsResponse
 import com.nexters.travelbudget.data.repository.RecordSpendRepository
 import com.nexters.travelbudget.model.SpendCategoryModel
 import com.nexters.travelbudget.model.enums.SpendCategoryEnum
@@ -12,18 +11,9 @@ import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.convertDateToMills
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.convertToServerDate
-import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
-import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import com.nexters.travelbudget.utils.observer.TripieCompletableObserver
-import com.nexters.travelbudget.utils.widget.piechart.PieData
 import io.reactivex.rxkotlin.addTo
-import org.json.JSONObject
-import retrofit2.HttpException
-import java.text.DecimalFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class RecordSpendViewModel(private val recordSpendRepository: RecordSpendRepository) :
     BaseViewModel() {

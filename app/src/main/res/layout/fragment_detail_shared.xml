@@ -10,7 +10,7 @@
 
         <variable
             name="vm"
-            type="com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel" />
+            type="com.nexters.travelbudget.ui.detail.TripDetailViewModel" />
     </data>
 
 
@@ -206,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:text="@{vm.detailSharedDate}"
+                        android:text="@{vm.focusDate}"
                         android:textColor="@color/colorFillBlue"
                         android:textSize="14sp"
                         android:textStyle="bold"

@@ -7,8 +7,6 @@ import com.nexters.travelbudget.ui.login.LoginViewModel
 import com.nexters.travelbudget.ui.login.kakao.KakaoLogin
 import com.nexters.travelbudget.ui.main.MainViewModel
 import com.nexters.travelbudget.ui.splash.SplashViewModel
-import com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel
-import com.nexters.travelbudget.ui.detail.TripDetailSharedViewModel
 import com.nexters.travelbudget.ui.detail.TripDetailViewModel
 import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileViewModel
 import com.nexters.travelbudget.ui.enter_room.EnterRoomViewModel
@@ -56,7 +54,6 @@ val viewModelModule = module {
         EnterRoomViewModel(roomCode, get())
     }
     viewModel { TripDetailViewModel(get()) }
-    viewModel { TripDetailSharedViewModel(get()) }
     viewModel { (planId: Long, memberId: Long, roomType: String) ->
         EditTripProfileViewModel(
             planId,
@@ -65,7 +62,7 @@ val viewModelModule = module {
             get()
         )
     }
-    viewModel { TripDetailPersonalViewModel(get()) }
+
     viewModel { TripDetailAloneViewModel(get(), get()) }
     viewModel { SelectDateViewModel() }
     viewModel { RecordSpendViewModel(get()) }

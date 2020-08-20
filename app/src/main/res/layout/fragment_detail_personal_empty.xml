@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.nexters.travelbudget.ui.detail.TripDetailPersonalViewModel" />
+            type="com.nexters.travelbudget.ui.detail.TripDetailAloneViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

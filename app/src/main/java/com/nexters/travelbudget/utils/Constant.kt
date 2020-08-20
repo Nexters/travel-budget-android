@@ -38,6 +38,7 @@ interface Constant {
         const val EXTRA_PAYMENT_ID = "EXTRA_PAYMENT_ID"
 
         const val EXTRA_CURRENT_DATE = "EXTRA_CURRENT_DATE"
+        const val EXTRA_FOCUS_TYPE = "EXTRA_FOCUS_TYPE"
 
         const val EXTRA_ACTIVITY_RESULT_TYPE= "EXTRA_ACTIVITY_RESULT_TYPE"
 
@@ -52,10 +53,13 @@ interface Constant {
         const val REQUEST_CODE_EDIT_TRIP_PROFILE = 50
         const val REQUEST_CODE_TRIP_DETAIL = 60
 
+        const val REQUEST_CODE_SPEND_CREATE = 100
+
         // Result Code (onActivityResult)
         const val RESULT_OK = 1
         const val RESULT_CANCEL = 0
         const val RESULT_ERROR = -1
+
 
         // SEGMENT
         const val SEGMENT_ROOM = "room"
