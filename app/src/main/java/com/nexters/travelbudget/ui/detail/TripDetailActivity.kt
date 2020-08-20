@@ -29,6 +29,8 @@ class TripDetailActivity :
     private val fragmentManager = supportFragmentManager
     private var day: String = ""
 
+    private var modifiesTripRoomInfo = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,16 +62,20 @@ class TripDetailActivity :
                         -1L
                     )
                 )
-
-                Constant.REQUEST_CODE_EDIT_TRIP_PROFILE -> viewModel.getTripDetailData(
-                    intent.getLongExtra(
-                        Constant.EXTRA_PLAN_ID,
-                        -1L
-                    )
-                )
+                Constant.REQUEST_CODE_EDIT_TRIP_PROFILE -> {
+                    modifiesTripRoomInfo = true
+                    viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+                }
             }
 
         }
+    }
+
+    override fun finish() {
+        if (modifiesTripRoomInfo) {
+            setResult(Constant.RESULT_OK)
+        }
+        super.finish()
     }
 
     private fun checkFocusPosition() {

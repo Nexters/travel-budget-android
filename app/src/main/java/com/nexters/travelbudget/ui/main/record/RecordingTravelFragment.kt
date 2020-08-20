@@ -66,9 +66,11 @@ class RecordingTravelFragment :
             adapter = TravelRecordRVAdapter { tripRecordResponse ->
 
                 if (tripRecordResponse.isPublic == "Y") {
-                    startActivity(TripDetailActivity.getIntent(context.applicationContext).apply {
-                        putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
-                    })
+                    activity?.startActivityForResult(
+                        TripDetailActivity.getIntent(context.applicationContext).apply {
+                            putExtra(Constant.EXTRA_PLAN_ID, tripRecordResponse.planId)
+                        }, Constant.REQUEST_CODE_TRIP_DETAIL
+                    )
                 } else {
                     activity?.startActivityForResult(
                         TripDetailAloneActivity.getIntent(context.applicationContext).apply {
