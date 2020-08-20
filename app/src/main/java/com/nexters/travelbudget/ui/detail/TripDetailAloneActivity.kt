@@ -167,7 +167,38 @@ class TripDetailAloneActivity :
     private fun setupDetailAloneRV() {
         binding.rvDetailAloneSharedList.run {
             adapter = SharedDetailRVAdapter { tripPaymentResponse ->
-                // TODO: 2020/08/20  아이템 수정 항목 Event 추가
+                val tripDetailResponse = viewModel.tripDetailAlone.value ?: return@SharedDetailRVAdapter
+                val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
+                val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
+                val roomType = TravelRoomType.PERSONAL
+                val editMode = EditModeType.EDIT_MODE
+                val focusType = BudgetType.PERSONAL
+                val paymentId = tripPaymentResponse.paymentId
+                val paymentTitle = tripPaymentResponse.title
+                val paymentCategory = tripPaymentResponse.category
+                val paymentAmount = tripPaymentResponse.price
+
+                startActivityForResult(
+                    Intent(
+                        this@TripDetailAloneActivity,
+                        RecordSpendActivity::class.java
+                    ).apply {
+                        putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
+                        putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
+                        putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                        putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, viewModel.focusDate.value)
+                        putExtra(Constant.EXTRA_PAYMENT_ID, paymentId)
+                        putExtra(Constant.EXTRA_PAYMENT_TITLE, paymentTitle)
+                        putExtra(Constant.EXTRA_PAYMENT_CATEGORY, paymentCategory)
+                        putExtra(Constant.EXTRA_PAYMENT_AMOUNT, paymentAmount)
+
+                        putStringArrayListExtra(
+                            Constant.EXTRA_PLAN_DATES,
+                            ArrayList(tripDetailResponse.dates)
+                        )
+                    }, Constant.REQUEST_CODE_SPEND_CREATE)
             }
         }
     }

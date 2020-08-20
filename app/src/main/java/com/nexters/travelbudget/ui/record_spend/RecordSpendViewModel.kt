@@ -11,6 +11,7 @@ import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.convertDateToMills
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.convertToServerDate
+import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripieCompletableObserver
 import io.reactivex.rxkotlin.addTo
@@ -82,6 +83,28 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
 
     fun close() {
         closeEvent.call()
+    }
+
+    fun editModeInit(title: String, category: String, paymentId: Long) {
+        spendExplain.value = title
+        this.paymentId = paymentId
+
+        selectedCategory = SpendCategoryEnum.getEnumByTitleEng(category).titleKor
+        val spendCategoryEnumList = SpendCategoryEnum.values()
+
+        for (i in spendCategoryEnumList.indices) {
+            if (category == spendCategoryEnumList[i].titleEng) {
+                _notifySelectedCategoryItem.value = Pair(
+                    Pair(selectedSpendCategoryList[i], i),
+                    Pair(selectedSpendCategoryList[i], i)
+                )
+
+                _spendCategoryList.value?.set(i, selectedSpendCategoryList[i])
+                latestClicked = i
+                break
+            }
+        }
+        checkComplete()
     }
 
     fun setBudgetId(sharedBudgetId: Long, personalBudgetId: Long) {
@@ -193,6 +216,11 @@ class RecordSpendViewModel(private val recordSpendRepository: RecordSpendReposit
     }
 
     fun modifySpend() {
+        if (isActivated.value != true) {
+            liveToastMessage.value = "비어있는 내용을 전부 채워주세요!"
+            return
+        }
+
         val isReady = getIsReady()
         recordSpendRepository.modifyPayments(
             paymentId,

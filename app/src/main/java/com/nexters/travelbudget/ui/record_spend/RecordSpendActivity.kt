@@ -18,6 +18,7 @@ import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.CustomItemDecoration
 import com.nexters.travelbudget.utils.MoneyStringTextWatcher
 import com.nexters.travelbudget.utils.ext.showToastMessage
+import com.nexters.travelbudget.utils.ext.toMoneyString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,9 +40,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
         val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1L)
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1L)
-        val paymentId = intent.getLongExtra(Constant.EXTRA_PAYMENT_ID, -1L)
         val currentDate = intent.getStringExtra(Constant.EXTRA_CURRENT_DATE)
         val focusType = intent.getSerializableExtra(Constant.EXTRA_FOCUS_TYPE) as BudgetType
+        val roomType = intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE)
+        val editMode = intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE)
 
         intent.getStringArrayListExtra(Constant.EXTRA_PLAN_DATES)?.let {
             dateList = it
@@ -56,17 +58,19 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
         viewModel.setDate(day)
         viewModel.setTime(time)
-        viewModel.setRoomType(intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) == TravelRoomType.SHARED)
-        viewModel.setEditMode(intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE) == EditModeType.EDIT_MODE)
+        viewModel.setRoomType(roomType == TravelRoomType.SHARED)
+        viewModel.setEditMode(editMode == EditModeType.EDIT_MODE)
         viewModel.setBudgetId(sharedBudgetId, personalBudgetId)
-        viewModel.setPaymentId(paymentId)
-
         viewModel.selectShared(focusType == BudgetType.SHARED)
 
 
         observeViewModel()
         setupSpendCategoryRV()
         setupTextWatcher()
+
+        if (editMode == EditModeType.EDIT_MODE) {
+            setupEditMode()
+        }
     }
 
     private fun observeViewModel() {
@@ -141,6 +145,16 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                 })
             }
         }
+    }
+
+    private fun setupEditMode() {
+        val paymentTitle = intent.getStringExtra(Constant.EXTRA_PAYMENT_TITLE) ?: ""
+        val paymentCategory = intent.getStringExtra(Constant.EXTRA_PAYMENT_CATEGORY) ?: ""
+        val paymentAmount = intent.getLongExtra(Constant.EXTRA_PAYMENT_AMOUNT, 0).toInt().toMoneyString()
+        val paymentId = intent.getLongExtra(Constant.EXTRA_PAYMENT_ID, -1L)
+        binding.etSpendAmount.setText(paymentAmount)
+        viewModel.setSpendAmount(paymentAmount)
+        viewModel.editModeInit(paymentTitle, paymentCategory, paymentId)
     }
 
     override fun onBackPressed() {

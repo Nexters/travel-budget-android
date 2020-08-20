@@ -44,6 +44,10 @@ interface Constant {
 
         const val EXTRA_ACTIVITY_RESULT_TYPE= "EXTRA_ACTIVITY_RESULT_TYPE"
 
+        const val EXTRA_PAYMENT_TITLE = "EXTRA_PAYMENT_TITLE"
+        const val EXTRA_PAYMENT_AMOUNT = "EXTRA_PAYMENT_AMOUNT"
+        const val EXTRA_PAYMENT_CATEGORY = "EXTRA_PAYMENT_CATEGORY"
+
         // SharedPreferences
         const val PREF_NAME = "TRAVEL_BUDGET_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
