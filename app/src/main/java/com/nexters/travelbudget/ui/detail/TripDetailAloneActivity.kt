@@ -2,10 +2,8 @@ package com.nexters.travelbudget.ui.detail
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
 import com.nexters.travelbudget.model.enums.ActivityResultType.SCREEN_FINISH
@@ -19,7 +17,6 @@ import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
-import com.nexters.travelbudget.utils.CustomItemDecoration
 import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -171,22 +168,8 @@ class TripDetailAloneActivity :
     private fun setupDetailAloneRV() {
         binding.rvDetailAloneSharedList.run {
             adapter = SharedDetailRVAdapter { tripPaymentResponse ->
+                // TODO: 2020/08/20  아이템 수정 항목 Event 추가
             }
-            addItemDecoration(object : CustomItemDecoration() {
-                override fun setSpacingForDirection(
-                    outRect: Rect,
-                    layoutManager: RecyclerView.LayoutManager?,
-                    position: Int,
-                    itemCount: Int
-                ) {
-                    outRect.top = resources.getDimensionPixelSize(R.dimen.spacing_size_12dp)
-                    outRect.bottom = if (position == itemCount - 1) {
-                        resources.getDimensionPixelSize(R.dimen.spacing_size_24dp)
-                    } else {
-                        0
-                    }
-                }
-            })
         }
     }
 
