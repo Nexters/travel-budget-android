@@ -61,12 +61,7 @@ class TripDetailActivity :
 
         if (resultCode == Constant.RESULT_OK) {
             when (requestCode) {
-                Constant.REQUEST_CODE_SPEND_CREATE -> viewModel.getTripDetailData(
-                    intent.getLongExtra(
-                        Constant.EXTRA_PLAN_ID,
-                        -1L
-                    )
-                )
+                Constant.REQUEST_CODE_SPEND_CREATE -> refreshData()
                 Constant.REQUEST_CODE_EDIT_TRIP_PROFILE -> {
                     modifiesTripRoomInfo = true
                     when (data?.getStringExtra(Constant.EXTRA_ACTIVITY_RESULT_TYPE) ?: "") {
@@ -243,6 +238,15 @@ class TripDetailActivity :
 
             })
         }
+    }
+
+    fun refreshData() {
+        viewModel.getTripDetailData(
+            intent.getLongExtra(
+                Constant.EXTRA_PLAN_ID,
+                -1L
+            )
+        )
     }
 
     private fun initViewPager() {

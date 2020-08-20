@@ -66,10 +66,22 @@ class TripDetailSharedFragment :
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(tripDetailResponse.dates)
                         )
-                    }, Constant.REQUEST_CODE_SPEND_CREATE)
+                    }, Constant.REQUEST_CODE_SPEND_EDIT)
 
             }
 
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Constant.RESULT_OK) {
+            when (requestCode) {
+                Constant.REQUEST_CODE_SPEND_EDIT -> {
+                    (requireActivity() as? TripDetailActivity)?.refreshData()
+                }
+            }
         }
     }
 

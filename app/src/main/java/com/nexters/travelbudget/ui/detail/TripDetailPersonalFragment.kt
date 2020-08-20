@@ -33,7 +33,8 @@ class TripDetailPersonalFragment() :
     private fun setupDetailPersonalRV() {
         binding.rvDetailPersonalList.run {
             adapter = SharedDetailRVAdapter { tripPaymentResponse ->
-                val tripDetailResponse = viewModel.tripInfoData.value ?: return@SharedDetailRVAdapter
+                val tripDetailResponse =
+                    viewModel.tripInfoData.value ?: return@SharedDetailRVAdapter
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
@@ -64,13 +65,26 @@ class TripDetailPersonalFragment() :
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(tripDetailResponse.dates)
                         )
-                    }, Constant.REQUEST_CODE_SPEND_CREATE)
+                    }, Constant.REQUEST_CODE_SPEND_EDIT
+                )
             }
 
         }
     }
-    companion object {
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Constant.RESULT_OK) {
+            when (requestCode) {
+                Constant.REQUEST_CODE_SPEND_EDIT -> {
+                    (requireActivity() as? TripDetailActivity)?.refreshData()
+                }
+            }
+        }
+    }
+
+    companion object {
         fun newInstance(): TripDetailPersonalFragment {
             return TripDetailPersonalFragment()
         }

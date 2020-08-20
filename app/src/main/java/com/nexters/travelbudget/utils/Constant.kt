@@ -60,6 +60,7 @@ interface Constant {
         const val REQUEST_CODE_TRIP_DETAIL = 60
 
         const val REQUEST_CODE_SPEND_CREATE = 100
+        const val REQUEST_CODE_SPEND_EDIT = 200
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1
