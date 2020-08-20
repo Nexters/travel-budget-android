@@ -18,8 +18,6 @@ import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
-import com.nexters.travelbudget.utils.ext.DEFAULT_DATE
-import com.nexters.travelbudget.utils.ext.convertToServerDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TripDetailActivity :
@@ -27,16 +25,12 @@ class TripDetailActivity :
     override val viewModel: TripDetailViewModel by viewModel()
 
     private val fragmentManager = supportFragmentManager
-    private var day: String = ""
+    private var day: String = "준비"
 
     private var modifiesTripRoomInfo = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val isPersonal = true
-        binding.isPersonal = isPersonal
-
 
         setTabLayout()
 
@@ -102,23 +96,7 @@ class TripDetailActivity :
             })
 
             focusDate.observe(this@TripDetailActivity, Observer {
-                val callDate: String
-                if (it == "준비") {
-                    isReady.value = "Y"
-                    isEmptyList.value = true
-                    callDate = DEFAULT_DATE
-                } else {
-                    isReady.value = "N"
-                    callDate = it
-                }
-
-                if (focusBudgetDate.value != null) {
-                    getPaymentTravelData(
-                        focusBudgetDate.value!!.budgetId,
-                        isReady.value!!,
-                        callDate.convertToServerDate()
-                    )
-                }
+                updateEachDateSpendList()
             })
 
             showDateDialogEvent.observe(this@TripDetailActivity, Observer {
