@@ -1,6 +1,8 @@
 package com.nexters.travelbudget.utils
 
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
@@ -17,6 +19,12 @@ class MoneyStringTextWatcher(
     private val onReplaced: (String) -> Unit
 ) : TextWatcher {
     private var beforeValue = ""
+
+    init {
+        et.inputType = InputType.TYPE_CLASS_NUMBER
+        et.filters = arrayOf(InputFilter.LengthFilter(11))
+    }
+
     override fun afterTextChanged(s: Editable?) = Unit
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
