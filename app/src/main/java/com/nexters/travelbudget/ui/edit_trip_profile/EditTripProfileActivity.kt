@@ -50,7 +50,6 @@ class EditTripProfileActivity :
                 bundleOf(Constant.EXTRA_ACTIVITY_RESULT_TYPE to ActivityResultType.SCREEN_FINISH.name)
             setResult(Constant.RESULT_OK, Intent().putExtras(bundle))
             finish()
-            finish()
         })
 
         viewModel.backScreen.observe(this, Observer {

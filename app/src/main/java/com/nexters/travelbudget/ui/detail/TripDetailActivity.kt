@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailBinding
+import com.nexters.travelbudget.model.enums.ActivityResultType
+import com.nexters.travelbudget.model.enums.ActivityResultType.*
 import com.nexters.travelbudget.model.enums.BudgetType
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
@@ -67,7 +69,19 @@ class TripDetailActivity :
                 )
                 Constant.REQUEST_CODE_EDIT_TRIP_PROFILE -> {
                     modifiesTripRoomInfo = true
-                    viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+                    when (data?.getStringExtra(Constant.EXTRA_ACTIVITY_RESULT_TYPE) ?: "") {
+                        SCREEN_REFRESH.name -> {
+                            viewModel.getTripDetailData(
+                                intent.getLongExtra(
+                                    Constant.EXTRA_PLAN_ID,
+                                    -1L
+                                )
+                            )
+                        }
+                        SCREEN_FINISH.name -> {
+                            finish()
+                        }
+                    }
                 }
             }
 
@@ -232,7 +246,6 @@ class TripDetailActivity :
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
         }
     }
-
 
 
     fun goToEditTripProfileActivity() {
