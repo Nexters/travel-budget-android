@@ -30,9 +30,9 @@ class TripEditText @JvmOverloads constructor(
         setBackgroundResource(R.drawable.bg_edit_text_underground_default)
         setHintTextColor(resources.getColor(R.color.colorTextHint, null))
         setTextColor(resources.getColor(R.color.colorTextBlack, null))
-        val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
-        field.isAccessible = true
-        field.set(this, R.drawable.cursor_trip_edit_text)
+        //val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+        //field.isAccessible = true
+        //field.set(this, R.drawable.cursor_trip_edit_text)
 
         onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             with(v as EditText) {

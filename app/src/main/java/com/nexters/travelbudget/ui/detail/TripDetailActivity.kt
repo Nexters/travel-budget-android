@@ -108,6 +108,7 @@ class TripDetailActivity :
                     }
                 )
             })
+
             startEditTripProfile.observe(this@TripDetailActivity, Observer {
                 goToEditTripProfileActivity()
             })
