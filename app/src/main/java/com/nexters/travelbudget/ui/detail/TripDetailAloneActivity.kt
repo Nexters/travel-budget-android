@@ -8,8 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
-import com.nexters.travelbudget.model.enums.ActivityResultType
-import com.nexters.travelbudget.model.enums.ActivityResultType.*
+import com.nexters.travelbudget.model.enums.ActivityResultType.SCREEN_FINISH
+import com.nexters.travelbudget.model.enums.ActivityResultType.SCREEN_REFRESH
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -35,7 +35,7 @@ class TripDetailAloneActivity :
         intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
     }
 
-    private var day: String = ""
+    private var day: String = "준비"
 
     private var modifiesTripRoomInfo = false
 

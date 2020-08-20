@@ -28,17 +28,14 @@ class StatisticsActivity : AppCompatActivity() {
             add(personalBudgetId)
         }.toLongArray()
 
+
         val roomType = intent.getSerializableExtra(Constant.EXTRA_ROOM_TYPE) as TravelRoomType
         val tl = findViewById<TabLayout>(R.id.tl_spend_statistics)
+
+
         val vp = findViewById<ViewPager>(R.id.vp_statistics).apply {
             adapter = StatisticsPageAdapter(supportFragmentManager, roomType, list)
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tl))
-        }
-
-        if (focusType == BudgetType.SHARED) {
-            tl.getTabAt(0)!!.select()
-        } else {
-            tl.getTabAt(1)!!.select()
         }
 
         tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -48,6 +45,14 @@ class StatisticsActivity : AppCompatActivity() {
                 vp.currentItem = tab.position
             }
         })
+
+        if (focusType == BudgetType.SHARED) {
+            tl.getTabAt(0)!!.select()
+        } else {
+            tl.getTabAt(1)!!.select()
+        }
+        vp.currentItem = tl.selectedTabPosition
+
 
         val divider = findViewById<View>(R.id.view_divider)
 

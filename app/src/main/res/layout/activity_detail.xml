@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="isPersonal"
-            type="Boolean" />
-
         <variable
             name="vm"
             type="com.nexters.travelbudget.ui.detail.TripDetailViewModel" />
@@ -132,7 +127,7 @@
             android:layout_height="44dp"
             android:layout_marginBottom="28dp"
             android:background="@drawable/ic_rectangle_blue_21"
-            android:goneIf="@{!isPersonal}"
+            android:goneIf="@{vm.focusBudgetDate == null}"
             android:onClick="@{()->vm.goToPaymentScreen()}"
             android:text="+ 지출기록"
             android:textColor="@color/colorWhite"
