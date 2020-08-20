@@ -18,11 +18,10 @@ import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
-import com.nexters.travelbudget.utils.DLog
-import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.convertToViewDate
+import com.nexters.travelbudget.utils.getNowDate
+import com.nexters.travelbudget.utils.isBetweenDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class TripDetailAloneActivity :
@@ -34,7 +33,6 @@ class TripDetailAloneActivity :
         intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
     }
 
-    private var day: String = "준비"
 
     private var modifiesTripRoomInfo = false
 
@@ -42,10 +40,15 @@ class TripDetailAloneActivity :
         super.onCreate(savedInstanceState)
         observeViewModel()
         setupDetailAloneRV()
-        setDay()
 
-//        viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
         viewModel.getTripDetailAloneData(planId)
+
+        val startDate = intent.getStringExtra(Constant.EXTRA_PLAN_START_DATE)!!
+        val endDate = intent.getStringExtra(Constant.EXTRA_PLAN_END_DATE)!!
+
+        if (getNowDate().isBetweenDate(startDate, endDate)) {
+            viewModel.setFocusDate(getNowDate().convertToViewDate())
+        }
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
@@ -68,6 +71,8 @@ class TripDetailAloneActivity :
                         return
                     }
                 }
+            } else if (requestCode == Constant.REQUEST_CODE_SPEND_CREATE) {
+                viewModel.getTripDetailAloneData(planId)
             }
         }
     }
@@ -82,35 +87,12 @@ class TripDetailAloneActivity :
     private fun observeViewModel() {
         with(viewModel) {
             showDateAloneDialogEvent.observe(this@TripDetailAloneActivity, Observer {
-                val tripDetailResponse = tripDetailAlone.value ?: return@Observer
-                SelectDateBottomSheetDialog.newInstance(detailAloneDate.value ?: "준비", ArrayList(tripDetailResponse.dates)) {
-                    setAloneDate(it)
-                    val isReady = if (it == "준비") {
-                        "Y"
-                    } else {
-                        "N"
-                    }
-
-                    if (it == "준비") {
-                        viewModel.isEmptyList.value = true
-                        getPaymentAloneTravelData(
-                            tripDetailResponse.personal?.budgetId ?: -1L,
-                            isReady,
-                            viewModel.tripDetailAlone.value?.dates?.get(0) ?: "0000-00-00"
-                        )
-                    } else {
-                        getPaymentAloneTravelData(
-                            tripDetailResponse.personal?.budgetId ?: -1L,
-                            isReady,
-                            it.convertToServerDate()
-                        )
-                    }
-                    getPaymentAloneTravelData(
-                        tripDetailResponse.personal?.budgetId ?: -1L,
-                        isReady,
-                        it
-                    )
-                }.show(supportFragmentManager, "bottom_sheet")
+                SelectDateBottomSheetDialog.newInstance(
+                    focusDate.value!!,
+                    ArrayList(tripDetailAlone.value!!.dates)
+                ) {
+                    setFocusDate(it)
+                }.show(fragmentManager, "bottom_sheet")
             })
 
             goToPieScreen.observe(this@TripDetailAloneActivity, Observer {
@@ -130,14 +112,18 @@ class TripDetailAloneActivity :
                     })
             })
 
+            focusDate.observe(this@TripDetailAloneActivity, Observer {
+                updateEachDateSpendList()
+            })
+
             goToPaymentScreen.observe(this@TripDetailAloneActivity, Observer {
-                val tripDetailResponse = viewModel.tripDetailAlone.value ?: return@Observer
+                val tripDetailResponse = tripDetailAlone.value ?: return@Observer
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
                 val editMode = EditModeType.CREATE_MODE
                 val focusType = BudgetType.PERSONAL
-                startActivity(
+                startActivityForResult(
                     Intent(
                         this@TripDetailAloneActivity,
                         RecordSpendActivity::class.java
@@ -147,13 +133,13 @@ class TripDetailAloneActivity :
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                         putExtra(Constant.EXTRA_EDIT_MODE, editMode)
                         putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
-                        putExtra(Constant.EXTRA_CURRENT_DATE, detailAloneDate.value)
-                        putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                        putExtra(Constant.EXTRA_CURRENT_DATE, focusDate.value)
+
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(tripDetailResponse.dates)
                         )
-                    })
+                    }, Constant.REQUEST_CODE_SPEND_CREATE)
             })
 
             startEditTripProfile.observe(this@TripDetailAloneActivity, Observer {
@@ -179,16 +165,6 @@ class TripDetailAloneActivity :
         }
     }
 
-    private fun setDay() {
-        var d = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        d = if (viewModel.tripDetailAlone.value?.dates?.contains(d) == true) {
-            d.convertToViewDate()
-        } else {
-            "준비"
-        }
-
-        this.day = d
-    }
 
     companion object {
 

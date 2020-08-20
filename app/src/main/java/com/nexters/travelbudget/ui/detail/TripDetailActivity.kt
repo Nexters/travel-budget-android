@@ -82,7 +82,6 @@ class TripDetailActivity :
     }
 
     private fun checkFocusPosition() {
-
         with(viewModel) {
             when (binding.tlDetail.selectedTabPosition) {
                 0 -> tabFocus.value = BudgetType.SHARED
@@ -94,9 +93,7 @@ class TripDetailActivity :
     private fun observeViewModel() {
         with(viewModel) {
             tripInfoData.observe(this@TripDetailActivity, Observer {
-                setDetailTitle(it.name)
                 checkFocusPosition()
-
             })
 
             tabFocus.observe(this@TripDetailActivity, Observer {
@@ -120,7 +117,7 @@ class TripDetailActivity :
 
             startManageMember.observe(this@TripDetailActivity, Observer {
                 val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
-                val roomTitle = viewModel.detailTitle.value ?: ""
+                val roomTitle = detailTitle.value ?: ""
                 if (planId == -1L) return@Observer
                 startActivity(
                     ManageMemberActivity.getIntent(
@@ -132,10 +129,10 @@ class TripDetailActivity :
             })
 
             goToPaymentScreen.observe(this@TripDetailActivity, Observer {
-                val tripDetailResponse = viewModel.tripInfoData.value ?: return@Observer
+                val tripDetailResponse = tripInfoData.value ?: return@Observer
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
-                val focusDate = viewModel.focusDate.value!!
+                val focusDate = focusDate.value!!
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
                 val focusType = tabFocus.value!!
