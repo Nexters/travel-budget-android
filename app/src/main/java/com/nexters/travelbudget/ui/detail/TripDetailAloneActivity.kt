@@ -8,6 +8,7 @@ import com.nexters.travelbudget.R
 import com.nexters.travelbudget.databinding.ActivityDetailAloneBinding
 import com.nexters.travelbudget.model.enums.ActivityResultType.SCREEN_FINISH
 import com.nexters.travelbudget.model.enums.ActivityResultType.SCREEN_REFRESH
+import com.nexters.travelbudget.model.enums.BudgetType
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -17,6 +18,7 @@ import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.ext.convertToServerDate
 import com.nexters.travelbudget.utils.ext.convertToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,7 +44,7 @@ class TripDetailAloneActivity :
         setupDetailAloneRV()
         setDay()
 
-        viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+//        viewModel.getTripDetailAloneData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
         viewModel.getTripDetailAloneData(planId)
 
         viewModel.backScreen.observe(this, Observer {
@@ -132,6 +134,7 @@ class TripDetailAloneActivity :
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
                 val editMode = EditModeType.CREATE_MODE
+                val focusType = BudgetType.PERSONAL
                 startActivity(
                     Intent(
                         this@TripDetailAloneActivity,
@@ -141,6 +144,7 @@ class TripDetailAloneActivity :
                         putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                         putExtra(Constant.EXTRA_EDIT_MODE, editMode)
+                        putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
                         putExtra(Constant.EXTRA_CURRENT_DATE, detailAloneDate.value)
                         putExtra(Constant.EXTRA_CURRENT_DATE, day)
                         putStringArrayListExtra(

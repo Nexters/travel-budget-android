@@ -43,9 +43,6 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         val currentDate = intent.getStringExtra(Constant.EXTRA_CURRENT_DATE)
         val focusType = intent.getSerializableExtra(Constant.EXTRA_FOCUS_TYPE) as BudgetType
 
-
-
-
         intent.getStringArrayListExtra(Constant.EXTRA_PLAN_DATES)?.let {
             dateList = it
         }
