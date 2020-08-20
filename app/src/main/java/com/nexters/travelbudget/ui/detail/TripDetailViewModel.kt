@@ -91,7 +91,9 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
 
     //call Payment case
     fun getPaymentTravelData(budgetId: Long, isReady: String, paymentDt: String) {
-        if (budgetId == -1L) return
+        if (budgetId == -1L) {
+            return
+        }
 
         detailTripRepository.getTripPaymentInfo(budgetId, isReady, paymentDt)
             .applySchedulers()
@@ -131,15 +133,6 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
     }
 
 
-    // TODO: 2020/08/19 fragment end
-
-
-    fun setDetailTitle(tripName: String) {
-        with(tripName) {
-            _detailTitle.value = tripName
-        }
-    }
-
     fun getTripDetailData(planId: Long) {
         detailTripRepository.getTripDetailInfo(planId)
             .applySchedulers()
@@ -147,6 +140,7 @@ class TripDetailViewModel(private val detailTripRepository: DetailTripRepository
             }
             .subscribeWith(object : TripDisposableSingleObserver<TripDetailResponse>() {
                 override fun onSuccess(result: TripDetailResponse) {
+                    _detailTitle.value = result.name
                     _tripInfoData.value = result
                 }
 

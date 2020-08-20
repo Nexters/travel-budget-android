@@ -1,6 +1,5 @@
 package com.nexters.travelbudget.ui.detail
 
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
@@ -8,22 +7,20 @@ import com.nexters.travelbudget.data.remote.model.response.TripPaymentResponse
 import com.nexters.travelbudget.data.repository.DetailPaymentRepository
 import com.nexters.travelbudget.data.repository.DetailTripRepository
 import com.nexters.travelbudget.ui.base.BaseViewModel
-import com.nexters.travelbudget.utils.Constant
-import com.nexters.travelbudget.utils.DLog
 import com.nexters.travelbudget.utils.DetailSharedData
+import com.nexters.travelbudget.utils.ext.DEFAULT_DATE
 import com.nexters.travelbudget.utils.ext.applySchedulers
 import com.nexters.travelbudget.utils.ext.convertToServerDate
-import com.nexters.travelbudget.utils.ext.convertToViewDate
 import com.nexters.travelbudget.utils.ext.toMoneyString
 import com.nexters.travelbudget.utils.lifecycle.SingleLiveEvent
 import com.nexters.travelbudget.utils.observer.TripDisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
-class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepository, private val detailPaymentRepository: DetailPaymentRepository) : BaseViewModel() {
+class TripDetailAloneViewModel(
+    private val detailTripRepository: DetailTripRepository,
+    private val detailPaymentRepository: DetailPaymentRepository
+) : BaseViewModel() {
     private val _newDetailAloneList = MutableLiveData<ArrayList<DetailSharedData>>()
     val newDetailSharedList: LiveData<ArrayList<DetailSharedData>> get() = _newDetailAloneList
 
@@ -35,8 +32,18 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
     }
     val detailAloneTitle: LiveData<String> get() = _detailAloneTitle
 
-    private val _detailAloneDate = MutableLiveData<String>("준비")
-    val detailAloneDate: LiveData<String> get() = _detailAloneDate
+//    private val _detailAloneDate = MutableLiveData<String>("준비")
+//    val detailAloneDate: LiveData<String> get() = _detailAloneDate
+
+    private val _focusDate = MutableLiveData<String>("준비")
+    val focusDate: LiveData<String> get() = _focusDate
+
+    private val _isReady = MutableLiveData<String>("Y")
+    val isReady get() = _isReady
+
+    private val _focusBudgetDate = MutableLiveData<TripDetailResponse.Data?>()
+    val focusBudgetDate = _focusBudgetDate
+
 
     private val _purposeAloneAmount = MutableLiveData<String>()
     val purposeAloneAmount: LiveData<String> = _purposeAloneAmount
@@ -86,53 +93,66 @@ class TripDetailAloneViewModel(private val detailTripRepository: DetailTripRepos
         showDateAloneDialogEvent.call()
     }
 
-    fun setAloneDate(date: String) {
-        _detailAloneDate.value = date
+    fun setFocusDate(date: String) {
+        _focusDate.value = date
     }
 
     fun getTripDetailAloneData(id: Long) {
         detailTripRepository.getTripDetailInfo(id)
             .applySchedulers()
-            //  .doOnSubscribe { _isLoading.value = true }
-            //  .doAfterTerminate { _isLoading.value = false }
             .doOnSuccess {
-//                _isEmptyList.value = it.isEmpty()
-                var date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                date = if (it.dates.contains(date) ?: false) {
-                    date.convertToViewDate()
-                } else {
-                    "준비"
-                }
-                setAloneDate(date)
-                val isReady = if (date == "준비") {
-                    "Y"
-                } else {
-                    "N"
-                }
 
-                if (date == "준비") {
-                    isEmptyList.value = true
-                    getPaymentAloneTravelData(it.personal?.budgetId ?: -1L, isReady, date)
-                }
-                else {
-                    getPaymentAloneTravelData(it.personal?.budgetId ?: -1L, isReady, date.convertToServerDate())
-                }
+
             }
             .subscribeWith(object : TripDisposableSingleObserver<TripDetailResponse>() {
                 override fun onSuccess(result: TripDetailResponse) {
                     _tripDetailAlone.value = result
                     _detailAloneTitle.value = result.name
-                    if(result.personal != null) {
-                        _purposeAloneAmount.value = result.personal.purposeAmount.toMoneyString()
-                        _remainAloneAmount.value = result.personal.remainAmount.toMoneyString()
-                        _suggestAloneAmount.value = result.personal.suggestAmount.toMoneyString()
-                    }
+                    _focusBudgetDate.value = result.personal
 
+                    setBudgetData()
+                    updateEachDateSpendList()
                 }
 
             }).addTo(compositeDisposable)
-
     }
+
+    fun updateEachDateSpendList() {
+        val date = _focusDate.value!!
+        val callDate: String
+        if (date == "준비") {
+            isReady.value = "Y"
+            isEmptyList.value = true
+            callDate = DEFAULT_DATE
+        } else {
+            isReady.value = "N"
+            callDate = date
+        }
+
+        focusBudgetDate.value?.let {
+            getPaymentAloneTravelData(
+                it.budgetId,
+                isReady.value!!,
+                callDate.convertToServerDate()
+            )
+        }
+    }
+
+    private fun setBudgetData() {
+        with(_focusBudgetDate.value) {
+            this?.let {
+                _purposeAloneAmount.value = purposeAmount.toMoneyString()
+                _remainAloneAmount.value = remainAmount.toMoneyString()
+                _suggestAloneAmount.value = suggestAmount.toMoneyString()
+            } ?: {
+                _purposeAloneAmount.value = "default"
+                _remainAloneAmount.value = "default"
+                _suggestAloneAmount.value = "default"
+            }()
+
+        }
+    }
+
 
     fun getPaymentAloneTravelData(budgetId: Long, isReady: String, paymentDt: String) {
         if (budgetId == -1L) {
