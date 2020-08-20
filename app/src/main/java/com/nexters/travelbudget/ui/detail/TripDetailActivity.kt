@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
-import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityDetailBinding
+import com.nexters.travelbudget.model.enums.BudgetType
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
@@ -15,15 +15,17 @@ import com.nexters.travelbudget.ui.detail.adapter.DetailVPAdapter
 import com.nexters.travelbudget.ui.edit_trip_profile.EditTripProfileActivity
 import com.nexters.travelbudget.ui.manage_member.ManageMemberActivity
 import com.nexters.travelbudget.ui.record_spend.RecordSpendActivity
+import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.ext.DEFAULT_DATE
 import com.nexters.travelbudget.utils.ext.convertToServerDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.collections.ArrayList
 
 class TripDetailActivity :
     BaseActivity<ActivityDetailBinding, TripDetailViewModel>(R.layout.activity_detail) {
     override val viewModel: TripDetailViewModel by viewModel()
+
     private val fragmentManager = supportFragmentManager
     private var day: String = ""
 
@@ -32,21 +34,96 @@ class TripDetailActivity :
 
         val isPersonal = true
         binding.isPersonal = isPersonal
+
+
         setTabLayout()
+
+        initViewPager()
         observeViewModel()
 
         viewModel.getTripDetailData(intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L))
+
 
         viewModel.backScreen.observe(this, Observer {
             onBackPressed()
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Constant.RESULT_OK) {
+            when (requestCode) {
+                Constant.REQUEST_CODE_SPEND_CREATE -> viewModel.getTripDetailData(
+                    intent.getLongExtra(
+                        Constant.EXTRA_PLAN_ID,
+                        -1L
+                    )
+                )
+
+                Constant.REQUEST_CODE_EDIT_TRIP_PROFILE -> viewModel.getTripDetailData(
+                    intent.getLongExtra(
+                        Constant.EXTRA_PLAN_ID,
+                        -1L
+                    )
+                )
+            }
+
+        }
+    }
+
+    private fun checkFocusPosition() {
+
+        with(viewModel) {
+            when (binding.tlDetail.selectedTabPosition) {
+                0 -> tabFocus.value = BudgetType.SHARED
+                else -> tabFocus.value = BudgetType.PERSONAL
+            }
+        }
+    }
+
     private fun observeViewModel() {
         with(viewModel) {
-            tripDetail.observe(this@TripDetailActivity, Observer {
+            tripInfoData.observe(this@TripDetailActivity, Observer {
                 setDetailTitle(it.name)
-                setupViewPager(it.dates, it.shared, it.personal)
+                checkFocusPosition()
+
+            })
+
+            tabFocus.observe(this@TripDetailActivity, Observer {
+                updateBudgetDate()
+
+            })
+
+            focusDate.observe(this@TripDetailActivity, Observer {
+                val callDate: String
+                if (it == "준비") {
+                    isReady.value = "Y"
+                    isEmptyList.value = true
+                    callDate = DEFAULT_DATE
+                } else {
+                    isReady.value = "N"
+                    callDate = it
+                }
+
+                if (focusBudgetDate.value != null) {
+                    getPaymentTravelData(
+                        focusBudgetDate.value!!.budgetId,
+                        isReady.value!!,
+                        callDate.convertToServerDate()
+                    )
+                }
+            })
+
+            showDateDialogEvent.observe(this@TripDetailActivity, Observer {
+                SelectDateBottomSheetDialog.newInstance(
+                    day,
+                    ArrayList(tripInfoData.value!!.dates)
+                ) {
+                    setFocusDate(it)
+                    setDay(it)
+
+                }.show(fragmentManager, "bottom_sheet")
             })
 
             startManageMember.observe(this@TripDetailActivity, Observer {
@@ -63,12 +140,13 @@ class TripDetailActivity :
             })
 
             goToPaymentScreen.observe(this@TripDetailActivity, Observer {
-                val tripDetailResponse = viewModel.tripDetail.value ?: return@Observer
+                val tripDetailResponse = viewModel.tripInfoData.value ?: return@Observer
                 val sharedBudgetId = tripDetailResponse.shared?.budgetId ?: -1L
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
                 val editMode = EditModeType.CREATE_MODE
-                startActivity(
+                val focusType = tabFocus.value!!
+                startActivityForResult(
                     Intent(
                         this@TripDetailActivity,
                         RecordSpendActivity::class.java
@@ -78,15 +156,18 @@ class TripDetailActivity :
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
                         putExtra(Constant.EXTRA_EDIT_MODE, editMode)
                         putExtra(Constant.EXTRA_CURRENT_DATE, day)
+                        putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
                         putStringArrayListExtra(
                             Constant.EXTRA_PLAN_DATES,
                             ArrayList(tripDetailResponse.dates)
                         )
-                    })
+                    }, Constant.REQUEST_CODE_SPEND_CREATE
+                )
             })
 
+
             startRecordSpend.observe(this@TripDetailActivity, Observer {
-                val detailDate = tripDetail.value ?: return@Observer
+                val detailDate = tripInfoData.value ?: return@Observer
                 startActivity(
                     Intent(
                         this@TripDetailActivity,
@@ -108,17 +189,18 @@ class TripDetailActivity :
                     }
                 )
             })
-
             startEditTripProfile.observe(this@TripDetailActivity, Observer {
                 goToEditTripProfileActivity()
             })
 
             goToPieScreen.observe(this@TripDetailActivity, Observer {
-                val detailBudgetId = tripDetail.value ?: return@Observer
+                val detailBudgetId = tripInfoData.value ?: return@Observer
 
                 val sharedBudgetId = detailBudgetId.shared?.budgetId ?: -1L
                 val personalBudgetId = detailBudgetId.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.SHARED
+                val focusType = tabFocus.value!!
+
                 startActivity(
                     Intent(
                         this@TripDetailActivity,
@@ -127,8 +209,10 @@ class TripDetailActivity :
                         putExtra(Constant.EXTRA_SHARED_BUDGET_ID, sharedBudgetId)
                         putExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, personalBudgetId)
                         putExtra(Constant.EXTRA_ROOM_TYPE, roomType)
+                        putExtra(Constant.EXTRA_FOCUS_TYPE, focusType)
                     })
             })
+
         }
     }
 
@@ -137,50 +221,24 @@ class TripDetailActivity :
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     binding.vpDetailPager.currentItem = tab.position
-                    if (tab.position == 0) {
-                        binding.isPersonal = true
-                    }
-                    if (tab.position == 1) {
-                        binding.isPersonal = viewModel.tripDetail.value?.personal?.budgetId != null
-                    }
+
+                    checkFocusPosition()
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
-                    if (tab.position == 0) {
-                        binding.isPersonal = true
-                    }
-                    if (tab.position == 1) {
-                        binding.isPersonal = viewModel.tripDetail.value?.personal?.budgetId != null
-                    }
+
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    if (tab.position == 0) {
-                        binding.isPersonal = true
-                    }
-                    if (tab.position == 1) {
-                        binding.isPersonal = viewModel.tripDetail.value?.personal?.budgetId != null
-                    }
                 }
 
             })
         }
     }
 
-    private fun setupViewPager(
-        dates: List<String>,
-        sharedBudgetData: TripDetailResponse.Data?,
-        personalBudgetData: TripDetailResponse.Data?
-    ) {
-        binding.vpDetailPager.run {
-            adapter = DetailVPAdapter(
-                supportFragmentManager,
-                TAB_COUNT,
-                dates,
-                sharedBudgetData,
-                personalBudgetData
-            )
-            offscreenPageLimit = TAB_COUNT - 1
+    private fun initViewPager() {
+        with(binding.vpDetailPager) {
+            adapter = DetailVPAdapter(supportFragmentManager)
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tlDetail))
         }
     }
@@ -191,16 +249,17 @@ class TripDetailActivity :
 
     fun goToEditTripProfileActivity() {
         val planId = intent.getLongExtra(Constant.EXTRA_PLAN_ID, -1L)
-        val memberId = viewModel.tripDetail.value?.memberId ?: -1L
-        startActivity(
+        val memberId = viewModel.tripInfoData.value?.memberId ?: -1L
+        startActivityForResult(
             Intent(
                 EditTripProfileActivity.getIntent(
                     this@TripDetailActivity,
                     planId, memberId, TravelRoomType.SHARED.name
                 )
-            )
+            ), Constant.REQUEST_CODE_EDIT_TRIP_PROFILE
         )
     }
+
 
     companion object {
         private const val TAB_COUNT = 2
@@ -209,6 +268,5 @@ class TripDetailActivity :
             return Intent(context, TripDetailActivity::class.java)
         }
     }
-
 
 }

@@ -3,16 +3,14 @@ package com.nexters.travelbudget.ui.statistics
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.nexters.travelbudget.R
+import com.nexters.travelbudget.model.enums.BudgetType
 import com.nexters.travelbudget.model.enums.TravelRoomType
-import com.nexters.travelbudget.ui.detail.TripDetailAloneViewModel
 import com.nexters.travelbudget.ui.statistics.adapter.StatisticsPageAdapter
 import com.nexters.travelbudget.utils.Constant
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StatisticsActivity : AppCompatActivity() {
 
@@ -22,6 +20,8 @@ class StatisticsActivity : AppCompatActivity() {
 
         val sharedBudgetId = intent.getLongExtra(Constant.EXTRA_SHARED_BUDGET_ID, -1)
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1)
+        val focusType = intent.getSerializableExtra(Constant.EXTRA_FOCUS_TYPE) as BudgetType
+
 
         val list = ArrayList<Long>().apply {
             add(sharedBudgetId)
@@ -33,6 +33,12 @@ class StatisticsActivity : AppCompatActivity() {
         val vp = findViewById<ViewPager>(R.id.vp_statistics).apply {
             adapter = StatisticsPageAdapter(supportFragmentManager, roomType, list)
             addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tl))
+        }
+
+        if (focusType == BudgetType.SHARED) {
+            tl.getTabAt(0)!!.select()
+        } else {
+            tl.getTabAt(1)!!.select()
         }
 
         tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

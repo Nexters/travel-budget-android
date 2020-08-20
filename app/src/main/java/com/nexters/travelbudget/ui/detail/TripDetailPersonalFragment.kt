@@ -3,97 +3,28 @@ package com.nexters.travelbudget.ui.detail
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import com.nexters.travelbudget.R
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.FragmentDetailPersonalBinding
 import com.nexters.travelbudget.ui.base.BaseFragment
 import com.nexters.travelbudget.ui.detail.adapter.SharedDetailRVAdapter
-import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.utils.CustomItemDecoration
-import com.nexters.travelbudget.utils.ext.convertToServerDate
-import com.nexters.travelbudget.utils.ext.convertToViewDate
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TripDetailPersonalFragment() :
-    BaseFragment<FragmentDetailPersonalBinding, TripDetailPersonalViewModel>(R.layout.fragment_detail_personal) {
+    BaseFragment<FragmentDetailPersonalBinding, TripDetailViewModel>(R.layout.fragment_detail_personal) {
 
-    override val viewModel: TripDetailPersonalViewModel by viewModel()
-
-    private val budgetData by lazy {
-        arguments?.getParcelable<TripDetailResponse.Data>(BUDGET_DATA)
-    }
-
-    private val dateItems by lazy {
-        arguments?.getStringArrayList(DATE_ITEMS) ?: listOf<String>()
-    }
-
-    private val budgetId by lazy {
-        budgetData?.budgetId ?: -1
-    }
-
-    private var day = ""
+    override val viewModel: TripDetailViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupDetailPersonalRV()
-        setDay()
-
-        viewModel.setPersonalDate(day)
-        (requireActivity() as? TripDetailActivity)?.setDay(viewModel.detailPersonalDate.value ?: "")
-
-        val isReady = if (day == "준비") {
-            "Y"
-        } else {
-            "N"
-        }
-
-        if (day == "준비") {
-            viewModel.isEmptyList.value = true
-            viewModel.getPaymentPersonalTravelData(budgetId, isReady, dateItems[0])
-        }
-        else {
-            viewModel.getPaymentPersonalTravelData(budgetId, isReady, day.convertToServerDate())
-        }
-        budgetData?.let {
-            viewModel.setBudgetData(it)
-        }
     }
 
     private fun observeViewModel() {
-        with(viewModel) {
-            showPersonalDateDialogEvent.observe(this@TripDetailPersonalFragment, Observer {
-                SelectDateBottomSheetDialog.newInstance(detailPersonalDate.value ?: "준비", ArrayList(dateItems)) {
-                    setPersonalDate(it)
-                    (requireActivity() as? TripDetailActivity)?.setDay(it)
-                    val isReady = if (it == "준비") {
-                        "Y"
-                    } else {
-                        "N"
-                    }
-
-                    if (it == "준비") {
-                        viewModel.isEmptyList.value = true
-                        getPaymentPersonalTravelData(budgetId, isReady, it)
-                    }
-                    else {
-                        getPaymentPersonalTravelData(budgetId, isReady, it.convertToServerDate())
-                    }
-
-                }.show(parentFragmentManager, "bottom_sheet")
-            })
-
-            startEditTripProfile.observe(this@TripDetailPersonalFragment, Observer {
-                (activity as? TripDetailActivity)?.goToEditTripProfileActivity()
-            })
-        }
     }
+
 
     private fun setupDetailPersonalRV() {
         binding.rvDetailPersonalList.run {
@@ -116,30 +47,12 @@ class TripDetailPersonalFragment() :
             })
         }
     }
-
-    private fun setDay() {
-        var d = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        d = if (dateItems.contains(d)) {
-            d.convertToViewDate()
-        } else {
-            "준비"
-        }
-        day = d
-    }
-
     companion object {
-        private const val BUDGET_DATA = "budget_data"
-        private const val DATE_ITEMS = "DATE_ITEMS"
 
-        fun newInstance(
-            data: TripDetailResponse.Data?,
-            items: List<String>
-        ): TripDetailPersonalFragment {
-            return TripDetailPersonalFragment().apply {
-                arguments = bundleOf(BUDGET_DATA to data, DATE_ITEMS to items)
-            }
+        fun newInstance(): TripDetailPersonalFragment {
+            return TripDetailPersonalFragment()
         }
     }
-
-
 }
+
+

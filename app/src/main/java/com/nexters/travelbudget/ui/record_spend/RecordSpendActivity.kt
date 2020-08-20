@@ -3,27 +3,24 @@ package com.nexters.travelbudget.ui.record_spend
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.TypedValue
-import android.widget.EditText
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.nexters.travelbudget.R
-import com.nexters.travelbudget.data.remote.model.response.TripDetailResponse
 import com.nexters.travelbudget.databinding.ActivityRecordSpendBinding
+import com.nexters.travelbudget.model.enums.BudgetType
 import com.nexters.travelbudget.model.enums.EditModeType
 import com.nexters.travelbudget.model.enums.TravelRoomType
 import com.nexters.travelbudget.ui.base.BaseActivity
-import com.nexters.travelbudget.ui.detail.TripDetailSharedFragment
 import com.nexters.travelbudget.ui.record_spend.adapter.SpendCategoryRVAdapter
 import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.time_picker.TimePickerDialogFragment
-import com.nexters.travelbudget.utils.*
-import com.nexters.travelbudget.utils.ext.convertToServerDate
+import com.nexters.travelbudget.utils.Constant
+import com.nexters.travelbudget.utils.CustomItemDecoration
+import com.nexters.travelbudget.utils.MoneyStringTextWatcher
 import com.nexters.travelbudget.utils.ext.showToastMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.round
 
 class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpendViewModel>(
@@ -44,6 +41,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         val personalBudgetId = intent.getLongExtra(Constant.EXTRA_PERSONAL_BUDGET_ID, -1L)
         val paymentId = intent.getLongExtra(Constant.EXTRA_PAYMENT_ID, -1L)
         val currentDate = intent.getStringExtra(Constant.EXTRA_CURRENT_DATE)
+        val focusType = intent.getSerializableExtra(Constant.EXTRA_FOCUS_TYPE) as BudgetType
+
+
+
 
         intent.getStringArrayListExtra(Constant.EXTRA_PLAN_DATES)?.let {
             dateList = it
@@ -62,6 +63,9 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
         viewModel.setEditMode(intent.getSerializableExtra(Constant.EXTRA_EDIT_MODE) == EditModeType.EDIT_MODE)
         viewModel.setBudgetId(sharedBudgetId, personalBudgetId)
         viewModel.setPaymentId(paymentId)
+
+        viewModel.selectShared(focusType == BudgetType.SHARED)
+
 
         observeViewModel()
         setupSpendCategoryRV()
@@ -90,6 +94,7 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
 
             recordSpendFinishEvent.observe(this@RecordSpendActivity, Observer {
                 showToastMessage(it)
+                setResult(Constant.RESULT_OK)
                 finish()
             })
 
@@ -139,5 +144,10 @@ class RecordSpendActivity : BaseActivity<ActivityRecordSpendBinding, RecordSpend
                 })
             }
         }
+    }
+
+    override fun onBackPressed() {
+        setResult(Constant.RESULT_CANCEL)
+        super.onBackPressed()
     }
 }
