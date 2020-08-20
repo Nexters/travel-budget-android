@@ -19,6 +19,7 @@ import com.nexters.travelbudget.ui.select_date.SelectDateBottomSheetDialog
 import com.nexters.travelbudget.ui.statistics.StatisticsActivity
 import com.nexters.travelbudget.utils.Constant
 import com.nexters.travelbudget.utils.ext.convertToViewDate
+import com.nexters.travelbudget.utils.ext.showToastMessage
 import com.nexters.travelbudget.utils.getNowDate
 import com.nexters.travelbudget.utils.isBetweenDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -101,6 +102,12 @@ class TripDetailAloneActivity :
                 val personalBudgetId = tripDetailResponse.personal?.budgetId ?: -1L
                 val roomType = TravelRoomType.PERSONAL
                 val focusType = BudgetType.PERSONAL
+
+                if (personalBudgetId == -1L) {
+                    showToastMessage("예산을 먼저 입력 해주세요!")
+                    return@Observer
+                }
+
                 startActivity(
                     Intent(
                         this@TripDetailAloneActivity,
