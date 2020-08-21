@@ -2,6 +2,7 @@ package com.nexters.travelbudget.utils.widget
 
 import android.content.Context
 import android.os.Build
+import android.text.InputType
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
@@ -32,6 +33,7 @@ class TripEditText @JvmOverloads constructor(
         setBackgroundResource(R.drawable.bg_edit_text_underground_default)
         setHintTextColor(resources.getColor(R.color.colorTextHint, null))
         setTextColor(resources.getColor(R.color.colorTextBlack, null))
+        inputType = InputType.TYPE_CLASS_TEXT
 
         try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
