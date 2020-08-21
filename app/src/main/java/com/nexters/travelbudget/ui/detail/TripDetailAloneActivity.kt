@@ -104,7 +104,7 @@ class TripDetailAloneActivity :
                 val focusType = BudgetType.PERSONAL
 
                 if (personalBudgetId == -1L) {
-                    showToastMessage("예산을 먼저 입력 해주세요!")
+                    showToastMessage("예산을 먼저 입력해주세요!")
                     return@Observer
                 }
 
