@@ -2,6 +2,8 @@
 <h3 align="center"> NEXTERS 17기 - 엄격한 관리자 팀 </h3>
 <h4 align="center">나 홀로 여행부터 함께 하는 여행까지, 개인 예산과 공용 여행 예산을 한 번에 관리하는 여행 전용 가계부</h4>
 
+![앱 그래픽 이미지](https://user-images.githubusercontent.com/41371709/91124637-924cff00-e6da-11ea-95a3-6a6eff99bec6.png)
+
 <br>
 
 ## Description :memo:
@@ -23,7 +25,7 @@ https://drive.google.com/file/d/1p9RZARG-cj14hc_xKlFgiuikMKFQvpkt/view?usp=drive
 ## Special feature :star:
 
 - **``` Firebase DynamicLink ```** 여행 방 초대 코드 기능 구현 
-- **``` 카카오 API ```** 로그인 기능 구현
+- **``` 카카오 API ```** 로그인 기능 구현 (인터셉터를 통한 토큰 자동 갱신)
 
 <br>
 
@@ -31,10 +33,12 @@ https://drive.google.com/file/d/1p9RZARG-cj14hc_xKlFgiuikMKFQvpkt/view?usp=drive
 
 #### Android frontend 
   - Target SDK : 23 - 29
-  - Architecture : MVVM
+  - Architecture : MVVM(View - DataBinding - ViewModel - Data), Repository pattern
   - Language : Kotlin
   - Async : RxJava, RxKotlin
-  - LiveData, Retrofit, OkHttp, Koin, Glide
+  - JetPack : LiveData, ViewModel, Lifecycle
+  - Network : Retrofit, OkHttp, Gson
+  - Dependency injection : koin
  
 #### 개발 환경
   - Android Studio 4.0
