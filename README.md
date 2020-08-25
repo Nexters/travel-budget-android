@@ -43,5 +43,5 @@ https://drive.google.com/file/d/1p9RZARG-cj14hc_xKlFgiuikMKFQvpkt/view?usp=drive
 <br>
 
 ## 다운로드 링크 :link:
-  - 곧 출시됩니다!
+  - https://play.google.com/store/apps/details?id=com.nexters.travelbudget&hl=ko
 
