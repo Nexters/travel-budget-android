@@ -42,7 +42,7 @@ class AuthInterceptor(private val context: Context) : Interceptor {
                 .toRequestBody("application/json".toMediaTypeOrNull())
 
             val requestBody = Request.Builder()
-                .url("http://175.123.172.42:9050/api/auth/token/refresh")
+                .url("http://1.242.8.198:9050/api/auth/token/refresh")
                 .post(body)
                 .build()
 

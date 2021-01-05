@@ -31,7 +31,7 @@ val networkModule = module {
 
 /** Auth Api 접근을 위한 메소드 */
 fun provideAuthApi(okHttpClient: OkHttpClient): AuthService {
-    return Retrofit.Builder().baseUrl("http://175.123.172.42:9050/")
+    return Retrofit.Builder().baseUrl("http://1.242.8.198:9050/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -41,7 +41,7 @@ fun provideAuthApi(okHttpClient: OkHttpClient): AuthService {
 
 /** Tripie Api 접근을 위한 메소드 */
 fun provideTripieApi(okHttpClient: OkHttpClient): TripieService {
-    return Retrofit.Builder().baseUrl("http://175.123.172.42:9050/")
+    return Retrofit.Builder().baseUrl("http://1.242.8.198:9050/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
